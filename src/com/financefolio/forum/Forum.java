@@ -8,7 +8,12 @@ public class Forum {
     //methods
     public void sortByRating()
     {
-
+        Collections.sort(forum, new Comparator<Question>() {
+            @Override
+            public int compare(Question q1, Question q2){
+                return Float.compare(q2.getRating(), q1.getRating());
+            }            
+        });
     }
 
     public void getForum() {

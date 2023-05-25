@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.*;
 
 
-public class Question {
+public class Question implements Comparable<Question>{
     private String body;
     private Date date;
     private String author;
@@ -19,7 +19,7 @@ public class Question {
         this.author = author;
         this.upvotes = upvotes;
         this.downvotes = downvotes;
-        this.rating = this.upvotes/this.downvotes;
+        this.rating = (float)this.upvotes/this.downvotes;
     }
 
     public String getBody() {
@@ -56,6 +56,12 @@ public class Question {
 
     public float getRating() {
         return rating;
+    }
+
+    @Override
+    public int compareTo(Question o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
     }
 }
 
