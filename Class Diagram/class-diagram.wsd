@@ -1,0 +1,320 @@
+@startuml Class Diagram
+skinparam classAttributeIconSize 0
+' package Declarations
+package com.financefolio.forum{ 
+    class Forum {
+     -posts: List<Question>
+     +requestFetch(): void
+     +sortByRating(): void
+     +getQuestionSelected(): Question
+     +insertToList(): void
+     +searchQuestion(): List<Question>
+     +addCommentToQuestion(): void
+     +registerVoteOnSelectedComment(): void
+    }
+
+    class Question{
+        -body: String
+        -date: Date
+        -author: String
+        -upvotes: int
+        -downvotes: int
+        -comments: List<Comment>
+        +requestInsert():void
+        +requestUpdate():void
+        +addVote(): void
+    }
+
+    class Comment{
+        -body: String
+        -date: Date
+        -author: String
+        -upvotes: int
+        -downvotes: int
+        +requestInsert():void
+        +requestUpdate():void
+        +addVote(): void
+    }
+}
+
+package com.financefolio.calendar{ 
+    class Calendar{
+        -reminderList: List<Reminder>
+        +saveReminderToCalendar(): void
+        +updateReminder(): void
+        +deleteReminder(): void
+    }
+
+    class Reminder{
+        -body: String
+        -notifyBefore: Date
+        -frequency: int
+        -date: Date
+        +getFrequency(): int
+    }
+}
+
+package com.financefolio.user{
+    class User{
+        -name: String
+        -id: int
+    }
+
+    class Expert{
+        -averageRating: int
+        -speacialty: String
+    }
+
+    class Member{
+        -premiumMember: boolean
+        -category: int
+        -income: float
+        -houseArea: int
+        -houseResidents: int
+        -friends: List<Friend>
+        +updateHouseDetails(): void
+        +updateIncome(): void
+        +updateMembership(): void
+        ' +savePreferences(): void
+        +sendFriendRequest(): void
+        +addFriend(): void
+        +removeFriend(): void
+        +isFriendsListEmpty(): boolean
+    }
+
+    class Review{
+        -body: String
+        -author: String
+        -date: Date
+        -rating:int
+    }
+}
+
+'note: Panagiwtakis left the chat.'
+package com.financefolio.chat{ 
+    class Chat{
+        -conversation: List<Message>
+        +sendMessageTo(): void
+    }
+
+    class Message{
+        -body: String
+        -sentOn: Time
+    }
+}
+
+
+package com.financefolio.points{ 
+    class PointsRecord{
+        'TODO: needs some thought '
+    }
+}
+
+package com.financefolio.social{ 
+
+    class Friend{
+        -id: int
+        -name: String
+        -dateAdded: Date
+        -sharingLevel: int
+        -type: String
+    }
+
+    class Sharing{
+    }
+}
+
+package com.financefolio.diagrams{
+    class DiagramsRecord{
+        diagramsRecord: List<Diagram>
+    }
+    
+    class Diagram{
+        -category: String
+        -timeInterval: Time
+        -creationDate: Date
+    }
+}
+
+package com.financefolio.expense{
+    class Expense{
+        ' -name: String'
+        -date: Date
+        -description: String
+        -cost: float
+    }
+
+    class Subscription{
+        -nextDate: Date
+        +setReminder(): void
+        +updateReminder(): void
+    }
+
+    class Miscellaneous{
+        -name: String
+        -cost: float
+    }
+
+    class MiscellaneousList{
+        -miscList: List<Miscellaneous>
+    }
+
+    class Bill{
+        -owed: float
+        -dateFrom: Date
+        -dateto: Date
+    }
+
+    class Power{ 
+    }
+
+    class Phone{
+    }
+
+    class Water{
+    }
+
+    class ExpenseList{
+        -expenses: List<Expense>
+        +pushToList(): void
+        +calcDiagram(): void
+        +getExpense():Expense
+        +requestUpdate(): void
+        +updateInList(): void
+    }
+}
+
+package com.financefolio.goals{
+    class Goal{
+        -name: String
+        -state: String
+        -shared: boolean
+        -timeDuration:long
+        -moneyToSpend: float
+        -difficulty: int
+        -reward: int
+        +estimateDifficulty(): int
+        +getReward(): int
+        +modifyGoal(): void
+        +updateGoal(): void
+        +deleteGoal(): void       
+    }
+
+    class Achievement{
+        -state: String
+        +calcPoints(): int
+    }
+
+    class AchievementList{ 
+        -achList: List<Achievement>
+    }
+
+    class GoalsHistory{ 
+        -goalHistory: List<Goal>
+    }
+}
+
+package com.financefolio.dao{
+    interface DAO{
+        get(): Optional <T>
+        getAll(): List<T> 
+        save(): void
+        update(): void
+        delete(): void
+    }
+
+    class QuestionDAO{}
+    
+    class MemberDAO{}
+    
+    class CommentDAO{}
+    
+    class SubscriptionDAO{}
+    
+    class MiscellaneousDAO{}
+    
+    class PhoneDAO{}
+    
+    class PowerDAO{}
+    
+    class WaterDAO{}
+
+    class GoalDAO{}
+
+    class AchievementDAO{}
+
+    class ReminderDAO{} 
+}
+
+' forum package relations
+Forum *-- Question
+Question *-- Comment
+
+' calendar package relations
+Calendar o-- Reminder
+User o-- Calendar
+
+' user package relations
+User <|-- Member
+User <|-- Expert
+Expert o-- Review
+
+' chat package relations
+Chat *-- Message
+
+' points package relations
+Member *-- PointsRecord
+
+'social  package relations
+Friend -- Sharing
+Member o-- Friend
+
+'diagrams package relations 
+DiagramsRecord *-- Diagram
+Member o-- DiagramsRecord
+
+'goals package relations
+GoalsHistory --* Member
+Goal --o GoalsHistory
+Achievement --o AchievementList
+Achievement --|> Goal
+
+'expense package relations
+Expense <|-- Miscellaneous
+Expense <|-- Bill
+Bill <|-- Power
+Bill <|-- Water
+Bill <|-- Phone
+Miscellaneous --* MiscellaneousList
+Expense <|-- Subscription
+ExpenseList *-- Expense
+
+'dao package relations
+DAO <|.. MemberDAO
+DAO <|.. QuestionDAO
+DAO <|.. CommentDAO
+DAO <|.. SubscriptionDAO
+DAO <|.. MiscellaneousDAO
+DAO <|.. PhoneDAO
+DAO <|.. WaterDAO
+DAO <|.. PowerDAO
+DAO <|.. AchievementDAO
+DAO <|.. GoalDAO
+DAO <|.. ReminderDAO
+
+' notes
+' note top of com.financefolio.chat: "Not updated since sequence revision. Will also need a DAO."
+' note top of Power: "Missing attributes."
+' note top of Water: "Missing attributes."
+' note top of Phone: "Missing attributes."
+' note top of Sharing: "No clue."
+' note top of com.financefolio.points: "Assigned to Panagiwtakis"
+' note top of ReminderDAO: "Not in sequence diagram, probably should be."
+' note top of GoalsHistory: "Not in sequence diagram, probably should be."
+' note top of AchievementList: "Not in sequence diagram, probably should be."
+' note top of com.financefolio.social: "No clue friend."
+' note top of Review: "Belongs in this package?"
+' note top of Expert: "Design Missing."
+' note top of com.financefolio.forum: "Not updated since sequence revision."
+' note top of com.financefolio.calendar: "Not updated since sequence revision."
+@enduml
