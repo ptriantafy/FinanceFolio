@@ -1,11 +1,14 @@
 package com.financefolio.social;
 
+import com.financefolio.social.chat.Chat;
+
 public class Friend {
 
 	private int id;
 	private String name; 
 	private String type;
 	private int sharingLevel;
+	private Chat conversation;
 	
 	public Friend(int id, String name, String type, int sharingLevel) {
 		super();
@@ -13,6 +16,7 @@ public class Friend {
 		this.name = name;
 		this.type = type;
 		this.sharingLevel = sharingLevel;
+		this.conversation = new Chat();
 	}
 	
 	public int getId() {
@@ -46,4 +50,9 @@ public class Friend {
 	public void setSharingLevel(int sharingLevel) {
 		this.sharingLevel = sharingLevel;
 	}
+
+	public Chat getConversation() {
+		return conversation;
+	}
+
 }

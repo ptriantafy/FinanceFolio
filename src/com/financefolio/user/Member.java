@@ -44,7 +44,7 @@ public class Member extends User {
 		this.friends.add(friend);
 	}
 
-	public void removeFromFriendsList(Friend friend) {
+	public void removeFriend(Friend friend) {
 		this.friends.remove(friend);
 	}
 	
