@@ -49,18 +49,26 @@ public class Question implements Comparable<Question>{
         return downvotes;
     }
 
-    public List<Comment> getComments() {
+    public List<Comment> getComments(int sel) {
         return comments;
     }
 
     public void setComments(Comment... com) {
         Collections.addAll(comments , com);
     }
+    public void setUpvotes(int upvotes) {
+        this.upvotes++;
+    }
+
+    public void setDownvotes() {
+        this.downvotes++;
+    }
 
     public String getCommentsDetails() {
         String temp = "";
         for(int i = 0; i < comments.size(); i++){
-           temp = temp + "\n" + i + "." + this.comments.get(i).getBody() + "\n" + "Author: " + this.comments.get(i).getAuthor();
+           temp = temp + "\n\n" + i + "." + this.comments.get(i).getBody() + "\n" + "Author: " + this.comments.get(i).getAuthor() + 
+           "\n" + "Upvotes: " + this.comments.get(i).getUpvotes() + "\t" + "Downvotes: " + this.comments.get(i).getDownvotes();
         }
         return temp;
     }
@@ -72,6 +80,13 @@ public class Question implements Comparable<Question>{
 
     public void addCommentToQuestion(){
         // this.comments.add()
+    }
+
+    public void registerVoteOnSelectedComment(int sel, int updown){
+        if(updown == 0)
+            comments.get(sel).setUpvotes();
+        else
+            comments.get(sel).setDownvotes();
     }
 
     @Override

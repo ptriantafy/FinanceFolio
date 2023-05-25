@@ -23,8 +23,22 @@ public class Comment {
     public String getAuthor(){
         return author;
     }
+    public int getUpvotes() {
+        return upvotes;
+    }
+    public int getDownvotes() {
+        return downvotes;
+    }
     public void requestInsert(){}
     public void requestUpdate(){}
-    public void addVote(){}
+    public void addVote(){
+    }
+
+    public void setUpvotes() {
+        this.upvotes++; 
+    }
+    public void setDownvotes() {
+        this.downvotes++;
+    }
     
 }
