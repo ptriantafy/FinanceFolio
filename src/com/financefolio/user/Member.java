@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.financefolio.social.Friend;
+import com.financefolio.social.FriendRequest;
+import com.financefolio.social.FriendRequestsList;
 import com.financefolio.social.FriendsList;
 
 public class Member extends User {
@@ -13,7 +15,9 @@ public class Member extends User {
 	private int houseArea;
 	private int houseResidents;
 	private FriendsList friends;
-
+	private FriendRequestsList requestsList;
+	
+	
 	public Member(int id, String name, boolean premiumMember, int category, float income, int houseArea,
 			int houseResidents) {
 		super(id, name);
@@ -23,8 +27,18 @@ public class Member extends User {
 		this.houseArea = houseArea;
 		this.houseResidents = houseResidents;
 		this.friends = new FriendsList();
+		this.requestsList = new FriendRequestsList();
 	}
 
+	public void acceptFriendRequest(FriendRequest fr) {
+		this.friends.addFriend(new Friend(fr.getReceiverId(), fr.getSenderName(), "casual", 1));
+		this.requestsList.deleteRequest(fr);
+	}
+	
+	public void declineFriendRequest(FriendRequest fr) {
+		this.requestsList.deleteRequest(fr);
+	}
+	
 	public void updateHouseDetails(int area, int residents) {
 		this.setHouseArea(area);
 		this.setHouseResidents(residents);

@@ -45,4 +45,9 @@ public class FriendRequest {
 		this.sentOn = sentOn;
 	}
 
+	public String getSenderName() {
+		return null;
+//		++DAO search name etc
+	}
+
 }
