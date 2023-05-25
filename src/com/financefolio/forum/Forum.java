@@ -8,7 +8,7 @@ public class Forum {
     //methods
     public void sortByRating()
     {
-        Collections.sort(forum, new Comparator<Question>() {
+        Collections.sort(forum, new Comparator<Question>() {    //Custom comparator for float objects
             @Override
             public int compare(Question q1, Question q2){
                 return Float.compare(q2.getRating(), q1.getRating());
@@ -17,18 +17,19 @@ public class Forum {
     }
 
     public void getForum() {
-        for(int i =0; i<this.forum.size(); i++){
-            System.out.println(this.forum.get(i).getBody()+this.forum.get(i).getRating());
+        for(int i = 0; i<this.forum.size(); i++){
+            System.out.println(i + "." + this.forum.get(i).getBody() + " " + this.forum.get(i).getRating());
         }
     }
 
-    public void getAll(Question que){
-        forum.add(que);   
+    public void getAll(Question... que){
+        Collections.addAll(forum, que);
     }
     public void addCommentToQuestion(){}
     public void registerVoteOnSelectedComment(){}
-    public Question getQuestionSelected(){
-        return null;}
+    public void getQuestionSelected(int sel){
+        System.out.println(this.forum.get(sel).getBody() + "\n" + "Author: " + this.forum.get(sel).getAuthor());
+    }
     public Question searchQuestion(){
         return null;}
 

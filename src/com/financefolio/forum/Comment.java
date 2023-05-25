@@ -10,7 +10,15 @@ public class Comment {
     private int upvotes;
     private int downvotes;
     //methods
-    static void requestInsert(){}
-    static void requestUpdate(){}
-    static void addVote(){}
+    public Comment(String body,Date date,String author, int upvotes, int downvotes){
+        this.body = body;
+        this.date = date;
+        this.author = author;
+        this.upvotes = upvotes;
+        this.downvotes = downvotes;
+    }
+    public void requestInsert(){}
+    public void requestUpdate(){}
+    public void addVote(){}
+    
 }

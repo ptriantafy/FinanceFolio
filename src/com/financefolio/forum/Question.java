@@ -42,17 +42,13 @@ public class Question implements Comparable<Question>{
         return downvotes;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setComments(Comment... com) {
+        Collections.addAll(comments , com);
     }
 
     public List<Comment> getComments() {
         return comments;
     }
-
-    // public void setRating() {
-    //     this.rating = this.upvotes/this.downvotes;
-    // }
 
     public float getRating() {
         return rating;
