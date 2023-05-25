@@ -46,8 +46,12 @@ public class Question implements Comparable<Question>{
         Collections.addAll(comments , com);
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public String getComments() {
+        String temp = "";
+        for(int i = 0; i < comments.size(); i++){
+           temp = temp + "\n" + this.comments.get(i).getBody() + "\n" + "Author: " + this.comments.get(i).getAuthor();
+        }
+        return temp;
     }
 
     public float getRating() {

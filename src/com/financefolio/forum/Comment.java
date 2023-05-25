@@ -17,6 +17,12 @@ public class Comment {
         this.upvotes = upvotes;
         this.downvotes = downvotes;
     }
+    public String getBody(){
+        return body;
+    }
+    public String getAuthor(){
+        return author;
+    }
     public void requestInsert(){}
     public void requestUpdate(){}
     public void addVote(){}

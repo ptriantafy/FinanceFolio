@@ -26,9 +26,12 @@ public class Forum {
         Collections.addAll(forum, que);
     }
     public void addCommentToQuestion(){}
-    public void registerVoteOnSelectedComment(){}
+    public void registerVoteOnSelectedComment(){
+
+    }
     public void getQuestionSelected(int sel){
-        System.out.println(this.forum.get(sel).getBody() + "\n" + "Author: " + this.forum.get(sel).getAuthor());
+        System.out.println(this.forum.get(sel).getBody() + "\n" + "Author: " + this.forum.get(sel).getAuthor() + "\n" +
+        "\n" + "------Comments------" + this.forum.get(sel).getComments());
     }
     public Question searchQuestion(){
         return null;}
