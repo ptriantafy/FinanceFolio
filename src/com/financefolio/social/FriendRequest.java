@@ -9,12 +9,12 @@ public class FriendRequest {
 	private int receiverId;
 	private Timestamp sentOn;
 	
-	public FriendRequest(int requestId, int senderId, int receiverId) {
+	public FriendRequest(int requestId, int senderId, int receiverId, Timestamp sentOn) {
 		super();
 		this.requestId = requestId;
 		this.senderId = senderId;
 		this.receiverId = receiverId;
-		this.sentOn = new Timestamp(System.currentTimeMillis());
+		this.sentOn = sentOn;
 	}
 
 	public int getRequestId() {
