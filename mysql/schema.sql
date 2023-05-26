@@ -1,7 +1,7 @@
--- SQLBook: Code
-DROP SCHEMA IF EXISTS FinanceFolio;
-CREATE SCHEMA FinanceFolio;
-USE FinanceFolio;
+
+DROP DATABASE IF EXISTS financefolio;
+CREATE DATABASE financefolio;
+USE financefolio;
 
 CREATE TABLE user (
   user_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -74,40 +74,44 @@ CREATE TABLE goals(
 
 CREATE TABLE expense(
   expense_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  description VARCHAR(255) NOT NULL,
-  addition_date DATE,
+  description VARCHAR(255),
+  addition_date DATE NOT NULL,
   cost DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (expense_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE subscription(
   subscription_id SMALLINT UNSIGNED NOT NULL,
-  -- next_billing_date  DATE DEFAULT DATE_ADD(CURDATE(), INTERVAL 1 MONTH), curdate() can't be default
-  CONSTRAINT `fk_expense_sub_id` FOREIGN KEY (subscription_id) REFERENCES expense (expense_id) ON DELETE RESTRICT ON UPDATE CASCADE
+  next_billing_date  DATE,
+  cost DECIMAL(10,2) NOT NULL,
+  CONSTRAINT `fk_expense_sub_id` FOREIGN KEY (subscription_id) REFERENCES expense (expense_id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE miscellaneous(
   misc_id SMALLINT UNSIGNED NOT NULL,
   misc_exp_name VARCHAR (45) NOT NULL,
-  cost DECIMAL(10,2)
+  cost DECIMAL(10,2) NOT NULL DEFAULT 0.0,
+  PRIMARY KEY(misc_id),
+  CONSTRAINT `fk_expense_misc_id` FOREIGN KEY (misc_id) REFERENCES expense (expense_id) ON DELETE CASCADE ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE misc_micro_expenses(
+  parent_expense_id SMALLINT UNSIGNED NOT NULL,
+  micro_expense_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  micro_expense_name VARCHAR (45) NOT NULL,
+  cost DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (micro_expense_id),
+  CONSTRAINT `fk_micro_misc_id` FOREIGN KEY (parent_expense_id) REFERENCES miscellaneous (misc_id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE bill(
   bill_id SMALLINT UNSIGNED NOT NULL,
-  owed DECIMAL(10,2),
-  -- dateFrom DATE DEFAULT CURDATE() curdate() can't be default
-  -- dateTo DATE DEFAULT ADDDATE(CURDATE(), INTERVAL 1 MONTH), curdate() can't be default
-  CONSTRAINT `fk_expense_bill_id` FOREIGN KEY (bill_id) REFERENCES expense (expense_id) ON DELETE RESTRICT ON UPDATE CASCADE
+  bill_type ENUM('water','power','telephony') NOT NULL,
+  owed DECIMAL(10,2) NOT NULL DEFAULT 0.0,
+  cost DECIMAL(10,2) NOT NULL,
+  dateFrom DATE, 
+  dateTo DATE, 
+  CONSTRAINT `fk_expense_bill_id` FOREIGN KEY (bill_id) REFERENCES expense (expense_id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
 
-CREATE TABLE bill_water(
-  bill_id SMALLINT UNSIGNED NOT NULL
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE bill_power(
-  bill_id SMALLINT UNSIGNED NOT NULL
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE bill_telephone(
-  bill_telephone_id SMALLINT UNSIGNED NOT NULL 
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+ 
