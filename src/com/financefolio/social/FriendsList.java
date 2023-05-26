@@ -15,6 +15,7 @@ public class FriendsList {
 
 	public void removeFriend(Friend friend) {
 		this.friendsList.remove(friend);
+//		call delete from DAO
 	}
 	
 	public boolean isFriendsListEmpty(){
@@ -26,6 +27,7 @@ public class FriendsList {
 	}
 	public void addFriend(Friend newFriend) {
 		this.friendsList.add(newFriend);
+//		call save from DAO
 	}
 
 }

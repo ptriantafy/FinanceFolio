@@ -15,6 +15,13 @@ public class FriendRequestsList {
 		return this.requests;
 	}
 	
+	public FriendRequest getRequestById(int id) {
+		for (FriendRequest fr : this.requests) {
+			 if (fr.getRequestId() == id) return fr;
+        }
+		return null;
+	}
+	
 	public void deleteRequest(FriendRequest fr) {
 		this.requests.remove(fr);
 	}

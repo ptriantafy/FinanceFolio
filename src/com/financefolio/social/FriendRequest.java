@@ -7,20 +7,24 @@ public class FriendRequest {
 	private int requestId;
 	private int senderId;
 	private int receiverId;
+	private int senderSharingLevel;
 	private Timestamp sentOn;
 	
-	public FriendRequest(int requestId, int senderId, int receiverId, Timestamp sentOn) {
+	public FriendRequest(int requestId, int senderId, int receiverId, int senderSharingLevel, Timestamp sentOn) {
 		super();
 		this.requestId = requestId;
 		this.senderId = senderId;
 		this.receiverId = receiverId;
+		this.senderSharingLevel = senderSharingLevel;
 		this.sentOn = sentOn;
 	}
 
 	public int getRequestId() {
 		return requestId;
 	}
-
+	public void setRequestId(int id) {
+		this.requestId = id;
+	}
 	public int getSenderId() {
 		return senderId;
 	}
@@ -45,9 +49,13 @@ public class FriendRequest {
 		this.sentOn = sentOn;
 	}
 
-	public String getSenderName() {
-		return null;
-//		++DAO search name etc
+	public int getSenderSharingLevel() {
+		return senderSharingLevel;
 	}
+
+	public void setSenderSharingLevel(int senderSharingLevel) {
+		this.senderSharingLevel = senderSharingLevel;
+	}
+
 
 }

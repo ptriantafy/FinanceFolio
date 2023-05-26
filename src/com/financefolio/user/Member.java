@@ -31,10 +31,26 @@ public class Member extends User {
 	}
 
 	public void acceptFriendRequest(FriendRequest fr) {
-		this.friends.addFriend(new Friend(fr.getReceiverId(), fr.getSenderName(), "casual", 1));
+		this.friends.addFriend(new Friend(fr.getSenderId(), 1));
 		this.requestsList.deleteRequest(fr);
 	}
 	
+	public FriendsList getFriends() {
+		return friends;
+	}
+
+	public void setFriends(FriendsList friends) {
+		this.friends = friends;
+	}
+
+	public FriendRequestsList getRequestsList() {
+		return requestsList;
+	}
+
+	public void setRequestsList(FriendRequestsList requestsList) {
+		this.requestsList = requestsList;
+	}
+
 	public void declineFriendRequest(FriendRequest fr) {
 		this.requestsList.deleteRequest(fr);
 	}
