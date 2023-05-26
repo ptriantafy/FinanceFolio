@@ -29,6 +29,12 @@ public class Member extends User {
 		this.setHouseResidents(residents);
 	}
 	
+	public static Member createNewMemberFromUserInput(int id, String name, boolean premiumMember, int category, float income, int houseArea, 
+			int houseResidents) {
+            Member newMember = new Member(id, name, premiumMember, category, income, houseArea, houseResidents);
+            return newMember;
+    }
+	
 	public boolean isPremiumMember() {
 		return premiumMember;
 	}
