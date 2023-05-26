@@ -1,4 +1,4 @@
--- SQLBook: Code
+
 DROP DATABASE IF EXISTS financefolio;
 CREATE DATABASE financefolio;
 USE financefolio;
@@ -74,8 +74,8 @@ CREATE TABLE goals(
 
 CREATE TABLE expense(
   expense_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  description VARCHAR(255) NOT NULL,
-  addition_date DATE,
+  description VARCHAR(255),
+  addition_date DATE NOT NULL,
   cost DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (expense_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -104,7 +104,8 @@ CREATE TABLE misc_micro_expenses(
 CREATE TABLE bill(
   bill_id SMALLINT UNSIGNED NOT NULL,
   bill_type ENUM('water','power','telephony') NOT NULL,
-  owed DECIMAL(10,2),
+  owed DECIMAL(10,2) NOT NULL DEFAULT 0.0,
+  cost DECIMAL(10,2) NOT NULL,
   dateFrom DATE, 
   dateTo DATE, 
   CONSTRAINT `fk_expense_bill_id` FOREIGN KEY (bill_id) REFERENCES expense (expense_id) ON DELETE RESTRICT ON UPDATE CASCADE

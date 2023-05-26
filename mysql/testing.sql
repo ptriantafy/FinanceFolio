@@ -1,0 +1,1 @@
+INSERT INTO bill(bill_type, cost, dateFrom, dateTo) VALUES ('water', 10, curdate() ,NULL);
