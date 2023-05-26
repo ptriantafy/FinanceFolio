@@ -10,12 +10,12 @@ public class Comment {
     private int upvotes;
     private int downvotes;
     //methods
-    public Comment(String body,Date date,String author, int upvotes, int downvotes){
+    public Comment(String body,Date date,String author){
         this.body = body;
         this.date = date;
         this.author = author;
-        this.upvotes = upvotes;
-        this.downvotes = downvotes;
+        this.upvotes = 0;
+        this.downvotes = 0;
     }
     public String getBody(){
         return body;

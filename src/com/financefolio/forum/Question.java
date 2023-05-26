@@ -15,14 +15,17 @@ public class Question implements Comparable<Question>{
     private List<Comment> comments = new ArrayList<Comment>();
 
 
-    public Question(String title, String body, Date date, String author, int upvotes, int downvotes){
+    public Question(String title, String body, Date date, String author){
         this.title = title;
         this.body = body;
         this.date = date;
         this.author = author;
-        this.upvotes = upvotes;
-        this.downvotes = downvotes;
-        this.rating = (float)this.upvotes/this.downvotes;
+        this.upvotes = 0;
+        this.downvotes = 0;
+        if(this.upvotes == 0 && this.downvotes == 0)
+            this.rating = 0;
+        else
+            this.rating = (float)this.upvotes/this.downvotes;
     }
 
     public String getTitle() {
@@ -78,8 +81,8 @@ public class Question implements Comparable<Question>{
         return rating;
     }
 
-    public void addCommentToQuestion(){
-        // this.comments.add()
+    public void addCommentToQuestion(Comment sel){
+        this.comments.add(sel);
     }
 
     public void registerVoteOnSelectedComment(int sel, int updown){
