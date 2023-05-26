@@ -83,13 +83,15 @@ CREATE TABLE expense(
 CREATE TABLE subscription(
   subscription_id SMALLINT UNSIGNED NOT NULL,
   next_billing_date  DATE,
-  CONSTRAINT `fk_expense_sub_id` FOREIGN KEY (subscription_id) REFERENCES expense (expense_id) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `fk_expense_sub_id` FOREIGN KEY (subscription_id) REFERENCES expense (expense_id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE miscellaneous(
   misc_id SMALLINT UNSIGNED NOT NULL,
   misc_exp_name VARCHAR (45) NOT NULL,
-  cost DECIMAL(10,2)
+  cost DECIMAL(10,2) NOT NULL DEFAULT 0.0,
+  PRIMARY KEY(misc_id),
+  CONSTRAINT `fk_expense_misc_id` FOREIGN KEY (misc_id) REFERENCES expense (expense_id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE misc_micro_expenses(
@@ -98,7 +100,7 @@ CREATE TABLE misc_micro_expenses(
   micro_expense_name VARCHAR (45) NOT NULL,
   cost DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (micro_expense_id),
-  CONSTRAINT `fk_misc_id` FOREIGN KEY (parent_expense_id) REFERENCES subscription (subscription_id) ON UPDATE CASCADE
+  CONSTRAINT `fk_micro_misc_id` FOREIGN KEY (parent_expense_id) REFERENCES miscellaneous (misc_id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE bill(
@@ -108,7 +110,7 @@ CREATE TABLE bill(
   cost DECIMAL(10,2) NOT NULL,
   dateFrom DATE, 
   dateTo DATE, 
-  CONSTRAINT `fk_expense_bill_id` FOREIGN KEY (bill_id) REFERENCES expense (expense_id) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `fk_expense_bill_id` FOREIGN KEY (bill_id) REFERENCES expense (expense_id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
 
  
