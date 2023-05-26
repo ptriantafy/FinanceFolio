@@ -11,3 +11,5 @@ INSERT INTO misc_micro_expenses(parent_expense_id, micro_expense_name, cost) VAL
 INSERT INTO misc_micro_expenses(parent_expense_id, micro_expense_name, cost) VALUES (2, 'chocolate', 3.5);
 INSERT INTO misc_micro_expenses(parent_expense_id, micro_expense_name, cost) VALUES (2, 'beer', 2.6);
 INSERT INTO misc_micro_expenses(parent_expense_id, micro_expense_name, cost) VALUES (2, 'tomatoes', 1.0);
+
+INSERT INTO subscription(next_billing_date, cost) VALUES (DATE_ADD(CURDATE(),INTERVAL 1 MONTH), 15);

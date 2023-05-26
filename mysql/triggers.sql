@@ -61,3 +61,18 @@ BEGIN
 END$
 
 DELIMITER ;
+
+DROP TRIGGER IF EXISTS financefolio.subscription_addition;
+
+
+DELIMITER $
+CREATE TRIGGER financefolio.subscription_addition BEFORE INSERT ON subscription
+FOR EACH ROW 
+BEGIN
+	DECLARE id SMALLINT UNSIGNED ;
+    INSERT INTO expense(description, addition_date, cost) VALUES('',CURDATE(),NEW.cost);
+	SELECT MAX(expense_id) INTO id FROM expense;
+    SET NEW.subscription_id = id;
+END$
+
+DELIMITER ;

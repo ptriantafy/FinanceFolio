@@ -83,6 +83,7 @@ CREATE TABLE expense(
 CREATE TABLE subscription(
   subscription_id SMALLINT UNSIGNED NOT NULL,
   next_billing_date  DATE,
+  cost DECIMAL(10,2) NOT NULL,
   CONSTRAINT `fk_expense_sub_id` FOREIGN KEY (subscription_id) REFERENCES expense (expense_id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
