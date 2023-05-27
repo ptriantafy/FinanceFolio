@@ -1,7 +1,9 @@
 package com.financefolio.social;
 
 import java.sql.Date;
+import java.sql.SQLException;
 
+import com.financefolio.dao.MemberDAO;
 import com.financefolio.social.chat.Chat;
 
 public class Friend {
@@ -18,8 +20,16 @@ public class Friend {
 		this.sharingLevel = sharingLevel;
 		this.conversation = new Chat(chat_id);
 		this.friendsSince = friendsSince;
-//		get name from UserDAO?
-		this.setName(null);
+		MemberDAO mDAO = new MemberDAO();
+		try {
+			mDAO.get(id).ifPresent(t -> this.name = getName());
+		} catch (SQLException e) {
+			this.setName(null);
+			e.printStackTrace();
+		} catch (Exception e) {
+			this.setName(null);
+			e.printStackTrace();
+		}
 	}
 	
 	public int getId() {

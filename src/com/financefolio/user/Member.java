@@ -1,5 +1,6 @@
 package com.financefolio.user;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +11,8 @@ import com.financefolio.social.FriendsList;
 
 public class Member extends User {
 	private boolean premiumMember;
-	private int category;
 	private float income;
+	private int category;
 	private int houseArea;
 	private int houseResidents;
 	private FriendsList friends;
@@ -19,8 +20,8 @@ public class Member extends User {
 	
 	
 	public Member(int id, String name, boolean premiumMember, int category, float income, int houseArea,
-			int houseResidents) {
-		super(id, name);
+			int houseResidents, Date date) {
+		super(id, name, date);
 		this.premiumMember = premiumMember;
 		this.category = category;
 		this.income = income;

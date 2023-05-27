@@ -16,7 +16,7 @@ CREATE TABLE member(
   income DECIMAL(10,2),
   house_area SMALLINT UNSIGNED,
   residents TINYINT UNSIGNED,
-  premium_user BOOLEAN DEFAULT FALSE NOT NULL,
+  premium_member BOOLEAN DEFAULT FALSE NOT NULL,
   PRIMARY KEY (member_id),
   CONSTRAINT `fk_user_member_id` FOREIGN KEY (member_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

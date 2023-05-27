@@ -11,7 +11,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.financefolio.social.Friend;
-import com.financefolio.social.FriendRequest;
 
 public class FriendDAO implements DAO<Friend> {
 
@@ -39,12 +38,14 @@ public class FriendDAO implements DAO<Friend> {
 		return con;
 	}
 	
+//	unused
 	@Override
 	public Optional<Friend> get(int id) throws SQLException, Exception {
 //		not implemented yet
 		return null;
 	}
 
+//	fetch friend list of given member_id
 	@Override
 	public Optional<List<Friend>> getAll(int id) throws SQLException, Exception {
 		Connection con = this.connect();
@@ -55,7 +56,7 @@ public class FriendDAO implements DAO<Friend> {
 		List<Friend> result = new ArrayList<>();
 		while(rs.next()) {
 			Friend tempresult;
-			if(rs.getInt("member1_id") == id) {
+			if(rs.getInt("member1_id") == id) {  // looks ugly but works
 //				Member requesting friends list is member1 in database
 				tempresult = new Friend(rs.getInt("member2_id"), rs.getInt("sharing_level_to2"), rs.getInt("chat_id"), rs.getDate("friends_since"));
 			}
@@ -69,6 +70,7 @@ public class FriendDAO implements DAO<Friend> {
 		return Optional.ofNullable(result);
 	}
 
+//	insert a new friendship; requires args[0]=member_id where member is the one accepting a friend request
 	@Override
 	public void save(Friend t, String args[]) throws SQLException, Exception {
 //		member1 is FriendRequest sender
@@ -81,18 +83,20 @@ public class FriendDAO implements DAO<Friend> {
 		statement.setDate(3, t.getFriendsSince());
 //		new chat has to be inserted before inserting new friend
 		statement.setInt(4, t.getConversation().getChat_id());
-//		oh boi how do i get this? member dao.get(friendid).getfriendslist.getfriend.getsharinglevel, look good to me
+//TODO		memberDAO.get(friend_id).getfriendslist.getfriend(args[0]).getsharinglevel, look good to me
 		statement.setInt(5, t.getSharingLevel());
 		statement.setInt(6, t.getSharingLevel());
 		statement.executeQuery();
 		con.close();
 	}
 
+//	edit existing friendship
 	@Override
 	public void update(Friend t) throws SQLException, Exception {
 //		not implemented yet
 	}
 
+//	delete friendship
 	@Override
 	public void delete(Friend t) throws SQLException, Exception {
 		Connection con = this.connect();
