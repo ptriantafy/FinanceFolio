@@ -1,5 +1,7 @@
 package com.financefolio.social;
 
+import java.sql.Date;
+
 import com.financefolio.social.chat.Chat;
 
 public class Friend {
@@ -8,12 +10,14 @@ public class Friend {
 	private String name; 
 	private int sharingLevel;
 	private Chat conversation;
+	private Date friendsSince;
 	
-	public Friend(int id, int sharingLevel) {
+	public Friend(int id, int sharingLevel, int chat_id, Date friendsSince) {
 		super();
 		this.id = id;
 		this.sharingLevel = sharingLevel;
-		this.conversation = new Chat();
+		this.conversation = new Chat(chat_id);
+		this.friendsSince = friendsSince;
 //		get name from UserDAO?
 		this.setName(null);
 	}
@@ -44,6 +48,14 @@ public class Friend {
 
 	public Chat getConversation() {
 		return conversation;
+	}
+
+	public Date getFriendsSince() {
+		return friendsSince;
+	}
+
+	public void setFriendsSince(Date friendsSince) {
+		this.friendsSince = friendsSince;
 	}
 
 }

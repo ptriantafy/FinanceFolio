@@ -39,7 +39,7 @@ CREATE TABLE messages(
   CONSTRAINT `fk_sender_chat_id` FOREIGN KEY (sender_id) REFERENCES member (member_id) ON DELETE RESTRICT ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE friends(
+CREATE TABLE friendships(
   member1_id SMALLINT UNSIGNED NOT NULL,
   member2_id SMALLINT UNSIGNED NOT NULL,
   friends_since DATE NOT NULL,

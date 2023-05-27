@@ -65,7 +65,7 @@ public class FriendRequestDAO implements DAO<FriendRequest> {
 		return Optional.ofNullable(result);
 	}
 	@Override
-	public void save(FriendRequest t) throws Exception {
+	public void save(FriendRequest t, String args[]) throws Exception {
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("INSERT INTO friend_requests(sender_id, receiver_id, "
 				+ "sender_sharing_level, sent_on) VALUES (?, ?, ?, ?);");
@@ -83,7 +83,7 @@ public class FriendRequestDAO implements DAO<FriendRequest> {
 	public void update(FriendRequest t) throws Exception {
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("UPDATE friend_requests SET sender_id = ?, receiver_id = ?, "
-				+ "sender_sharing_level = ? WHERE request_id = )");
+				+ "sender_sharing_level = ? WHERE request_id = ?;");
 		statement.setInt(1, t.getSenderId());
 		statement.setInt(2, t.getReceiverId());
 		statement.setInt(3, t.getSenderSharingLevel());
@@ -95,7 +95,7 @@ public class FriendRequestDAO implements DAO<FriendRequest> {
 	@Override
 	public void delete(FriendRequest t) throws Exception {
 		Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("DELETE FROM friend_requests WHERE request_id = )");
+		PreparedStatement statement = con.prepareStatement("DELETE FROM friend_requests WHERE request_id = ?;");
 		statement.setInt(1, t.getRequestId());
 		statement.executeQuery();
 		con.close();
