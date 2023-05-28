@@ -4,24 +4,26 @@ import java.sql.Date;
 
 public class Comment {
     //attributes
+    private int commentId;
     private String body;
     private Date date;
-    private String author;
+    private int authorId;
     private int upvotes;
     private int downvotes;
     //methods
-    public Comment(String body,Date date,String author){
+    public Comment(int commentId, String body,Date date,int authorId){
+        this.commentId = commentId;
         this.body = body;
-        this.date = date;
-        this.author = author;
+        this.date = date;//find method to return curr date
+        this.authorId = authorId;
         this.upvotes = 0;
         this.downvotes = 0;
     }
     public String getBody(){
         return body;
     }
-    public String getAuthor(){
-        return author;
+    public int getauthorId(){
+        return authorId;
     }
     public int getUpvotes() {
         return upvotes;
@@ -34,11 +36,11 @@ public class Comment {
     public void addVote(){
     }
 
-    public void setUpvotes() {
-        this.upvotes++; 
+    public void setUpvotes(int upvotes) {
+        this.upvotes = upvotes; 
     }
-    public void setDownvotes() {
-        this.downvotes++;
+    public void setDownvotes(int downvotes) {
+        this.downvotes = downvotes;
     }
     
 }

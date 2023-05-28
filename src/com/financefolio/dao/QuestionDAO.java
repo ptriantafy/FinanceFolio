@@ -34,12 +34,12 @@ public class QuestionDAO implements DAO<Question>{
     }
 
     @Override
-    public Optional<Question> get(int request_id) throws Exception{
+    public Optional<Question> get(int question_id) throws Exception{
         Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("SELECT * FROM question WHERE request_id = ?;");
-		statement.setInt(1, request_id);
+		PreparedStatement statement = con.prepareStatement("SELECT * FROM question WHERE question_id = ?;");
+		statement.setInt(1, question_id);
 		ResultSet rs = statement.executeQuery();
-		Question result = new Question(rs.getString("title"),rs.getInt("question_id"), 
+		Question result = new Question(rs.getInt("question_id"), rs.getString("title"), 
                                         rs.getString("body"), rs.getDate("cdate"),rs.getInt("author_id"));
         result.setUpvotes(rs.getInt("upvotes"));
         result.setDownvotes(rs.getInt("downvotes"));
@@ -48,15 +48,17 @@ public class QuestionDAO implements DAO<Question>{
     }
 
     @Override 
-    public Optional<List<Question>> getAll(int request_id) throws Exception {
+    public Optional<List<Question>> getAll(int question_id) throws Exception {
         Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("SELECT * FROM question WHERE receiver_id = ?;");
-		statement.setInt(1, request_id);
+		PreparedStatement statement = con.prepareStatement("SELECT * FROM question WHERE question_id = ?;");
+		statement.setInt(1, question_id);
 		ResultSet rs = statement.executeQuery();
 		List<Question> result = new ArrayList<Question>();
 		while(rs.next()) {
-			Question tempresult = new Question(rs.getString("title"),rs.getInt("question_id"), 
+			Question tempresult = new Question(rs.getInt("question_id"), rs.getString("title"), 
                                         rs.getString("body"), rs.getDate("cdate"),rs.getInt("author_id"));
+            tempresult.setUpvotes(rs.getInt("upvotes"));
+            tempresult.setDownvotes(rs.getInt("downvotes"));
 			result.add(tempresult);
 		}
 		con.close();

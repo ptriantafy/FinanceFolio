@@ -5,8 +5,8 @@ import java.util.*;
 
 
 public class Question implements Comparable<Question>{
+    private int questionId;
     private String title;
-    private int question_id;
     private String body;
     private Date date;
     private int author_id;
@@ -16,9 +16,9 @@ public class Question implements Comparable<Question>{
     private List<Comment> comments = new ArrayList<Comment>();
 
 
-    public Question(String title,int question_id, String body, Date date, int author_id){
+    public Question(int questionId ,String title, String body, Date date, int author_id){
+        this.questionId = questionId;
         this.title = title;
-        this.question_id = question_id;
         this.body = body;
         this.date = date;
         this.author_id = author_id;
@@ -31,11 +31,11 @@ public class Question implements Comparable<Question>{
     }
 
     public int getQuestionId() {
-        return question_id;
+        return questionId;
     }
 
-    public void setQuestionId(int question_id) {
-        this.question_id = question_id;
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
     public String getTitle() {
