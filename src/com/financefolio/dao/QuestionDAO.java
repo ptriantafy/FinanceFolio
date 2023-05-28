@@ -64,16 +64,38 @@ public class QuestionDAO implements DAO<Question>{
     }
 
     @Override
-    public void save(Question que, String arg[]) throws Exception{
+    public void save(Question que, String arg[]) throws Exception { 
         Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("INSERT INTO question(title, body, "
-				+ "author_id) VALUES (?, ?, ?);");
+				+ "cdate, author_id) VALUES (?, ?, curdate(), ?);");
 		statement.setString(1, que.getTitle());
 		statement.setString(2, que.getBody());
 		statement.setInt(3, que.getAuthorId());
 		statement.executeQuery();
 		ResultSet last_id = statement.getGeneratedKeys();
 		con.close();
-		que.setRequestId(last_id.getInt(1));
+		que.setQuestionId(last_id.getInt(1));
+    }
+
+    @Override
+    public void update(Question que, String arg[]) throws Exception{
+        Connection con = this.connect();
+		PreparedStatement statement = con.prepareStatement("UPDATE question SET title = ?, body = ?, "
+				+ "upvotes = ?, downvotes = ? WHERE question_id = ?;");
+		statement.setString(1, que.getTitle());
+		statement.setString(2, que.getBody());
+		statement.setInt(3, que.getUpvotes());
+		statement.setInt(4, que.getDownvotes());
+		statement.executeQuery();
+		con.close();
+    }
+
+    @Override
+    public void delete (Question que) throws Exception{
+        Connection con = this.connect();
+		PreparedStatement statement = con.prepareStatement("DELETE FROM question WHERE request_id = ?;");
+		statement.setInt(1, que.getQuestionId());
+		statement.executeQuery();
+		con.close();
     }
 }
