@@ -11,7 +11,7 @@ VALUES ('john_doe', NOW()),
        ('emily_wright', NOW());
 
 
-INSERT INTO member (member_id, category, income, house_area, residents, premium_user)
+INSERT INTO member (member_id, category, income, house_area, residents, premium_member)
 VALUES (1, 2, 5000.00, 1500, 3, TRUE),
        (2, 1, 3000.00, 1000, 2, FALSE),
        (3, 3, 7000.00, 2000, 4, TRUE),

@@ -65,4 +65,8 @@ public class Message {
 	public void setChat_id(int chat_id) {
 		this.chat_id = chat_id;
 	}
+	@Override
+    public String toString() {
+        return "body:" + this.getBody() + " sentOn:" + this.getSentOn();
+	}
 }

@@ -19,8 +19,8 @@ public class MessageDAO implements DAO<Message> {
 	//constructor
 	public MessageDAO()
 	{
-		this.usrname = "Messages";
-		this.password = "FinFolMess";
+		this.usrname = "FinanceFolioJava";
+		this.password = "FinFolJavPass";
 	}
 	
 	public Connection connect() throws Exception

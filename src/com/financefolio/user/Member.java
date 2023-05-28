@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 import com.financefolio.dao.FriendDAO;
+import com.financefolio.dao.FriendRequestDAO;
 import com.financefolio.social.Friend;
 import com.financefolio.social.FriendRequest;
 import com.financefolio.social.FriendRequestsList;
@@ -34,9 +35,11 @@ public class Member extends User {
 	public void acceptFriendRequest(FriendRequest fr) {
 		Friend newFriend = new Friend(fr.getSenderId(), 1, -1, Date.valueOf(LocalDate.now()));
 		FriendDAO fDAO = new FriendDAO();
-		String[] arg = new String[] {String.valueOf(this.getId())};
+		FriendRequestDAO frDAO = new FriendRequestDAO();
+		String[] arg = new String[] {String.valueOf(this.getId()), String.valueOf(fr.getSenderSharingLevel())};
 		try {
 			fDAO.save(newFriend, arg);
+			frDAO.delete(fr);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,10 +47,15 @@ public class Member extends User {
 		this.requestsList.deleteRequest(fr);
 	}
 	public void declineFriendRequest(FriendRequest fr) {
+		FriendRequestDAO frDAO = new FriendRequestDAO();
+		try {
+			frDAO.delete(fr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.requestsList.deleteRequest(fr);
 	}
 	
-//	setters getters
 	public FriendsList getFriends() {
 		return friends;
 	}
@@ -100,4 +108,10 @@ public class Member extends User {
 	public void setCategory(int category) {
 		this.category = category;
 	}
+	@Override
+    public String toString() {
+        return "id:" + String.valueOf(this.getId())+" name:" + this.getName()+" premium" + String.valueOf(this.isPremiumMember())
+        		+"\n Friends: " + this.getFriends().toString()
+        		+"\n Friend Requests:" + this.getRequestsList();
+    }
 }

@@ -29,5 +29,8 @@ public class Chat {
 	public void sendMessage(Message message) {
 		this.messages.add(message);
 	}
-	
+	@Override
+    public String toString() {
+        return this.getMessages().toString();
+    }
 }

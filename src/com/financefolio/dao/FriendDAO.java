@@ -21,8 +21,8 @@ public class FriendDAO implements DAO<Friend> {
 	//constructor
 	public FriendDAO()
 	{
-		this.usrname = "Friend";
-		this.password = "FinFolFriend";
+		this.usrname = "FinanceFolioJava";
+		this.password = "FinFolJavPass";
 	}
 	
 	public Connection connect() throws Exception

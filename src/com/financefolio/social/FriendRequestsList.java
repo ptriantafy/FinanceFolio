@@ -28,4 +28,8 @@ public class FriendRequestsList {
 	public void addRequest(FriendRequest fr) {
 		this.requests.add(fr);
 	}
+	@Override
+    public String toString() {
+        return this.getRequests().toString();
+    }
 }

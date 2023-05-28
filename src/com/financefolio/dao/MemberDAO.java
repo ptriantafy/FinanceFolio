@@ -19,8 +19,8 @@ public class MemberDAO implements DAO<Member> {
 	//constructor
 	public MemberDAO()
 	{
-		this.usrname = "Member";
-		this.password = "FinFolMembUs";
+		this.usrname = "FinanceFolioJava";
+		this.password = "FinFolJavPass";
 	}
 	
 	public Connection connect() throws Exception
@@ -57,7 +57,7 @@ public class MemberDAO implements DAO<Member> {
 		List<Member> result = new ArrayList<>();
 		while(rs.next()) {
 			Member tempresult = new Member(rs.getInt("member_id"), rs.getString("username"), rs.getBoolean("premium_member"), rs.getInt("category"),
-					rs.getFloat("income"), rs.getInt("house_area"), rs.getInt("residents"), rs.getDate("register_dates"));
+					rs.getFloat("income"), rs.getInt("house_area"), rs.getInt("residents"), rs.getDate("register_date"));
 			result.add(tempresult);
 		}
 		con.close();

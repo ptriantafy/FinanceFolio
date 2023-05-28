@@ -56,6 +56,8 @@ public class FriendRequest {
 	public void setSenderSharingLevel(int senderSharingLevel) {
 		this.senderSharingLevel = senderSharingLevel;
 	}
-
-
+	@Override
+    public String toString() {
+        return "id:" + String.valueOf(this.getSenderId())+" sentOn:" + this.getSentOn()+ " senderSharingLevel" + this.getSenderSharingLevel();
+    }
 }

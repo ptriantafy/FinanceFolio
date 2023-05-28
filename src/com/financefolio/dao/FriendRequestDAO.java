@@ -19,8 +19,8 @@ public class FriendRequestDAO implements DAO<FriendRequest> {
 	//constructor
 	public FriendRequestDAO()
 	{
-		this.usrname = "FriendRequest";
-		this.password = "FinFolFrReq";
+		this.usrname = "FinanceFolioJava";
+		this.password = "FinFolJavPass";
 	}
 	
 	public Connection connect() throws Exception
