@@ -6,26 +6,36 @@ import java.util.*;
 
 public class Question implements Comparable<Question>{
     private String title;
+    private int question_id;
     private String body;
     private Date date;
-    private String author;
+    private int author_id;
     private int upvotes;
     private int downvotes;
     private float rating;
     private List<Comment> comments = new ArrayList<Comment>();
 
 
-    public Question(String title, String body, Date date, String author){
+    public Question(String title,int question_id, String body, Date date, int author_id){
         this.title = title;
+        this.question_id = question_id;
         this.body = body;
         this.date = date;
-        this.author = author;
+        this.author_id = author_id;
         this.upvotes = 0;
         this.downvotes = 0;
         if(this.upvotes == 0 && this.downvotes == 0)
             this.rating = 0;
         else
             this.rating = (float)this.upvotes/this.downvotes;
+    }
+
+    public int getQuestionId() {
+        return question_id;
+    }
+
+    public void setQuestionId(int question_id) {
+        this.question_id = question_id;
     }
 
     public String getTitle() {
@@ -40,8 +50,8 @@ public class Question implements Comparable<Question>{
         return date;
     }
 
-    public String getAuthor() {
-        return author;
+    public int getAuthorId() {
+        return author_id;
     }
 
     public int getUpvotes() {
@@ -56,15 +66,19 @@ public class Question implements Comparable<Question>{
         return comments;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public void setComments(Comment... com) {
         Collections.addAll(comments , com);
     }
     public void setUpvotes(int upvotes) {
-        this.upvotes++;
+        this.upvotes = upvotes;
     }
 
-    public void setDownvotes() {
-        this.downvotes++;
+    public void setDownvotes(int downvotes) {
+        this.downvotes = downvotes;
     }
 
     public String getCommentsDetails() {
