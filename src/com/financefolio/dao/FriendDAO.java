@@ -71,20 +71,21 @@ public class FriendDAO implements DAO<Friend> {
 	}
 
 //	insert a new friendship; requires args[0]=member_id where member is the one accepting a friend request
+//	requires args[1] = friendRequest.getSenderSharingLevel
 	@Override
 	public void save(Friend t, String args[]) throws SQLException, Exception {
-//		member1 is FriendRequest sender
-//		member2 is the user who accepts the request, his id is passed as a string in args[]
 		Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("INSERT INTO friendship(member1_id, member2_id, "
-				+ " friends_since, chat_id,sharing_level_to2, sharing_level_to1) VALUES (?, ?, ?, ?);");
+		PreparedStatement statement = con.prepareStatement("INSERT INTO chat VALUES();");
+		statement.execute();
+		ResultSet newChatId = statement.getGeneratedKeys();
+//		member1 is FriendRequest sender
+		statement = con.prepareStatement("INSERT INTO friendship(member1_id, member2_id, "
+				+ " friends_since, chat_id, sharing_level_to2, sharing_level_to1) VALUES (?, ?, ?, ?);");
 		statement.setInt(1, t.getId());
 		statement.setInt(2, Integer.parseInt(Objects.requireNonNull(args[0], "ID of member cannot be null")));
 		statement.setDate(3, t.getFriendsSince());
-//		new chat has to be inserted before inserting new friend
-		statement.setInt(4, t.getConversation().getChat_id());
-//TODO		memberDAO.get(friend_id).getfriendslist.getfriend(args[0]).getsharinglevel, look good to me
-		statement.setInt(5, t.getSharingLevel());
+		statement.setInt(4, newChatId.getInt(1));
+		statement.setInt(5, Integer.parseInt(Objects.requireNonNull(args[1], "Sharing Level from friend cannot be null")));
 		statement.setInt(6, t.getSharingLevel());
 		statement.executeQuery();
 		con.close();

@@ -1,9 +1,9 @@
 package com.financefolio.user;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
+import com.financefolio.dao.FriendDAO;
 import com.financefolio.social.Friend;
 import com.financefolio.social.FriendRequest;
 import com.financefolio.social.FriendRequestsList;
@@ -32,10 +32,22 @@ public class Member extends User {
 	}
 
 	public void acceptFriendRequest(FriendRequest fr) {
-		this.friends.addFriend(new Friend(fr.getSenderId(), 1));
+		Friend newFriend = new Friend(fr.getSenderId(), 1, -1, Date.valueOf(LocalDate.now()));
+		FriendDAO fDAO = new FriendDAO();
+		String[] arg = new String[] {String.valueOf(this.getId())};
+		try {
+			fDAO.save(newFriend, arg);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.friends.addFriend(newFriend);
+		this.requestsList.deleteRequest(fr);
+	}
+	public void declineFriendRequest(FriendRequest fr) {
 		this.requestsList.deleteRequest(fr);
 	}
 	
+//	setters getters
 	public FriendsList getFriends() {
 		return friends;
 	}
@@ -52,9 +64,6 @@ public class Member extends User {
 		this.requestsList = requestsList;
 	}
 
-	public void declineFriendRequest(FriendRequest fr) {
-		this.requestsList.deleteRequest(fr);
-	}
 	
 	public void updateHouseDetails(int area, int residents) {
 		this.setHouseArea(area);
