@@ -25,7 +25,7 @@ public class CommentDAO implements DAO<Comment>{
     {
         //Driver
         Class.forName("com.mysql.cj.jdbc.Driver");
-
+        //Connection with database
         Connection con = DriverManager.getConnection(db_url, username, password);
 
         System.out.println("Connection established");
@@ -34,14 +34,20 @@ public class CommentDAO implements DAO<Comment>{
     }
 
     @Override
-    public Optional<Comment> get(int request_id) throws Exception{
+    public Optional<Comment> get(int comment_id) throws Exception{
         Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("SELECT * FROM question WHERE request_id = ?;");
-		statement.setInt(1, request_id);
+        //SQL statement to be executed
+		PreparedStatement statement = con.prepareStatement("SELECT * FROM comment WHERE comment_id = ?;");
+        //value of ?
+		statement.setInt(1, comment_id);
+        //Execute query
 		ResultSet rs = statement.executeQuery();
-		Comment result = new Comment(rs.getInt("comment_id"),rs.getString("body"),rs.getDate("cdate"),rs.getInt("author_id"));
+        //Retrieve comment details from database and make new comment object
+		Comment result = new Comment(rs.getInt("question_id"),rs.getInt("comment_id"),rs.getString("body"),rs.getDate("cdate"),rs.getInt("author_id"));
+        //set upvotes and downvotes based on default value of database
         result.setUpvotes(rs.getInt("upvotes"));
         result.setDownvotes(rs.getInt("downvotes"));
+        //close connection with database
 		con.close();
 		return Optional.ofNullable(result);
     }
@@ -49,12 +55,14 @@ public class CommentDAO implements DAO<Comment>{
     @Override 
     public Optional<List<Comment>> getAll(int question_id) throws Exception {
         Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("SELECT * FROM question WHERE question_id = ?;");
+		PreparedStatement statement = con.prepareStatement("SELECT * FROM comment WHERE comment_id = ?;");
 		statement.setInt(1, question_id);
 		ResultSet rs = statement.executeQuery();
-		List<Comment> result = new ArrayList<Comment>();
+        //create new list of comments to store result
+		List<Comment> result = new ArrayList<Comment>();    
+        //while rs has an entry keep looping
 		while(rs.next()) {
-			Comment tempresult = new Comment(rs.getInt("comment_id"), rs.getString("body"), 
+			Comment tempresult = new Comment(rs.getInt("question_id"),rs.getInt("comment_id"), rs.getString("body"), 
                                         rs.getDate("cdate"),rs.getInt("author_id"));
             tempresult.setUpvotes(rs.getInt("upvotes"));
             tempresult.setDownvotes(rs.getInt("downvotes"));
@@ -62,5 +70,40 @@ public class CommentDAO implements DAO<Comment>{
 		}
 		con.close();
 		return Optional.ofNullable(result);
+    }
+
+    @Override
+    public void save(Comment com, String arg[]) throws Exception { 
+        Connection con = this.connect();
+		PreparedStatement statement = con.prepareStatement("INSERT INTO comment(body, "
+				+ "cdate, author_id) VALUES (?, curdate(), ?);");
+		statement.setString(1, com.getBody());
+		statement.setInt(2, com.getauthorId());
+		statement.executeQuery();
+		ResultSet last_id = statement.getGeneratedKeys();//id of last inserted comment
+		con.close();
+		com.setCommentId(last_id.getInt(2));
+    }
+
+    @Override
+    public void update(Comment com, String arg[]) throws Exception{
+        Connection con = this.connect();
+		PreparedStatement statement = con.prepareStatement("UPDATE comment SET body = ?, "
+				+ "upvotes = ?, downvotes = ? WHERE comment_id = ?;");
+		statement.setString(1, com.getBody());
+		statement.setInt(2, com.getUpvotes());
+		statement.setInt(3, com.getDownvotes());
+        statement.setInt(4, com.getCommentId());
+		statement.executeQuery();
+		con.close();
+    }
+
+    @Override
+    public void delete (Comment com) throws Exception{
+        Connection con = this.connect();
+		PreparedStatement statement = con.prepareStatement("DELETE FROM comment WHERE comment_id = ?;");
+		statement.setInt(1, com.getCommentId());
+		statement.executeQuery();
+		con.close();
     }
 }

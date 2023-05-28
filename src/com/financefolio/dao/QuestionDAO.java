@@ -88,6 +88,7 @@ public class QuestionDAO implements DAO<Question>{
 		statement.setString(2, que.getBody());
 		statement.setInt(3, que.getUpvotes());
 		statement.setInt(4, que.getDownvotes());
+        statement.setInt(5, que.getQuestionId());
 		statement.executeQuery();
 		con.close();
     }
@@ -95,7 +96,7 @@ public class QuestionDAO implements DAO<Question>{
     @Override
     public void delete (Question que) throws Exception{
         Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("DELETE FROM question WHERE request_id = ?;");
+		PreparedStatement statement = con.prepareStatement("DELETE FROM question WHERE question_id = ?;");
 		statement.setInt(1, que.getQuestionId());
 		statement.executeQuery();
 		con.close();

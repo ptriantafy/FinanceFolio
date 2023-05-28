@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class Comment {
     //attributes
+    private int questionId;
     private int commentId;
     private String body;
     private Date date;
@@ -11,13 +12,17 @@ public class Comment {
     private int upvotes;
     private int downvotes;
     //methods
-    public Comment(int commentId, String body,Date date,int authorId){
+    public Comment(int questionId, int commentId, String body,Date date,int authorId){
+        this.questionId = questionId;
         this.commentId = commentId;
         this.body = body;
         this.date = date;//find method to return curr date
         this.authorId = authorId;
         this.upvotes = 0;
         this.downvotes = 0;
+    }
+    public int getCommentId() {
+        return commentId;
     }
     public String getBody(){
         return body;
@@ -34,6 +39,10 @@ public class Comment {
     public void requestInsert(){}
     public void requestUpdate(){}
     public void addVote(){
+    }
+
+    public void setCommentId(int commentId){
+        this.commentId = commentId;
     }
 
     public void setUpvotes(int upvotes) {
