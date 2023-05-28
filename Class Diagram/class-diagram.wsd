@@ -58,6 +58,9 @@ package com.financefolio.user{
     class User{
         -name: String
         -id: int
+        -registerDate: Date
+        --
+        setters/getters
     }
 
     class Expert{
@@ -71,15 +74,12 @@ package com.financefolio.user{
         -income: float
         -houseArea: int
         -houseResidents: int
-        -friends: List<Friend>
-        +updateHouseDetails(): void
-        +updateIncome(): void
-        +updateMembership(): void
-        ' +savePreferences(): void
-        +sendFriendRequest(): void
-        +addFriend(): void
-        +removeFriend(): void
-        +isFriendsListEmpty(): boolean
+        -friends: FriendsList
+        -requestsList: FriendRequestsList
+        +acceptFriendRequest: void
+        +declineFriendRequest: void
+        --
+        setters/getters
     }
 
     class Review{
@@ -90,18 +90,6 @@ package com.financefolio.user{
     }
 }
 
-'note: Panagiwtakis left the chat.'
-package com.financefolio.chat{ 
-    class Chat{
-        -conversation: List<Message>
-        +sendMessageTo(): void
-    }
-
-    class Message{
-        -body: String
-        -sentOn: Time
-    }
-}
 
 
 package com.financefolio.points{ 
@@ -111,16 +99,57 @@ package com.financefolio.points{
 }
 
 package com.financefolio.social{ 
+package com.financefolio.social.chat{ 
+    class Chat{
+        -messages: List<Message>
+        -chat_id: int
+        +sendMessage(): void
+        --
+        setters/getters
+    }
 
+    class Message{
+        -body: String
+        -chat_id: int
+        -id: int
+        -receiver_id: int
+        -sender_id: int
+        -sentOn: Timestamp
+        --
+        setters/getters
+    }
+}
+    class FriendRequest{
+        - receiverId: int
+        -senderId: int
+        -requestId: int
+        -senderSharingLevel: int
+        -sentOn: Timestamp
+        --
+        setters/getters
+    }
+    class FriendRequestsList{
+        -requests: List<FriendRequest>
+        +addRequest(): void
+        +deleteRequest(): void
+        --
+        setters/getters
+    }
+    class FriendsList{
+        - friendsList: List<Friends>
+        +addFriend(): void
+        +removeFriend():void
+        --
+        setters/getters
+    }
     class Friend{
         -id: int
         -name: String
-        -dateAdded: Date
+        -friendsSince: Date
         -sharingLevel: int
-        -type: String
-    }
-
-    class Sharing{
+        -conversation: Chat
+        --
+        setters/getters
     }
 }
 
@@ -214,18 +243,93 @@ package com.financefolio.goals{
     }
 }
 
+package com.financefolio.statistics
+{
+    class statistics
+    {
+        -totalExpenses: float
+        -totalBillExpenses: float
+        -pwrExpenses: float
+        -wtrExpenses: float
+        -telExpenses: float
+        -totalSubscriptionExpenses: float
+        -totalMiscExpenses: float
+        +calcGlobalStats(): void
+        +checkUserGlobalStanding(): void
+        +calcUserGlobalStats(): void
+    }
+}
+
+package com.financefolio.diagrams
+{
+    class diagram
+    {
+        -xAxis: List<float>
+        -yAxis: List<float>
+        +setXAxis: void
+        +setYAxis: void
+        +getXAxis: void                                             
+        +getYAxis: void                                             
+    }
+    class diagramCalculation
+    {
+        -diagramList: List<diagram>
+        +createDiagram: void
+
+    }
+}
+
 package com.financefolio.dao{
     interface DAO{
-        get(): Optional <T>
-        getAll(): List<T> 
-        save(): void
-        update(): void
-        delete(): void
+        +get(): Optional <T>
+        +getAll(): Optinal <List<T>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+    class MemberDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +get(): Optional <Member>
+        +getAll(): Optinal <List<Member>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+    class MessageDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +get(): Optional <Message>
+        +getAll(): Optinal <List<Message>> 
+        +save(): void
+        +update(): void
+        +delete(): void
     }
 
+    class FriendRequestDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +get(): Optional <FriendRequest>
+        +getAll(): Optinal <List<FriendRequest>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+
+    class FriendDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +get(): Optional <Friend>
+        +getAll(): Optinal <List<Friend>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
     class QuestionDAO{}
-    
-    class MemberDAO{}
     
     class CommentDAO{}
     
@@ -259,15 +363,18 @@ User <|-- Member
 User <|-- Expert
 Expert o-- Review
 
-' chat package relations
-Chat *-- Message
 
 ' points package relations
 Member *-- PointsRecord
 
+' chat package relations
+Chat *-- Message
 'social  package relations
-Friend -- Sharing
-Member o-- Friend
+Friend --o FriendsList
+FriendRequest --o FriendRequestsList
+Member *--FriendRequestsList
+Member *--FriendsList
+Friend *--Chat
 
 'diagrams package relations 
 DiagramsRecord *-- Diagram
@@ -290,7 +397,6 @@ Expense <|-- Subscription
 ExpenseList *-- Expense
 
 'dao package relations
-DAO <|.. MemberDAO
 DAO <|.. QuestionDAO
 DAO <|.. CommentDAO
 DAO <|.. SubscriptionDAO
@@ -301,18 +407,19 @@ DAO <|.. PowerDAO
 DAO <|.. AchievementDAO
 DAO <|.. GoalDAO
 DAO <|.. ReminderDAO
-
+DAO <|.. MessageDAO
+DAO <|.. MemberDAO
+DAO <|.. FriendDAO
+DAO <|.. FriendRequestDAO
 ' notes
 ' note top of com.financefolio.chat: "Not updated since sequence revision. Will also need a DAO."
 ' note top of Power: "Missing attributes."
 ' note top of Water: "Missing attributes."
 ' note top of Phone: "Missing attributes."
 ' note top of Sharing: "No clue."
-' note top of com.financefolio.points: "Assigned to Panagiwtakis"
 ' note top of ReminderDAO: "Not in sequence diagram, probably should be."
 ' note top of GoalsHistory: "Not in sequence diagram, probably should be."
 ' note top of AchievementList: "Not in sequence diagram, probably should be."
-' note top of com.financefolio.social: "No clue friend."
 ' note top of Review: "Belongs in this package?"
 ' note top of Expert: "Design Missing."
 ' note top of com.financefolio.forum: "Not updated since sequence revision."
