@@ -168,20 +168,17 @@ package com.financefolio.diagrams{
 package com.financefolio.expense{
     class Expense{
         ' -name: String'
-        -date: Date
-        -description: String
-        -cost: float
+        -category: String
+        -name: String
+        -amount: int
+        +getSelectedCategory(): String 
     }
 
     class Subscription{
-        -nextDate: Date
-        +setReminder(): void
-        +updateReminder(): void
     }
 
     class Miscellaneous{
-        -name: String
-        -cost: float
+
     }
 
     class MiscellaneousList{
@@ -189,9 +186,7 @@ package com.financefolio.expense{
     }
 
     class Bill{
-        -owed: float
-        -dateFrom: Date
-        -dateto: Date
+
     }
 
     class Power{ 
@@ -204,12 +199,11 @@ package com.financefolio.expense{
     }
 
     class ExpenseList{
-        -expenses: List<Expense>
-        +pushToList(): void
-        +calcDiagram(): void
-        +getExpense():Expense
-        +requestUpdate(): void
+        -number: int
+        -expensesInList: List<Expense>
         +updateInList(): void
+        +getAllExpensesList(): List<Expense>
+        +addExpensesInList(): void
     }
 }
 
