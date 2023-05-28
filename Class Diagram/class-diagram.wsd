@@ -4,13 +4,10 @@ skinparam classAttributeIconSize 0
 package com.financefolio.forum{ 
     class Forum {
      -posts: List<Question>
-     +requestFetch(): void
      +sortByRating(): void
-     +getQuestionSelected(): Question
-     +insertToList(): void
-     +searchQuestion(): List<Question>
-     +addCommentToQuestion(): void
-     +registerVoteOnSelectedComment(): void
+     +getQuestionSelected(): void
+     +searchQuestion(): Question
+    '  +addCommentToQuestion(): void
     }
 
     class Question{
@@ -20,9 +17,11 @@ package com.financefolio.forum{
         -upvotes: int
         -downvotes: int
         -comments: List<Comment>
-        +requestInsert():void
-        +requestUpdate():void
-        +addVote(): void
+        +registerVoteOnSelectedComment(): void
+        +addCommentToQuestion()
+        ' +requestInsert():void
+        ' +requestUpdate():void
+        ' +addVote(): void
     }
 
     class Comment{
@@ -320,9 +319,27 @@ package com.financefolio.dao{
         +update(): void
         +delete(): void
     }
-    class QuestionDAO{}
+    class QuestionDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +get(): Optional <Question>
+        +getAll(): Optinal <List<Question>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
     
-    class CommentDAO{}
+    class CommentDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +get(): Optional <Comment>
+        +getAll(): Optinal <List<Comment>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
     
     class SubscriptionDAO{}
     
