@@ -2,6 +2,7 @@ package com.financefolio.social.chat;
 
 import java.util.List;
 
+import com.financefolio.dao.MessageDAO;
 
 import java.util.ArrayList;
 public class Chat {
@@ -27,6 +28,12 @@ public class Chat {
 		return messages;
 	}
 	public void sendMessage(Message message) {
+		MessageDAO mDAO = new MessageDAO();
+		try {
+			mDAO.save(message, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.messages.add(message);
 	}
 	@Override

@@ -33,12 +33,14 @@ public class Member extends User {
 	}
 
 	public void acceptFriendRequest(FriendRequest fr) {
+//		setting chat id -1; DAO will take care of it
 		Friend newFriend = new Friend(fr.getSenderId(), 1, -1, Date.valueOf(LocalDate.now()));
 		FriendDAO fDAO = new FriendDAO();
 		FriendRequestDAO frDAO = new FriendRequestDAO();
-		String[] arg = new String[] {String.valueOf(this.getId()), String.valueOf(fr.getSenderSharingLevel())};
+//		required arguments to save in database
+		String[] friendship_args = new String[] {String.valueOf(this.getId()), String.valueOf(fr.getSenderSharingLevel())};
 		try {
-			fDAO.save(newFriend, arg);
+			fDAO.save(newFriend, friendship_args);
 			frDAO.delete(fr);
 		} catch (Exception e) {
 			e.printStackTrace();
