@@ -49,22 +49,30 @@ public class Member extends User {
 				System.out.println("Excluded for premium features!\n\n");
 				super.displayUserInfo();
 				Member M = new Member(0,"", false, 0, getIncome(), getHouseArea(), getHouseResidents());
+				M.displayMemberInfo();	
+			}
+			else if(membership.equalsIgnoreCase("Premium")) {
+				System.out.println("Please fill in points for a discount on the Premium Subscription: \n");
+				int points = sc1.nextInt();
+				//chech for member's points
+				System.out.println("The Premium Subscription will cost x euros.\n");
+				// payment made
+				updateMembership(true);
+				System.out.println("You have Premium Membership! You have access to all the functions of the app!");
+				super.displayUserInfo();
+				Member M = new Member(0,"", true, 0, getIncome(), getHouseArea(), getHouseResidents());
 				M.displayMemberInfo();
-				
-				
-			}else {
-				System.out.println("pipa");
 			}
             
 		}
+		else if(choice.equalsIgnoreCase("collective")) {
+			// collective app behavior 
+			
+		}
+	
 	
 	}
 	
-	
-		
-		
-		
-
 	
 	public Member(int id, String name, boolean premiumMember, int category, float income, int houseArea,
 			int houseResidents) {
@@ -79,7 +87,7 @@ public class Member extends User {
 
 	
 	protected void displayMemberInfo() {
-	    System.out.println("Premium Member :" + premiumMember);
+	    System.out.println("Premium Member: " + premiumMember);
 	    System.out.println("Income: " + income);
 	    System.out.println("Square Meters: " + houseArea);
 	    System.out.println("Number of Residents: " + houseResidents);
