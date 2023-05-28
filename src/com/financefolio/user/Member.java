@@ -7,6 +7,7 @@ import java.util.Scanner;
 import com.financefolio.social.Friend;
 
 public class Member extends User {
+	private User newUser;
 	private boolean premiumMember;
 	private int category;
 	private float income;
@@ -46,6 +47,7 @@ public class Member extends User {
 			
 			if(membership.equalsIgnoreCase("Basic")) {
 				System.out.println("Excluded for premium features!\n\n");
+				super.displayUserInfo();
 				Member M = new Member(0,"", false, 0, getIncome(), getHouseArea(), getHouseResidents());
 				M.displayMemberInfo();
 				
@@ -57,6 +59,8 @@ public class Member extends User {
 		}
 	
 	}
+	
+	
 		
 		
 		
@@ -73,6 +77,7 @@ public class Member extends User {
 	    this.friends = new ArrayList<>();
 	}
 
+	
 	protected void displayMemberInfo() {
 	    System.out.println("Premium Member :" + premiumMember);
 	    System.out.println("Income: " + income);
