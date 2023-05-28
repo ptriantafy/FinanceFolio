@@ -1,29 +1,80 @@
 package com.financefolio.user;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Date;
+import java.time.LocalDate;
 
+import com.financefolio.dao.FriendDAO;
+import com.financefolio.dao.FriendRequestDAO;
 import com.financefolio.social.Friend;
+import com.financefolio.social.FriendRequest;
+import com.financefolio.social.FriendRequestsList;
+import com.financefolio.social.FriendsList;
 
 public class Member extends User {
 	private boolean premiumMember;
-	private int category;
 	private float income;
+	private int category;
 	private int houseArea;
 	private int houseResidents;
-	private List<Friend> friends;
-
+	private FriendsList friends;
+	private FriendRequestsList requestsList;
+	
+	
 	public Member(int id, String name, boolean premiumMember, int category, float income, int houseArea,
-			int houseResidents) {
-		super(id, name);
+			int houseResidents, Date date) {
+		super(id, name, date);
 		this.premiumMember = premiumMember;
 		this.category = category;
 		this.income = income;
 		this.houseArea = houseArea;
 		this.houseResidents = houseResidents;
-		this.friends = new ArrayList<>();
+		this.friends = new FriendsList();
+		this.requestsList = new FriendRequestsList();
 	}
 
+	public void acceptFriendRequest(FriendRequest fr) {
+//		setting chat id -1; DAO will take care of it
+		Friend newFriend = new Friend(fr.getSenderId(), 1, -1, Date.valueOf(LocalDate.now()));
+		FriendDAO fDAO = new FriendDAO();
+		FriendRequestDAO frDAO = new FriendRequestDAO();
+//		required arguments to save in database
+		String[] friendship_args = new String[] {String.valueOf(this.getId()), String.valueOf(fr.getSenderSharingLevel())};
+		try {
+			fDAO.save(newFriend, friendship_args);
+			frDAO.delete(fr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.friends.addFriend(newFriend);
+		this.requestsList.deleteRequest(fr);
+	}
+	public void declineFriendRequest(FriendRequest fr) {
+		FriendRequestDAO frDAO = new FriendRequestDAO();
+		try {
+			frDAO.delete(fr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.requestsList.deleteRequest(fr);
+	}
+	
+	public FriendsList getFriends() {
+		return friends;
+	}
+
+	public void setFriends(FriendsList friends) {
+		this.friends = friends;
+	}
+
+	public FriendRequestsList getRequestsList() {
+		return requestsList;
+	}
+
+	public void setRequestsList(FriendRequestsList requestsList) {
+		this.requestsList = requestsList;
+	}
+
+	
 	public void updateHouseDetails(int area, int residents) {
 		this.setHouseArea(area);
 		this.setHouseResidents(residents);
@@ -34,22 +85,6 @@ public class Member extends User {
 	}
 	public void updateMembership(boolean membership) {
 		this.premiumMember = membership;
-	}
-
-	public List<Friend> getFriends() {
-		return friends;
-	}
-
-	public void addFriend(Friend friend) {
-		this.friends.add(friend);
-	}
-
-	public void removeFromFriendsList(Friend friend) {
-		this.friends.remove(friend);
-	}
-	
-	public boolean isFriendsListEmpty(){
-		return friends.isEmpty();
 	}
 	public int getHouseResidents() {
 		return houseResidents;
@@ -75,4 +110,10 @@ public class Member extends User {
 	public void setCategory(int category) {
 		this.category = category;
 	}
+	@Override
+    public String toString() {
+        return "id:" + String.valueOf(this.getId())+" name:" + this.getName()+" premium" + String.valueOf(this.isPremiumMember())
+        		+"\n Friends: " + this.getFriends().toString()
+        		+"\n Friend Requests:" + this.getRequestsList();
+    }
 }
