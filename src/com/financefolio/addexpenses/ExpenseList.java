@@ -12,7 +12,7 @@ public class ExpenseList {
 		
 	}
 	
-	public void addExpenses(Expense newExpense) {
+	public void addExpensesInList(Expense newExpense) {
 		expensesInList.add(newExpense);
 		number++; 
 	}
@@ -25,6 +25,5 @@ public class ExpenseList {
 	public List<Expense> getAllExpensesList() {
 		return expensesInList; 
 	}
-	
 	
 }
