@@ -260,10 +260,7 @@ package com.financefolio.diagrams
     {
         -xAxis: List<float>
         -yAxis: List<float>
-        +setXAxis: void
-        +setYAxis: void
-        +getXAxis: void                                             
-        +getYAxis: void                                             
+        setters/getters                                           
     }
     class diagramCalculation
     {
