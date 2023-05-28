@@ -27,7 +27,7 @@ public class Comment {
     public String getBody(){
         return body;
     }
-    public int getauthorId(){
+    public int getAuthorId(){
         return authorId;
     }
     public int getUpvotes() {

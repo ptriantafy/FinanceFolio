@@ -48,10 +48,10 @@ public class QuestionDAO implements DAO<Question>{
     }
 
     @Override 
-    public Optional<List<Question>> getAll(int question_id) throws Exception {
+    public Optional<List<Question>> getAll(int dummy) throws Exception {
         Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("SELECT * FROM question WHERE question_id = ?;");
-		statement.setInt(1, question_id);
+		PreparedStatement statement = con.prepareStatement("SELECT * FROM question;");
+		// statement.setInt(1, question_id);
 		ResultSet rs = statement.executeQuery();
 		List<Question> result = new ArrayList<Question>();
 		while(rs.next()) {
@@ -80,7 +80,7 @@ public class QuestionDAO implements DAO<Question>{
     }
 
     @Override
-    public void update(Question que, String arg[]) throws Exception{
+    public void update(Question que) throws Exception{
         Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("UPDATE question SET title = ?, body = ?, "
 				+ "upvotes = ?, downvotes = ? WHERE question_id = ?;");

@@ -1,10 +1,15 @@
 package com.financefolio.forum;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+
+import com.financefolio.dao.QuestionDAO;
 
 public class Forum {
     //attributes
-    private List<Question> forum = new ArrayList<Question>();
+    private List<Question> forum = new ArrayList <Question>();
+    //DAO
+    QuestionDAO qd = new QuestionDAO();
     //methods
     public void sortByRating()
     {
@@ -16,7 +21,9 @@ public class Forum {
         });
     }
 
-    public void getForum() {
+    public void getForum() throws Exception{
+        qd.connect();
+        forum = qd.getAll();
         System.out.println("------Forum Questions------");
         for(int i = 0; i<this.forum.size(); i++){
             System.out.println(i + "." + this.forum.get(i).getBody() + " " + this.forum.get(i).getRating());
@@ -32,7 +39,7 @@ public class Forum {
     }
 
     public void getQuestionSelected(int sel){
-        System.out.println("\n" + "------Question------" + "\n" + this.forum.get(sel).getBody() + "\n" + "Author: " + this.forum.get(sel).getAuthor() + "\n\n" + 
+        System.out.println("\n" + "------Question------" + "\n" + this.forum.get(sel).getBody() + "\n" + "\n\n" + 
         "------Comments------" + this.forum.get(sel).getCommentsDetails());
     }
     public Question searchQuestion(String input){
@@ -45,6 +52,10 @@ public class Forum {
             }
         }
         return this.forum.get(final1);
+    }
+
+    public void addQuestion(){
+        //give question_id -1 value
     }
 
 }

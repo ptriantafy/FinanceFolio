@@ -53,10 +53,10 @@ public class CommentDAO implements DAO<Comment>{
     }
 
     @Override 
-    public Optional<List<Comment>> getAll(int question_id) throws Exception {
+    public Optional<List<Comment>> getAll(int dummy) throws Exception {
         Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("SELECT * FROM comment WHERE comment_id = ?;");
-		statement.setInt(1, question_id);
+		PreparedStatement statement = con.prepareStatement("SELECT * FROM comment;");
+		// statement.setInt(1, question_id);
 		ResultSet rs = statement.executeQuery();
         //create new list of comments to store result
 		List<Comment> result = new ArrayList<Comment>();    
@@ -78,7 +78,7 @@ public class CommentDAO implements DAO<Comment>{
 		PreparedStatement statement = con.prepareStatement("INSERT INTO comment(body, "
 				+ "cdate, author_id) VALUES (?, curdate(), ?);");
 		statement.setString(1, com.getBody());
-		statement.setInt(2, com.getauthorId());
+		statement.setInt(2, com.getAuthorId());
 		statement.executeQuery();
 		ResultSet last_id = statement.getGeneratedKeys();//id of last inserted comment
 		con.close();
@@ -86,7 +86,7 @@ public class CommentDAO implements DAO<Comment>{
     }
 
     @Override
-    public void update(Comment com, String arg[]) throws Exception{
+    public void update(Comment com) throws Exception{
         Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("UPDATE comment SET body = ?, "
 				+ "upvotes = ?, downvotes = ? WHERE comment_id = ?;");
