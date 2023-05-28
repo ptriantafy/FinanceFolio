@@ -4,27 +4,52 @@ import java.sql.Date;
 
 public class Comment {
     //attributes
+    private int questionId;
+    private int commentId;
     private String body;
     private Date date;
-    private String author;
+    private int authorId;
     private int upvotes;
     private int downvotes;
     //methods
-    public Comment(String body,Date date,String author, int upvotes, int downvotes){
+    public Comment(int questionId, int commentId, String body,Date date,int authorId){
+        this.questionId = questionId;
+        this.commentId = commentId;
         this.body = body;
-        this.date = date;
-        this.author = author;
-        this.upvotes = upvotes;
-        this.downvotes = downvotes;
+        this.date = date;//find method to return curr date
+        this.authorId = authorId;
+        this.upvotes = 0;
+        this.downvotes = 0;
+    }
+    public int getCommentId() {
+        return commentId;
     }
     public String getBody(){
         return body;
     }
-    public String getAuthor(){
-        return author;
+    public int getAuthorId(){
+        return authorId;
+    }
+    public int getUpvotes() {
+        return upvotes;
+    }
+    public int getDownvotes() {
+        return downvotes;
     }
     public void requestInsert(){}
     public void requestUpdate(){}
-    public void addVote(){}
+    public void addVote(){
+    }
+
+    public void setCommentId(int commentId){
+        this.commentId = commentId;
+    }
+
+    public void setUpvotes(int upvotes) {
+        this.upvotes = upvotes; 
+    }
+    public void setDownvotes(int downvotes) {
+        this.downvotes = downvotes;
+    }
     
 }
