@@ -2,76 +2,18 @@ package com.financefolio.user;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 
 import com.financefolio.social.Friend;
 
 public class Member extends User {
-	private User newUser;
+
 	private boolean premiumMember;
 	private int category;
 	private float income;
 	private int houseArea;
 	private int houseResidents;
 	private List<Friend> friends;
-	
-	public void Choice() {
-		System.out.println("-------Settings-------\n Welcome! \n Do you plan to use this app for personal or collective use?");
-		Scanner sc =  new Scanner(System.in);
-		String choice = sc.nextLine();
-		
-		if(choice.equalsIgnoreCase("personal")) {
-			System.out.println("Please describe the reason why you are using the app, the goals you want to achieve and what kind of customer you think you are.\n"
-					+ "Reason: ");
-			String reason = sc.nextLine();
-			System.out.println("Goal: ");
-			String goal = sc.nextLine();
-			System.out.println("Kind of consumer: ");
-			String consumer = sc.nextLine();
-			System.out.println("Please fill in the square meters of your house and how many people live in it.\n Square meters: ");
-			int house_area = sc.nextInt();
-			setHouseArea(house_area);
-			System.out.println("Number of people: ");
-            int house_residents = sc.nextInt();
-            setHouseResidents(house_residents);
-            sc.nextLine();
-            System.out.println("Please enter your work status and your income range. Work status: ");
-			String status = sc.nextLine();
-			System.out.println("Income range: ");
-            float user_income = sc.nextInt();
-            updateIncome(user_income);
-            System.out.println("Select your membership.(Basic or premium).");
-            Scanner sc1 =  new Scanner(System.in);
-            String membership = sc1.nextLine();
-            updateMembership(false);
-			
-			if(membership.equalsIgnoreCase("Basic")) {
-				System.out.println("Excluded for premium features!\n\n");
-				super.displayUserInfo();
-				Member M = new Member(0,"", false, 0, getIncome(), getHouseArea(), getHouseResidents());
-				M.displayMemberInfo();	
-			}
-			else if(membership.equalsIgnoreCase("Premium")) {
-				System.out.println("Please fill in points for a discount on the Premium Subscription: \n");
-				int points = sc1.nextInt();
-				//chech for member's points
-				System.out.println("The Premium Subscription will cost x euros.\n");
-				// payment made
-				updateMembership(true);
-				System.out.println("You have Premium Membership! You have access to all the functions of the app!");
-				super.displayUserInfo();
-				Member M = new Member(0,"", true, 0, getIncome(), getHouseArea(), getHouseResidents());
-				M.displayMemberInfo();
-			}
-            
-		}
-		else if(choice.equalsIgnoreCase("collective")) {
-			// collective app behavior 
-			
-		}
-	
-	
-	}
 	
 	
 	public Member(int id, String name, boolean premiumMember, int category, float income, int houseArea,

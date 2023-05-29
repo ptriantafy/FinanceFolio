@@ -2,7 +2,7 @@ package com.financefolio.user;
 
 import java.util.Scanner;
 import com.financefolio.user.User;
-import java.util.Scanner;
+
 
 public class User {
 	private int id;
@@ -21,8 +21,12 @@ public class User {
 	 newUser.displayUserInfo();
 	 
 	 Member member = new Member(newUser.getId(), newUser.getName(), false, 0, 0.0f, 0, 0);
-	 member.Choice();
+	 UserInput userinput = new UserInput();
+	 userinput.handleMembershipChoice(member);
+	 
 	 }
+   
+   public User() {}
 	 
 	public User(int id, String name) {
 		super();
