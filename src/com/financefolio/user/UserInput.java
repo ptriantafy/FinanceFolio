@@ -15,6 +15,7 @@ public class UserInput{
 	            handlePersonalUse(member, sc);
 	        } else if (choice.equalsIgnoreCase("collective")) {
 	            handleCollectiveUse(member, sc);
+	            handlePersonalUse(member, sc);
 	        }
 	    }
 
@@ -62,7 +63,19 @@ public class UserInput{
 	    }
 
 	    private void handleCollectiveUse(Member member, Scanner sc) {
-	        // Collective app behavior
+	    	System.out.println("Please fill in the number of people that will use the app and how many of them have income. \n Number of people:  ");
+	        int number_of_people = sc.nextInt();
+	        System.out.println("With income: ");
+	        int people_with_income = sc.nextInt();
+	       float[] incomes = new float[people_with_income]; 
+	       String[] status = new String[people_with_income];
+	        for (int i = 0; i < people_with_income; i++) {
+	            System.out.println("Enter the income of person " + (i + 1) + ":");
+	            incomes[i] = sc.nextFloat();
+	            System.out.println("Enter the status of person " + (i + 1) + ":");
+	            sc.nextLine();
+	            status[i] = sc.nextLine();
+	        }
 	    }
 
 }
