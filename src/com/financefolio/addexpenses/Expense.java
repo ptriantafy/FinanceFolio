@@ -1,6 +1,7 @@
 package com.financefolio.addexpenses;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Expense {
 	
@@ -82,7 +83,7 @@ public class Expense {
     
     //example main
     public static void main(String[] args) {
-		ExpenseList expensesList = new ExpenseList();
+		/*ExpenseList expensesList = new ExpenseList();
 		
 		Expense bill1 = new Expense("Bill", "Phone BIll", 340.0);
 		Expense sub1 = new Expense("Subscription", "Spotify", 6.99);
@@ -100,6 +101,27 @@ public class Expense {
 	        System.out.println("Amount: " + expense0.getAmount());
 	        System.out.println();
 	    }
+	    */
+    	 System.out.println("Welcome to Expenses!\nWrite Add to add an expense!");
+	        Scanner sc = new Scanner(System.in);
+	        String choice = sc.nextLine();
+
+	        if (choice.equalsIgnoreCase("add")) {
+	            //expenseinput
+	        	System.out.println("Add an Expense!\n");
+	        	System.out.println("Type Bill for Bill, Sub for Subscription or Misc for Miscellaneous");
+	        	String type = sc.nextLine();
+	        	if(type.equalsIgnoreCase("Bill")) {
+	        		System.out.println("0");
+	        	}else if(type.equalsIgnoreCase("Sub")) {
+	        		System.out.println("1");
+	        	}else if (type.equalsIgnoreCase("Misc")) {
+	        		System.out.println("2");
+	        	}
+	    }
+    
+    
+
 		
 	}
    
