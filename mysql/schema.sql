@@ -1,5 +1,6 @@
-DROP SCHEMA IF EXISTS financefolio;
-CREATE SCHEMA financefolio;
+
+DROP DATABASE IF EXISTS financefolio;
+CREATE DATABASE financefolio;
 USE financefolio;
 
 CREATE TABLE user (
@@ -149,3 +150,5 @@ CREATE TABLE bill(
   dateTo DATE, 
   CONSTRAINT `fk_expense_bill_id` FOREIGN KEY (bill_id) REFERENCES expense (expense_id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
+
+ 
