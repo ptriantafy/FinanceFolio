@@ -2,8 +2,36 @@ package com.financefolio.calendar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Calendar {
+	
+	public static void main(String[] args) {
+		 System.out.println("Welcome to Bill Reminder!\n");
+		 Scanner sc = new Scanner(System.in);
+		 int choice;
+		 do {
+	     System.out.println("Please select a date: ");
+		 choice = sc.nextInt();
+		 }
+		 while(choice>31);
+		
+		System.out.println("Select for what you want your reminder for. (Bill or subscriptive exprense)");
+		String selection = sc.nextLine();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
     private List<Reminder> reminderList;
 
     public Calendar() {
@@ -38,4 +66,7 @@ public class Calendar {
     public void setReminderList(List<Reminder> reminderList) {
         this.reminderList = reminderList;
     }
+    
+    
+    
 }

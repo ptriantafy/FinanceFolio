@@ -1,5 +1,6 @@
 package com.financefolio.user;
 
+import java.util.Date;
 import java.util.Scanner;
 import com.financefolio.user.User;
 
@@ -7,9 +8,11 @@ import com.financefolio.user.User;
 public class User {
 	private int id;
 	private String name;
+	private Date creationDate;
 	
    public static void main(String[] args) {
-	
+	   
+	 	
 	 Scanner scanner = new Scanner(System.in);
 	 System.out.println("Enter user ID:");
 	 int userId = scanner.nextInt();
@@ -19,6 +22,7 @@ public class User {
 	
 	 User newUser = new User(userId, userName);
 	 newUser.displayUserInfo();
+	 System.out.println("Creation Date: " + newUser.getCreationDate());
 	 
 	 Member member = new Member(newUser.getId(), newUser.getName(), false, 0, 0.0f, 0, 0);
 	 UserInput userinput = new UserInput();
@@ -32,11 +36,13 @@ public class User {
 		super();
 		this.id = id;
 		this.name = name;
+		this.creationDate = new Date();
 	}
 	
 	protected void displayUserInfo() {
 	    System.out.println("User ID: " + id);
 	    System.out.println("User Name: " + name);
+	    
 	}
 	
 	public int getId() {
@@ -51,4 +57,14 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+	
+	
 }
