@@ -41,66 +41,70 @@ public class Expense {
     
     //sub-classes for expense and for bill
     
-    public static class Bill extends Expense {
-        public Bill(String name, double amount) {
-            super("Bill", name, amount);
-        }
-    }
     
-    public static class Power extends Bill {
-        public Power(String name, double amount) {
-            super(name, amount);
-        }
-    }
     
-    public static class Water extends Bill {
-        public Water(String name, double amount) {
-            super(name, amount);
-        }
-    }
-
-    public static class Phone extends Bill {
-        public Phone(String name, double amount) {
-            super(name, amount);
-        }
-    }
-	
-	//sub-classes of expense
-    
-    public static class Subscription extends Expense {
-
-        public Subscription(String name, double amount) {
-            super("Subscription", name, amount);
-        }
-    }
-
-    public static class Miscellaneous extends Expense {
-        public Miscellaneous(String name, double amount) {
-            super("Miscellaneous", name, amount);
-        }
-    }
-    
-    //example main
-    public static void main(String[] args) {
-		ExpenseList expensesList = new ExpenseList();
-		
-		Expense bill1 = new Expense("Bill", "Phone BIll", 340.0);
-		Expense sub1 = new Expense("Subscription", "Spotify", 6.99);
-		Expense misc1 =  new Expense("Miscellaneous", "Groceries", 52.0);
-		
-		expensesList.addExpensesInList(bill1);
-		expensesList.addExpensesInList(sub1);
-		expensesList.addExpensesInList(misc1); 
-		
-		List<Expense> expenseList1 = expensesList.getAllExpensesList(); 
-		
-		for (Expense expense0 : expenseList1) {
-	        System.out.println("Category: " + expense0.getSelectedCategory());
-	        System.out.println("Name: " + expense0.getName());
-	        System.out.println("Amount: " + expense0.getAmount());
-	        System.out.println();
-	    }
-		
-	}
+   
    
 }
+
+class Bill extends Expense {
+    public Bill(String name, double amount) {
+        super("Bill", name, amount);
+    }
+}
+
+class Power extends Bill {
+    public Power(String name, double amount) {
+        super(name, amount);
+    }
+}
+
+class Water extends Bill {
+    public Water(String name, double amount) {
+        super(name, amount);
+    }
+}
+
+class Phone extends Bill {
+    public Phone(String name, double amount) {
+        super(name, amount);
+    }
+}
+
+//sub-classes of expense
+
+class Subscription extends Expense {
+
+    public Subscription(String name, double amount) {
+        super("Subscription", name, amount);
+    }
+}
+
+class Miscellaneous extends Expense {
+    public Miscellaneous(String name, double amount) {
+        super("Miscellaneous", name, amount);
+    }
+}
+
+//  //example main
+//  public static void main(String[] args) {
+//     ExpenseList expensesList = new ExpenseList();
+    
+//     Expense bill1 = new Expense("Bill", "Phone BIll", 340.0);
+//     Expense sub1 = new Expense("Subscription", "Spotify", 6.99);
+//     Expense misc1 =  new Expense("Miscellaneous", "Groceries", 52.0);
+    
+//     expensesList.addExpensesInList(bill1);
+//     expensesList.addExpensesInList(sub1);
+//     expensesList.addExpensesInList(misc1); 
+    
+//     List<Expense> expenseList1 = expensesList.getAllExpensesList(); 
+    
+//     for (Expense expense0 : expenseList1) {
+//         System.out.println("Category: " + expense0.getSelectedCategory());
+//         System.out.println("Name: " + expense0.getName());
+//         System.out.println("Amount: " + expense0.getAmount());
+//         System.out.println();
+//     }
+    
+// }
