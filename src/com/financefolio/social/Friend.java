@@ -21,7 +21,7 @@ public class Friend {
 		this.friendsSince = friendsSince;
 		MemberDAO mDAO = new MemberDAO();
 		try {
-			mDAO.get(id).ifPresent(t -> this.name = getName());
+			this.name = mDAO.get(id).get().getName();
 		} catch (Exception e) {
 			this.setName("Could not get name");
 			e.printStackTrace();

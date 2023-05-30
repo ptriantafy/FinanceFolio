@@ -36,6 +36,9 @@ public class FriendsList {
 	public List<Friend> getFriendsList() {
 		return friendsList;
 	}
+	public void setFriendsList(List<Friend> friendsList) {
+		this.friendsList = friendsList;
+	}
     public String toString() {
         return this.getFriendsList().stream().map(Object::toString)
                 .collect(Collectors.joining(", "));

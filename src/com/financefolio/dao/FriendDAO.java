@@ -38,7 +38,7 @@ public class FriendDAO implements DAO<Friend> {
 		return con;
 	}
 	
-//	unused
+//	fetch friend list of given member_id
 	@Override
 	public Optional<Friend> get(int id) throws SQLException, Exception {
 //		not implemented yet

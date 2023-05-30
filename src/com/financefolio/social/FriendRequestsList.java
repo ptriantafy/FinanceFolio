@@ -34,4 +34,8 @@ public class FriendRequestsList {
     public String toString() {
         return this.getRequests().toString();
     }
+
+	public void setRequestsList(List<FriendRequest> list) {
+		this.requests = list;
+	}
 }

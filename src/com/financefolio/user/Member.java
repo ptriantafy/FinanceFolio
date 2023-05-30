@@ -112,8 +112,8 @@ public class Member extends User {
 	}
 	@Override
     public String toString() {
-        return "id:" + String.valueOf(this.getId())+" name:" + this.getName()+" premium" + String.valueOf(this.isPremiumMember())
+        return "\nid: " + String.valueOf(this.getId())+" name: " + this.getName()+" premium: " + String.valueOf(this.isPremiumMember())
         		+"\n Friends: " + this.getFriends().toString()
-        		+"\n Friend Requests:" + this.getRequestsList();
+        		+"\n Friend Requests: " + this.getRequestsList();
     }
 }
