@@ -38,6 +38,15 @@ public class UserInput{
 	        String status = sc.nextLine();
 	        System.out.println("Income range: ");
 	        float income = sc.nextFloat();
+	        if (income >= 0 && income < 4000) {
+	            member.setCategory(1);
+	        } else if (income >= 4000 && income < 5500) {
+	        	 member.setCategory(2);
+	        } else if (income >= 5500 && income < 7500) {
+	        	 member.setCategory(3);
+	        } else {
+	        	 member.setCategory(4);
+	        }
 	        member.updateIncome(income);
 	        System.out.println("Select your membership (Basic or Premium).");
 	        String membership = sc.next();
@@ -46,7 +55,7 @@ public class UserInput{
 	        if (membership.equalsIgnoreCase("Basic")) {
 	            System.out.println("Excluded for premium features!\n\n");
 	            member.displayUserInfo();
-	            Member m = new Member(0, "", false, 0, member.getIncome(), member.getHouseArea(), member.getHouseResidents());
+	            Member m = new Member(0, "", false, member.getCategory(), member.getIncome(), member.getHouseArea(), member.getHouseResidents());
 	            m.displayMemberInfo();
 	        } else if (membership.equalsIgnoreCase("Premium")) {
 	            System.out.println("Please fill in points for a discount on the Premium Subscription: \n");
@@ -57,7 +66,7 @@ public class UserInput{
 	            member.updateMembership(true);
 	            System.out.println("You have Premium Membership! You have access to all the functions of the app!");
 	            member.displayUserInfo();
-	            Member m = new Member(0, "", true, 0, member.getIncome(), member.getHouseArea(), member.getHouseResidents());
+	            Member m = new Member(0, "", true, member.getCategory(), member.getIncome(), member.getHouseArea(), member.getHouseResidents());
 	            m.displayMemberInfo();
 	        }
 	    }

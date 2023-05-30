@@ -30,9 +30,11 @@ public class Member extends User {
 	
 	protected void displayMemberInfo() {
 	    System.out.println("Premium Member: " + premiumMember);
+	    System.out.println("Category:" + category);
 	    System.out.println("Income: " + income);
 	    System.out.println("Square Meters: " + houseArea);
 	    System.out.println("Number of Residents: " + houseResidents);
+	  
 	}	
 	
 	public void updateHouseDetails(int area, int residents) {
