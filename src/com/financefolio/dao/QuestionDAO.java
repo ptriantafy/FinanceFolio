@@ -43,6 +43,7 @@ public class QuestionDAO implements DAO<Question>{
                                         rs.getString("body"), rs.getDate("cdate"),rs.getInt("author_id"));
         result.setUpvotes(rs.getInt("upvotes"));
         result.setDownvotes(rs.getInt("downvotes"));
+        result.setRating();
 		con.close();
 		return Optional.ofNullable(result);
     }
@@ -59,6 +60,7 @@ public class QuestionDAO implements DAO<Question>{
                                         rs.getString("body"), rs.getDate("cdate"),rs.getInt("author_id"));
             tempresult.setUpvotes(rs.getInt("upvotes"));
             tempresult.setDownvotes(rs.getInt("downvotes"));
+            tempresult.setRating();
 			result.add(tempresult);
 		}
 		con.close();
@@ -93,7 +95,7 @@ public class QuestionDAO implements DAO<Question>{
 		con.close();
     }
 
-    @Override
+    @Override 
     public void delete (Question que) throws Exception{
         Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("DELETE FROM question WHERE question_id = ?;");

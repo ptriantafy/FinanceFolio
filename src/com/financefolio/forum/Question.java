@@ -22,12 +22,6 @@ public class Question implements Comparable<Question>{
         this.body = body;
         this.date = date;
         this.author_id = author_id;
-        this.upvotes = 0;
-        this.downvotes = 0;
-        if(this.upvotes == 0 && this.downvotes == 0)
-            this.rating = 0;
-        else
-            this.rating = (float)this.upvotes/this.downvotes;
     }
 
     public int getQuestionId() {
@@ -90,6 +84,10 @@ public class Question implements Comparable<Question>{
         return temp;
     }
 
+
+    public void setRating(){
+        this.rating = this.upvotes-this.downvotes;
+    }
 
     public float getRating() {
         return rating;

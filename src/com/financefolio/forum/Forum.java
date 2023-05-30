@@ -1,16 +1,18 @@
 package com.financefolio.forum;
 
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 import com.financefolio.dao.QuestionDAO;
 
 public class Forum {
     //attributes
     private List<Question> forum = new ArrayList <Question>();
-    //DAO
-    QuestionDAO qd = new QuestionDAO();
     //methods
+    public void setForumScene(){
+        for(int i = 0; i<this.forum.size(); i++){
+            System.out.println(i + "." + this.forum.get(i).getBody() + "\t" + this.forum.get(i).getRating() +  "\n");
+        }
+    }
     public void sortByRating()
     {
         Collections.sort(forum, new Comparator<Question>() {    //Custom comparator for float objects
@@ -22,17 +24,18 @@ public class Forum {
     }
 
     public void getForum() throws Exception{
-        qd.connect();
-        forum = qd.getAll();
-        System.out.println("------Forum Questions------");
-        for(int i = 0; i<this.forum.size(); i++){
-            System.out.println(i + "." + this.forum.get(i).getBody() + " " + this.forum.get(i).getRating());
+        int dummy = 0;
+        QuestionDAO qd = new QuestionDAO();
+        try {
+            forum = qd.getAll(dummy).get();
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
-    public void getAll(Question... que){
-        Collections.addAll(forum, que);
-    }
+    // public void getAll(Question... que){
+    //     Collections.addAll(forum, que);
+    // }
 
     public Question getQuestion(int sel){
         return this.forum.get(sel);
