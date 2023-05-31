@@ -17,6 +17,7 @@ public class FriendsList {
 	
 
 	public void removeFriend(Friend friend) {
+//		TODO Delete messages and conversation
 		FriendDAO fDAO = new FriendDAO();
 		try {
 			fDAO.delete(friend);
