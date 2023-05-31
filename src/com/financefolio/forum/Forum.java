@@ -33,10 +33,6 @@ public class Forum {
         }
     }
 
-    // public void getAll(Question... que){
-    //     Collections.addAll(forum, que);
-    // }
-
     public Question getQuestion(int sel){
         return this.forum.get(sel);
     }
@@ -57,8 +53,13 @@ public class Forum {
         return this.forum.get(final1);
     }
 
-    public void addQuestion(){
-        //give question_id -1 value
+    public void addQuestion(Question que,String dummy[]){
+        QuestionDAO qd  = new QuestionDAO();
+        try {
+            qd.save(que, dummy);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 }

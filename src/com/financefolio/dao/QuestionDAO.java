@@ -1,5 +1,6 @@
 package com.financefolio.dao;
 
+// import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,6 +8,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.sql.*;
 
 import com.financefolio.forum.Question;
 
@@ -35,17 +37,17 @@ public class QuestionDAO implements DAO<Question>{
 
     @Override
     public Optional<Question> get(int question_id) throws Exception{
-        Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("SELECT * FROM question WHERE question_id = ?;");
-		statement.setInt(1, question_id);
-		ResultSet rs = statement.executeQuery();
-		Question result = new Question(rs.getInt("question_id"), rs.getString("title"), 
-                                        rs.getString("body"), rs.getDate("cdate"),rs.getInt("author_id"));
-        result.setUpvotes(rs.getInt("upvotes"));
-        result.setDownvotes(rs.getInt("downvotes"));
-        result.setRating();
-		con.close();
-		return Optional.ofNullable(result);
+        // Connection con = this.connect();
+		// PreparedStatement statement = con.prepareStatement("SELECT * FROM question WHERE question_id = ?;");
+		// statement.setInt(1, question_id);
+		// ResultSet rs = statement.executeQuery();
+		// Question result = new Question(rs.getInt("question_id"), rs.getString("title"), 
+        //                                 rs.getString("body"), rs.getDate("cdate"),rs.getInt("author_id"));
+        // result.setUpvotes(rs.getInt("upvotes"));
+        // result.setDownvotes(rs.getInt("downvotes"));
+        // result.setRating();
+		// con.close();
+		return null;
     }
 
     @Override 
@@ -71,14 +73,15 @@ public class QuestionDAO implements DAO<Question>{
     public void save(Question que, String arg[]) throws Exception { 
         Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("INSERT INTO question(title, body, "
-				+ "cdate, author_id) VALUES (?, ?, curdate(), ?);");
+				+ "cdate, author_id) VALUES (?, ?, curdate(), ?);", Statement.RETURN_GENERATED_KEYS);
 		statement.setString(1, que.getTitle());
 		statement.setString(2, que.getBody());
 		statement.setInt(3, que.getAuthorId());
-		statement.executeQuery();
+        statement.execute();
 		ResultSet last_id = statement.getGeneratedKeys();
-		con.close();
 		que.setQuestionId(last_id.getInt(1));
+        last_id.close();
+        con.close();
     }
 
     @Override
