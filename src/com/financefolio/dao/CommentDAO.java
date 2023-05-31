@@ -7,8 +7,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.sql.*;
+
+import javax.naming.spi.DirStateFactory.Result;
 
 import com.financefolio.forum.Comment;
+import com.mysql.cj.protocol.Resultset;
 
 public class CommentDAO implements DAO<Comment>{
     private String db_url = "jdbc:mysql://localhost:3306/financefolio";
@@ -73,17 +77,47 @@ public class CommentDAO implements DAO<Comment>{
     }
 
     @Override
-    public void save(Comment com, String arg[]) throws Exception { 
-        Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("INSERT INTO comment(body, "
-				+ "cdate, author_id) VALUES (?, curdate(), ?);");
-		statement.setString(1, com.getBody());
-		statement.setInt(2, com.getAuthorId());
-		statement.executeQuery();
-		ResultSet last_id = statement.getGeneratedKeys();//id of last inserted comment
-		con.close();
-		com.setCommentId(last_id.getInt(2));
+    public void save(Comment com, String arg[]) throws Exception {
+        Connection con = null;
+        PreparedStatement statement = null;
+        ResultSet lastId = null;
+        try {
+            con = this.connect();
+            statement = con.prepareStatement("INSERT INTO comment(question_id, body, cdate, author_id) VALUES (?, ?, CURDATE(), ?);", Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, com.getQuestionId());
+            statement.setString(2, com.getBody());
+            statement.setInt(3, com.getAuthorId());
+            statement.executeUpdate();
+            lastId = statement.getGeneratedKeys();
+            if (lastId.next()) {
+                int commentId = lastId.getInt(2);
+                com.setCommentId(commentId);
+            }
+        } finally {
+            if (lastId != null) {
+                lastId.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
+    
+    
+    // public void save(Comment com, String arg[]) throws Exception { 
+    //     Connection con = this.connect();
+	// 	PreparedStatement statement = con.prepareStatement("INSERT INTO comment(body, "
+	// 			+ "cdate, author_id) VALUES (?, curdate(), ?);");
+	// 	statement.setString(1, com.getBody());
+	// 	statement.setInt(2, com.getAuthorId());
+	// 	statement.executeQuery();
+	// 	ResultSet last_id = statement.getGeneratedKeys();//id of last inserted comment
+	// 	con.close();
+	// 	com.setCommentId(last_id.getInt(2));
+    // }
 
     @Override
     public void update(Comment com) throws Exception{
@@ -94,7 +128,7 @@ public class CommentDAO implements DAO<Comment>{
 		statement.setInt(2, com.getUpvotes());
 		statement.setInt(3, com.getDownvotes());
         statement.setInt(4, com.getCommentId());
-		statement.executeQuery();
+		statement.executeUpdate();
 		con.close();
     }
 
