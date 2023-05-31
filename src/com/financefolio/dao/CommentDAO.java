@@ -53,10 +53,10 @@ public class CommentDAO implements DAO<Comment>{
     }
 
     @Override 
-    public Optional<List<Comment>> getAll(int dummy) throws Exception {
+    public Optional<List<Comment>> getAll(int question_id) throws Exception {
         Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("SELECT * FROM comment;");
-		// statement.setInt(1, question_id);
+		PreparedStatement statement = con.prepareStatement("SELECT * FROM comment where question_id = ?;");
+		statement.setInt(1, question_id);
 		ResultSet rs = statement.executeQuery();
         //create new list of comments to store result
 		List<Comment> result = new ArrayList<Comment>();    

@@ -84,24 +84,27 @@ public class Question implements Comparable<Question>{
 // #endregion
     public void getComments() throws Exception {
         CommentDAO cd = new CommentDAO();
-        int dummy = 0;
         try {
-            comments = cd.getAll(dummy).get();
+            comments = cd.getAll(this.questionId).get();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-    public String setViewCommentScene() {
-        String temp = "";
-        for(int i = 0; i < comments.size(); i++){
-            temp = temp + "\n\n" + i + "." + this.comments.get(i).getBody() + "\n" +  
-           "\n" + "Upvotes: " + this.comments.get(i).getUpvotes() + "\t" + "Downvotes: " + this.comments.get(i).getDownvotes();
+    public void setViewCommentScene() {
+        System.out.println("-------Comments------");
+        for(int i = 0; i < comments.size(); ++i){
+            System.out.println(i + "." + this.comments.get(i).getBody() + "\n" +  
+           "\n" + "Upvotes: " + this.comments.get(i).getUpvotes() + "\t" + "Downvotes: " + this.comments.get(i).getDownvotes());
         }
-        return temp;
     }
 
-    public void addCommentToQuestion(Comment sel){
-        this.comments.add(sel);
+    public void addCommentToQuestion(Comment sel, String dummy[]){
+        CommentDAO cd = new CommentDAO();
+        try {
+            cd.save(sel,dummy);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 
     // public void registerVoteOnSelectedComment(int sel, int updown){

@@ -58,8 +58,11 @@ public class QuestionDAO implements DAO<Question>{
 		ResultSet rs = statement.executeQuery();
 		List<Question> result = new ArrayList<Question>();
 		while(rs.next()) {
-			Question tempresult = new Question(rs.getInt("question_id"), rs.getString("title"), 
-                                        rs.getString("body"), rs.getDate("cdate"),rs.getInt("author_id"));
+			Question tempresult = new Question(rs.getInt("question_id"), 
+                                               rs.getString("title"), 
+                                               rs.getString("body"), 
+                                               rs.getDate("cdate"),
+                                               rs.getInt("author_id"));
             tempresult.setUpvotes(rs.getInt("upvotes"));
             tempresult.setDownvotes(rs.getInt("downvotes"));
             tempresult.setRating();

@@ -9,9 +9,15 @@ public class Forum {
     private List<Question> forum = new ArrayList <Question>();
     //methods
     public void setForumScene(){
-        for(int i = 0; i<this.forum.size(); i++){
-            System.out.println(i + "." + this.forum.get(i).getBody() + "\t" + this.forum.get(i).getRating() +  "\n");
+        for(int i = 0; i < this.forum.size(); i++){
+            System.out.println((i+1) + "." + this.forum.get(i).getTitle() + "\n" +
+            this.forum.get(i).getBody() + "\t" + 
+            this.forum.get(i).getRating() +  "\n");
         }
+        //test
+        // for (int i = 0; i < this.forum.size(); i++) {
+        //     System.out.println(this.forum.get(i).getQuestionId());
+        // }
     }
     public void sortByRating()
     {
@@ -23,7 +29,7 @@ public class Forum {
         });
     }
 
-    public void getForum() throws Exception{
+    public void getQuestions() throws Exception{
         int dummy = 0;
         QuestionDAO qd = new QuestionDAO();
         try {
@@ -37,16 +43,15 @@ public class Forum {
         return this.forum.get(sel);
     }
 
-    public void getQuestionSelected(int sel){
-        System.out.println("\n" + "------Question------" + "\n" + this.forum.get(sel).getBody() + "\n" + "\n\n" + 
-        "------Comments------" + this.forum.get(sel).getCommentsDetails());
+    public void setViewQuestionScene(int sel){
+        System.out.println("\n" + "------Question------" + "\n" + this.forum.get(sel).getBody() + "\n");
     }
     public Question searchQuestion(String input){
         int final1 = 0;
         for(int i = 0; i < this.forum.size(); i++)
         {
             if(this.forum.get(i).getTitle().contains(input) || this.forum.get(i).getBody().contains(input)){
-                getQuestionSelected(i);
+                setViewQuestionScene(i);
                 final1 = i;
             }
         }
