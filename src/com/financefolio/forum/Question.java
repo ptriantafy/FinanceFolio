@@ -3,6 +3,8 @@ package com.financefolio.forum;
 import java.sql.Date;
 import java.util.*;
 
+import com.financefolio.dao.CommentDAO;
+
 
 public class Question implements Comparable<Question>{
     private int questionId;
@@ -23,7 +25,7 @@ public class Question implements Comparable<Question>{
         this.date = date;
         this.author_id = author_id;
     }
-
+//#region
     public int getQuestionId() {
         return questionId;
     }
@@ -56,41 +58,46 @@ public class Question implements Comparable<Question>{
         return downvotes;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
+    
     public void setTitle(String title) {
         this.title = title;
     }
-
+    
     public void setComments(Comment... com) {
         Collections.addAll(comments , com);
     }
     public void setUpvotes(int upvotes) {
         this.upvotes = upvotes;
     }
-
+    
     public void setDownvotes(int downvotes) {
         this.downvotes = downvotes;
     }
-
-    public String getCommentsDetails() {
-        String temp = "";
-        for(int i = 0; i < comments.size(); i++){
-           temp = temp + "\n\n" + i + "." + this.comments.get(i).getBody() + "\n" +  
-           "\n" + "Upvotes: " + this.comments.get(i).getUpvotes() + "\t" + "Downvotes: " + this.comments.get(i).getDownvotes();
-        }
-        return temp;
+    
+    public float getRating() {
+        return rating;
     }
-
 
     public void setRating(){
         this.rating = this.upvotes-this.downvotes;
     }
-
-    public float getRating() {
-        return rating;
+// #endregion
+    public void getComments() throws Exception {
+        CommentDAO cd = new CommentDAO();
+        int dummy = 0;
+        try {
+            comments = cd.getAll(dummy).get();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public String setViewCommentScene() {
+        String temp = "";
+        for(int i = 0; i < comments.size(); i++){
+            temp = temp + "\n\n" + i + "." + this.comments.get(i).getBody() + "\n" +  
+           "\n" + "Upvotes: " + this.comments.get(i).getUpvotes() + "\t" + "Downvotes: " + this.comments.get(i).getDownvotes();
+        }
+        return temp;
     }
 
     public void addCommentToQuestion(Comment sel){

@@ -70,19 +70,51 @@ public class QuestionDAO implements DAO<Question>{
     }
 
     @Override
+    // public void save(Question que, String arg[]) throws Exception { 
+    //     Connection con = this.connect();
+	// 	PreparedStatement statement = con.prepareStatement("INSERT INTO question(title, body, "
+	// 			+ "cdate, author_id) VALUES (?, ?, curdate(), ?);", Statement.RETURN_GENERATED_KEYS);
+	// 	statement.setString(1, que.getTitle());
+	// 	statement.setString(2, que.getBody());
+	// 	statement.setInt(3, que.getAuthorId());
+    //     statement.executeUpdate();
+	// 	ResultSet last_id = statement.getGeneratedKeys();
+	// 	que.setQuestionId(last_id.getInt(1));
+    //     last_id.close();
+    //     con.close();
+    // }
     public void save(Question que, String arg[]) throws Exception { 
-        Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("INSERT INTO question(title, body, "
-				+ "cdate, author_id) VALUES (?, ?, curdate(), ?);", Statement.RETURN_GENERATED_KEYS);
-		statement.setString(1, que.getTitle());
-		statement.setString(2, que.getBody());
-		statement.setInt(3, que.getAuthorId());
-        statement.execute();
-		ResultSet last_id = statement.getGeneratedKeys();
-		que.setQuestionId(last_id.getInt(1));
-        last_id.close();
-        con.close();
+        Connection con = null;
+        PreparedStatement statement = null;
+        ResultSet lastId = null;
+        
+        try {
+            con = this.connect();
+            statement = con.prepareStatement("INSERT INTO question(title, body, cdate, author_id) VALUES (?, ?, curdate(), ?);", Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, que.getTitle());
+            statement.setString(2, que.getBody());
+            statement.setInt(3, que.getAuthorId());
+            
+            statement.executeUpdate();
+            
+            lastId = statement.getGeneratedKeys();
+            if (lastId.next()) {
+                int questionId = lastId.getInt(1);
+                que.setQuestionId(questionId);
+            }
+        } finally {
+            if (lastId != null) {
+                lastId.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
+    
 
     @Override
     public void update(Question que) throws Exception{
@@ -94,7 +126,7 @@ public class QuestionDAO implements DAO<Question>{
 		statement.setInt(3, que.getUpvotes());
 		statement.setInt(4, que.getDownvotes());
         statement.setInt(5, que.getQuestionId());
-		statement.executeQuery();
+		statement.executeUpdate();
 		con.close();
     }
 
