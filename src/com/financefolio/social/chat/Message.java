@@ -67,6 +67,6 @@ public class Message {
 	}
 	@Override
     public String toString() {
-        return "body:" + this.getBody() + " sentOn:" + this.getSentOn();
+        return "body: " + this.getBody() + " sentOn: " + this.getSentOn() +"\n";
 	}
 }

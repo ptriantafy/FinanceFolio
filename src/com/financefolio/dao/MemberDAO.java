@@ -32,7 +32,7 @@ public class MemberDAO implements DAO<Member> {
 		Connection con = DriverManager.getConnection(
 				db_url,usrname,password);
 		
-		System.out.println("Connection Established Successfully!");
+//		System.out.println("Connection Established Successfully!");
 		return con;
 	}
 //	fetches specific member given their id

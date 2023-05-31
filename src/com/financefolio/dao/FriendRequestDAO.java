@@ -32,7 +32,7 @@ public class FriendRequestDAO implements DAO<FriendRequest> {
 		Connection con = DriverManager.getConnection(
 				db_url,usrname,password);
 		
-		System.out.println("Connection Established Successfully!");
+//		System.out.println("Connection Established Successfully!");
 		return con;
 	}
 
@@ -97,7 +97,7 @@ public class FriendRequestDAO implements DAO<FriendRequest> {
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("DELETE FROM friend_requests WHERE request_id = ?;");
 		statement.setInt(1, t.getRequestId());
-		statement.executeQuery();
+		statement.executeUpdate();
 		con.close();
 	}
 

@@ -65,7 +65,8 @@ public class Friend {
 	}
 	@Override
     public String toString() {
-        return "id:" + String.valueOf(this.getId())+" name:" + this.getName()+" friendsSince:" + String.valueOf(this.getFriendsSince())
+        return "\nid: " + String.valueOf(this.getId())+" name: " + this.getName()+" friendsSince: " + String.valueOf(this.getFriendsSince())
+        + "chat_id: " + this.getConversation().getChat_id() + "\n"
         +this.getConversation().toString();
     }
 }

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,7 +35,7 @@ public class FriendDAO implements DAO<Friend> {
 		Connection con = DriverManager.getConnection(
 				db_url,usrname,password);
 		
-		System.out.println("Connection Established Successfully!");
+//		System.out.println("Connection Established Successfully!");
 		return con;
 	}
 	
@@ -75,20 +76,26 @@ public class FriendDAO implements DAO<Friend> {
 	@Override
 	public void save(Friend t, String args[]) throws SQLException, Exception {
 		Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("INSERT INTO chat VALUES();");
-		statement.execute();
+		PreparedStatement statement = con.prepareStatement("INSERT INTO chat VALUES();", Statement.RETURN_GENERATED_KEYS);
+		statement.executeUpdate();
 		ResultSet newChatId = statement.getGeneratedKeys();
 //		member1 is FriendRequest sender
-		statement = con.prepareStatement("INSERT INTO friendship(member1_id, member2_id, "
-				+ " friends_since, chat_id, sharing_level_to2, sharing_level_to1) VALUES (?, ?, ?, ?);");
+	    int chatId = 0;
+		if (newChatId.next()) {
+	        chatId = newChatId.getInt(1);
+	    }
+		statement = con.prepareStatement("INSERT INTO friendships(member1_id, member2_id, "
+				+ " friends_since, chat_id, sharing_level_to2, sharing_level_to1) VALUES (?, ?, ?, ?, ?, ?);");
 		statement.setInt(1, t.getId());
 		statement.setInt(2, Integer.parseInt(Objects.requireNonNull(args[0], "ID of member cannot be null")));
 		statement.setDate(3, t.getFriendsSince());
-		statement.setInt(4, newChatId.getInt(1));
+		statement.setInt(4, chatId);
 		statement.setInt(5, Integer.parseInt(Objects.requireNonNull(args[1], "Sharing Level from friend cannot be null")));
 		statement.setInt(6, t.getSharingLevel());
-		statement.executeQuery();
+		t.getConversation().setChat_id(chatId);
+		statement.executeUpdate();
 		con.close();
+		System.out.println(chatId);
 	}
 
 //	edit existing friendship
@@ -104,7 +111,7 @@ public class FriendDAO implements DAO<Friend> {
 //		only chat_id is unique in database
 		PreparedStatement statement = con.prepareStatement("DELETE FROM friendships WHERE chat_id = ?;");
 		statement.setInt(1, t.getConversation().getChat_id());
-		statement.executeQuery();
+		statement.executeUpdate();
 		con.close();
 	}
 
