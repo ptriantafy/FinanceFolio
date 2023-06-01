@@ -99,8 +99,10 @@ public class Question implements Comparable<Question>{
     public void setViewCommentsScene() {
         System.out.println("-------Comments------");
         for(int i = 0; i < comments.size(); ++i){
-            System.out.println((i+1) + "." + this.comments.get(i).getBody() + "\n" +  
-           "\n" + "Upvotes: " + this.comments.get(i).getUpvotes() + "\t" + "Downvotes: " + this.comments.get(i).getDownvotes());
+            System.out.println((i+1) + "." + 
+            this.comments.get(i).getBody() + "\n\n" +  
+            "Upvotes: " + this.comments.get(i).getUpvotes() + "\t" + 
+            "Downvotes: " + this.comments.get(i).getDownvotes() + "\n");
         }
     }
 

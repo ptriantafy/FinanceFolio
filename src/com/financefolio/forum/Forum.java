@@ -7,12 +7,11 @@ import com.financefolio.dao.QuestionDAO;
 public class Forum {
     //attributes
     private List<Question> forum = new ArrayList <Question>();
+    private List<Question> search_result = new ArrayList<Question>();
     //methods
     public void setForumScene(){
         for(int i = 0; i < this.forum.size(); i++){
-            System.out.println((i+1) + "." + this.forum.get(i).getTitle() + "\n" +
-            this.forum.get(i).getBody() + "\n" + 
-            "Upvotes:" + this.forum.get(i).getUpvotes() + "\t" + "Downvotes:" + this.forum.get(i).getDownvotes() + "\n");
+            System.out.println((i+1) + "." + this.forum.get(i).getTitle() + "\n");
         }
     }
     public void sortByRating()
@@ -40,19 +39,25 @@ public class Forum {
     }
 
     public void setViewQuestionScene(int sel){
-        System.out.println("\n" + "------Question------" + "\n" + this.forum.get(sel).getBody() + "\t" + this.forum.get(sel).getQuestionId() + "\n" +
-        "Upvotes:" + this.forum.get(sel).getUpvotes() + "\t" + "Downvotes:" + this.forum.get(sel).getDownvotes() + "\n");
+        System.out.println("\n" + "------Question------" + "\n" + 
+        this.forum.get(sel).getTitle() + "\n\n" +
+        this.forum.get(sel).getBody() + "\n" + 
+        "Upvotes:" + this.forum.get(sel).getUpvotes() + "\t" + 
+        "Downvotes:" + this.forum.get(sel).getDownvotes() + "\n");
     }
-    public Question searchQuestion(String input){
-        int final1 = 0;
+    public void searchQuestion(String input){
         for(int i = 0; i < this.forum.size(); i++)
         {
             if(this.forum.get(i).getTitle().contains(input) || this.forum.get(i).getBody().contains(input)){
-                setViewQuestionScene(i);
-                final1 = i;
+                search_result.add(this.forum.get(i));
             }
         }
-        return this.forum.get(final1);
+        System.out.println("Questions matching to inputs: " + "\n");
+        for(int j = 0; j < search_result.size(); j++)
+        {
+            System.out.println((j+1) + "." + 
+            search_result.get(j).getTitle() + "\n");
+        }
     }
 
     public void addQuestion(Question que,String dummy[]){
@@ -63,7 +68,7 @@ public class Forum {
             System.out.println(e);
         }
     }
-        
+
     public void registerVoteOnQuestion(int vote, Question que_sel) {
         QuestionDAO qd = new QuestionDAO();
         try {
