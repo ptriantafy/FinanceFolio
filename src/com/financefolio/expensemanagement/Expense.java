@@ -64,45 +64,51 @@ public class Expense {
     
 }
 
-//sub-classes for expense and for bill
-// class Bill extends Expense {
-//     public Bill(String name, double amount) {
-//         super("Bill", name, amount);
-//     }
-// }
 
-// class Power extends Bill {
-//     public Power(String name, double amount) {
-//         super(name, amount);
-//     }
-// }
+class Bill extends Expense {
+    public Bill(String name, double amount) {
+        super.setCategory("Bill");
+        super.setAmount(amount);
+        super.setName(name);
+    }
+}
 
-// class Water extends Bill {
-//     public Water(String name, double amount) {
-//         super(name, amount);
-//     }
-// }
+class Power extends Bill {
+    public Power(String name, double amount) {
+        super(name, amount);
+    }
+}
 
-// class Phone extends Bill {
-//     public Phone(String name, double amount) {
-//         super(name, amount);
-//     }
-// }
+class Water extends Bill {
+    public Water(String name, double amount) {
+        super(name, amount);
+    }
+}
 
-// //sub-classes of expense
+class Phone extends Bill {
+    public Phone(String name, double amount) {
+        super(name, amount);
+    }
+}
 
-// class Subscription extends Expense {
+//sub-classes of expense
 
-//     public Subscription(String name, double amount) {
-//         super("Subscription", name, amount);
-//     }
-// }
+class Subscription extends Expense {
 
-// class Miscellaneous extends Expense {
-//     public Miscellaneous(String name, double amount) {
-//         super("Miscellaneous", name, amount);
-//     }
-// }
+    public Subscription(String name, double amount) {
+        super.setCategory("Subscription");
+        super.setAmount(amount);
+        super.setName(name);
+    }
+}
+
+class Miscellaneous extends Expense {
+    public Miscellaneous(String name, double amount) {
+        super.setCategory("Miscellaneous");
+        super.setAmount(amount);
+        super.setName(name);
+    }
+}
 
 //  //example main
 //  public static void main(String[] args) {
