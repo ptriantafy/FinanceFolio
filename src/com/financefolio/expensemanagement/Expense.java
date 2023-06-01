@@ -1,4 +1,4 @@
-package com.financefolio.addexpenses;
+package com.financefolio.expensemanagement;
 
 import java.util.List;
 
@@ -6,14 +6,20 @@ public class Expense {
 	
 	private String category; //Expense type: Bills, Subscriptions or Misc.
 	private String name;
+    private String description = "";
+    private int id;
     private double amount;
 
-	public Expense(String category, String name, double amount){
-		this.category = category;
-		this.name = name; 
-		this.amount = amount;
-	}
-	
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
 
     public void setCategory(String category) {
         this.category = category;
@@ -23,12 +29,24 @@ public class Expense {
     	return category; 	
     }
     
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+
+    public int getId()
+    {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getAmount() {
@@ -39,52 +57,52 @@ public class Expense {
         this.amount = amount;
     }
     
-    //sub-classes for expense and for bill
     
     
     
-   
-   
+    
+    
 }
 
-class Bill extends Expense {
-    public Bill(String name, double amount) {
-        super("Bill", name, amount);
-    }
-}
+//sub-classes for expense and for bill
+// class Bill extends Expense {
+//     public Bill(String name, double amount) {
+//         super("Bill", name, amount);
+//     }
+// }
 
-class Power extends Bill {
-    public Power(String name, double amount) {
-        super(name, amount);
-    }
-}
+// class Power extends Bill {
+//     public Power(String name, double amount) {
+//         super(name, amount);
+//     }
+// }
 
-class Water extends Bill {
-    public Water(String name, double amount) {
-        super(name, amount);
-    }
-}
+// class Water extends Bill {
+//     public Water(String name, double amount) {
+//         super(name, amount);
+//     }
+// }
 
-class Phone extends Bill {
-    public Phone(String name, double amount) {
-        super(name, amount);
-    }
-}
+// class Phone extends Bill {
+//     public Phone(String name, double amount) {
+//         super(name, amount);
+//     }
+// }
 
-//sub-classes of expense
+// //sub-classes of expense
 
-class Subscription extends Expense {
+// class Subscription extends Expense {
 
-    public Subscription(String name, double amount) {
-        super("Subscription", name, amount);
-    }
-}
+//     public Subscription(String name, double amount) {
+//         super("Subscription", name, amount);
+//     }
+// }
 
-class Miscellaneous extends Expense {
-    public Miscellaneous(String name, double amount) {
-        super("Miscellaneous", name, amount);
-    }
-}
+// class Miscellaneous extends Expense {
+//     public Miscellaneous(String name, double amount) {
+//         super("Miscellaneous", name, amount);
+//     }
+// }
 
 //  //example main
 //  public static void main(String[] args) {
