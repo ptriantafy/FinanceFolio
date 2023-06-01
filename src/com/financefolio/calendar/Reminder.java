@@ -4,23 +4,26 @@ import java.util.Date;
 
 public class Reminder {
     private String body;
-    private Date notifyBefore;
+    private String DayNotifyBefore;
+    private String HourNotifyBefore;
+    private String payment_frequency;
     private int frequency;
-    private Date date;
+    private String date;
+    
+    
+    public Reminder(String body, String payment_frequency, int frequency, String date) {
+    	this.body = body;
+    	this.payment_frequency = payment_frequency;
+    	 this.frequency = frequency;
+    	this.date = date;	
+    }
+    
 
-    public Reminder(String body, Date notifyBefore, int frequency, Date date) {
+    public Reminder(String body, String DayNotifyBefore, String HourNotifyBefore, String date) {
         this.body = body;
-        this.notifyBefore = notifyBefore;
-        this.frequency = frequency;
+        this.DayNotifyBefore = DayNotifyBefore;
+        this.HourNotifyBefore = HourNotifyBefore;
         this.date = date;
-    }
-
-    public int getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
     }
 
     public String getBody() {
@@ -31,19 +34,52 @@ public class Reminder {
         this.body = body;
     }
 
-    public Date getNotifyBefore() {
-        return notifyBefore;
-    }
 
-    public void setNotifyBefore(Date notifyBefore) {
-        this.notifyBefore = notifyBefore;
-    }
+    public String getDayNotifyBefore() {
+		return DayNotifyBefore;
+	}
 
-    public Date getDate() {
+	public void setDayNotifyBefore(String dayNotifyBefore) {
+		DayNotifyBefore = dayNotifyBefore;
+	}
+
+	public String getHourNotifyBefore() {
+		return HourNotifyBefore;
+	}
+
+	public void setHourNotifyBefore(String hourNotifyBefore) {
+		HourNotifyBefore = hourNotifyBefore;
+	}
+
+	public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
+
+	public int getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(int frequency) {
+		this.frequency = frequency;
+	}
+
+
+	public String getPayment_frequency() {
+		return payment_frequency;
+	}
+
+
+	public void setPayment_frequency(String payment_frequency) {
+		this.payment_frequency = payment_frequency;
+	}
+	
+	
+    
+    
+    
+   
 }
