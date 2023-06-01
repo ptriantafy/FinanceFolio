@@ -99,7 +99,7 @@ public class MessageDAO implements DAO<Message> {
 		statement.setTimestamp(4, t.getSentOn());
 		statement.setInt(5, t.getChat_id());
 		statement.setInt(6, t.getId());
-		statement.executeQuery();
+		statement.executeUpdate();
 		con.close();
 	}
 
@@ -108,9 +108,12 @@ public class MessageDAO implements DAO<Message> {
 	@Override
 	public void delete(Message t) throws SQLException, Exception {
 		Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("DELETE FROM messages WHERE message_id = ?;");
-		statement.setInt(1, t.getId());
-		statement.executeQuery();
+		PreparedStatement statement = con.prepareStatement("DELETE FROM messages WHERE chat_id = ?;");
+		statement.setInt(1, t.getChat_id());
+		statement.executeUpdate();
+		statement = con.prepareStatement("DELETE FROM chat WHERE chat_id = ?;");
+		statement.setInt(1, t.getChat_id());
+		statement.executeUpdate();
 		con.close();
 	}
 

@@ -32,6 +32,15 @@ public class Member extends User {
 		this.requestsList = new FriendRequestsList();
 	}
 
+	public void sendFriendRequest(FriendRequest fr) {
+		FriendRequestDAO frDAO = new FriendRequestDAO();
+		try {
+			frDAO.save(fr, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void acceptFriendRequest(FriendRequest fr) {
 //		setting chat id -1; DAO will take care of it
 		Friend newFriend = new Friend(fr.getSenderId(), 1, -1, Date.valueOf(LocalDate.now()));
