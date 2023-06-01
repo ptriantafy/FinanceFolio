@@ -43,26 +43,39 @@ public class Expense {
     //sub-classes for expense and for bill
     
     public static class Bill extends Expense {
-        public Bill(String name, double amount) {
+    	private String billCategory; //power, water or phone 
+    	
+        public Bill(String name, double amount, String billCategory) {
             super("Bill", name, amount);
+            this.billCategory = billCategory; 
         }
-    }
+        
+        public String getBillCategory() {
+            return billCategory;
+        }
+        
+        public void setBillCategory(String billCategory) {
+        	this.billCategory = billCategory; 
+        }
+        }
+        
+    
     
     public static class Power extends Bill {
         public Power(String name, double amount) {
-            super(name, amount);
+            super(name, amount, "Power");
         }
     }
     
     public static class Water extends Bill {
         public Water(String name, double amount) {
-            super(name, amount);
+            super(name, amount, "Water");
         }
     }
 
     public static class Phone extends Bill {
         public Phone(String name, double amount) {
-            super(name, amount);
+            super(name, amount, "Phone");
         }
     }
 	
@@ -83,41 +96,56 @@ public class Expense {
     
     //example main
     public static void main(String[] args) {
-		/*ExpenseList expensesList = new ExpenseList();
 		
-		Expense bill1 = new Expense("Bill", "Phone BIll", 340.0);
-		Expense sub1 = new Expense("Subscription", "Spotify", 6.99);
-		Expense misc1 =  new Expense("Miscellaneous", "Groceries", 52.0);
-		
-		expensesList.addExpensesInList(bill1);
-		expensesList.addExpensesInList(sub1);
-		expensesList.addExpensesInList(misc1); 
-		
-		List<Expense> expenseList1 = expensesList.getAllExpensesList(); 
-		
-		for (Expense expense0 : expenseList1) {
-	        System.out.println("Category: " + expense0.getSelectedCategory());
-	        System.out.println("Name: " + expense0.getName());
-	        System.out.println("Amount: " + expense0.getAmount());
-	        System.out.println();
-	    }
-	    */
-    	 System.out.println("Welcome to Expenses!\nWrite Add to add an expense!");
-	        Scanner sc = new Scanner(System.in);
-	        String choice = sc.nextLine();
-
-	        if (choice.equalsIgnoreCase("add")) {
-	            //expenseinput
-	        	System.out.println("Add an Expense!\n");
-	        	System.out.println("Type Bill for Bill, Sub for Subscription or Misc for Miscellaneous");
-	        	String type = sc.nextLine();
-	        	if(type.equalsIgnoreCase("Bill")) {
-	        		System.out.println("0");
-	        	}else if(type.equalsIgnoreCase("Sub")) {
-	        		System.out.println("1");
-	        	}else if (type.equalsIgnoreCase("Misc")) {
-	        		System.out.println("2");
+    	ExpenseList expensesList = new ExpenseList();
+    	System.out.println("Welcome to Expenses!\nWrite Add to add an expense!");
+	    Scanner sc = new Scanner(System.in);
+	    String choice = sc.nextLine();
+	    
+	    if (choice.equalsIgnoreCase("add")) {
+	    	Expense expense1 = new Expense("", "", 0.0);
+	       //expenseinput
+	        System.out.println("Add an Expense!\n");
+	        System.out.println("Type Bill for Bill, Sub for Subscription or Misc for Miscellaneous");
+	        String type = sc.nextLine();
+	        // Expense is of type Bill
+	        if(type.equalsIgnoreCase("Bill")) {
+	        	Bill bill1 = new Bill("", 0.0, "");
+	        	bill1.setCategory("Bill");
+	        	System.out.println("The selected category is: " + bill1.getSelectedCategory());
+	        	System.out.println("Is it Power, Water or Phone?");
+	        	String billType = sc.nextLine();
+	        	//Bill Category: Power
+	        	if(billType.equalsIgnoreCase("power")) {
+	        		bill1.setBillCategory("Power");
+	        		Power power1 = new Power("", 0.0);
+	        		power1.setBillCategory("Power");
+	        		System.out.println("The selected category is: " + power1.getSelectedCategory());
+	        		System.out.println("The selected Bill category is: " + power1.getBillCategory());
+	        	//Bill Category: Water	
+	        	}else if(billType.equalsIgnoreCase("water")) {
+	        		bill1.setBillCategory("Water");
+	        		Water water1 = new Water("", 0.0);
+	        		System.out.println("The selected category is: " + water1.getSelectedCategory());
+	        		System.out.println("The selected Bill category is: " + water1.getBillCategory());	
+	        	//Bill Category: Phone
+	        	}else if(billType.equalsIgnoreCase("phone")) {
+	        		bill1.setBillCategory("Phone");
+	        		Phone phone1 = new Phone("", 0.0);
+	        		System.out.println("The selected category is: " + phone1.getSelectedCategory());
+	        		System.out.println("The selected Bill category is: " + phone1.getBillCategory());
 	        	}
+	        //Expense is of type Subscription
+	        }else if(type.equalsIgnoreCase("Sub")) {
+	        	Subscription sub1 = new Subscription("", 0.0);
+	        	sub1.setCategory("Subscription");
+	        	System.out.println("The selected category is: " + sub1.getSelectedCategory());
+	        //Expense is of type Miscellaneous
+	        }else if (type.equalsIgnoreCase("Misc")) {
+	        	Miscellaneous misc1 = new Miscellaneous("", 0.0);
+	        	misc1.setCategory("Miscellaneous");
+	        	System.out.println("The selected category is: " + misc1.getSelectedCategory());
+	        }
 	    }
     
     
