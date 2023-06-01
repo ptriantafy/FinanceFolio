@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.*;
 
 import com.financefolio.dao.CommentDAO;
+import com.financefolio.dao.QuestionDAO;
 
 
 public class Question implements Comparable<Question>{
@@ -82,6 +83,11 @@ public class Question implements Comparable<Question>{
         this.rating = this.upvotes-this.downvotes;
     }
 // #endregion
+
+    public Comment getComment(int sel){
+        return this.comments.get(sel);
+    }
+
     public void getComments() throws Exception {
         CommentDAO cd = new CommentDAO();
         try {
@@ -90,29 +96,35 @@ public class Question implements Comparable<Question>{
             System.out.println(e);
         }
     }
-    public void setViewCommentScene() {
+    public void setViewCommentsScene() {
         System.out.println("-------Comments------");
         for(int i = 0; i < comments.size(); ++i){
-            System.out.println(i + "." + this.comments.get(i).getBody() + "\n" +  
+            System.out.println((i+1) + "." + this.comments.get(i).getBody() + "\n" +  
            "\n" + "Upvotes: " + this.comments.get(i).getUpvotes() + "\t" + "Downvotes: " + this.comments.get(i).getDownvotes());
         }
     }
 
-    public void addCommentToQuestion(Comment sel, String dummy[]){
+    public void addCommentToQuestion(Comment sel, String[] dummy) {
         CommentDAO cd = new CommentDAO();
         try {
-            cd.save(sel,dummy);
+            cd.save(sel, dummy);
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace(); // Print the exception stack trace for debugging
         }
     }
-
-    // public void registerVoteOnSelectedComment(int sel, int updown){
-    //     if(updown == 0)
-    //         comments.get(sel).setUpvotes();
-    //     else
-    //         comments.get(sel).setDownvotes();
-    // }
+    public void registerVoteOnSelectedComment(Comment com, int vote){
+    
+        CommentDAO cd = new CommentDAO();
+        try {
+          if(vote == 0)
+              com.setUpvotes(com.getUpvotes() + 1);
+          else
+              com.setDownvotes(com.getDownvotes() + 1);
+          cd.update(com);
+        } catch (Exception e) {
+          System.out.println(e);
+        }  
+      }
 
     @Override
     public int compareTo(Question o) {

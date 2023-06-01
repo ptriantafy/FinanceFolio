@@ -105,19 +105,6 @@ public class CommentDAO implements DAO<Comment>{
             }
         }
     }
-    
-    
-    // public void save(Comment com, String arg[]) throws Exception { 
-    //     Connection con = this.connect();
-	// 	PreparedStatement statement = con.prepareStatement("INSERT INTO comment(body, "
-	// 			+ "cdate, author_id) VALUES (?, curdate(), ?);");
-	// 	statement.setString(1, com.getBody());
-	// 	statement.setInt(2, com.getAuthorId());
-	// 	statement.executeQuery();
-	// 	ResultSet last_id = statement.getGeneratedKeys();//id of last inserted comment
-	// 	con.close();
-	// 	com.setCommentId(last_id.getInt(2));
-    // }
 
     @Override
     public void update(Comment com) throws Exception{

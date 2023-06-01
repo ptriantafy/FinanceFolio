@@ -14,10 +14,6 @@ public class Forum {
             this.forum.get(i).getBody() + "\n" + 
             "Upvotes:" + this.forum.get(i).getUpvotes() + "\t" + "Downvotes:" + this.forum.get(i).getDownvotes() + "\n");
         }
-        //test
-        // for (int i = 0; i < this.forum.size(); i++) {
-        //     System.out.println(this.forum.get(i).getQuestionId());
-        // }
     }
     public void sortByRating()
     {
@@ -67,13 +63,12 @@ public class Forum {
             System.out.println(e);
         }
     }
-
-    public void registerVoteOnQuestion(boolean updown, Question que_sel) {
+        
+    public void registerVoteOnQuestion(int vote, Question que_sel) {
         QuestionDAO qd = new QuestionDAO();
         try {
-            if (updown) {
+            if (vote == 0) {
                 que_sel.setUpvotes(que_sel.getUpvotes() + 1);
-                System.out.println(que_sel.getUpvotes());
             } else {
                 que_sel.setDownvotes(que_sel.getDownvotes() + 1);
             }
@@ -83,25 +78,4 @@ public class Forum {
         }
     }
     
-
-    // public void registerVoteOnQuestion(boolean updown, Question que_sel){
-    //     QuestionDAO qd = new QuestionDAO();
-    //     if(updown == true){
-    //         que_sel.setUpvotes(que_sel.getUpvotes()+1);
-    //         System.out.println(que_sel.getUpvotes());
-    //     }
-    //     else if (updown == false){
-    //         que_sel.setDownvotes(que_sel.getDownvotes()+1);   
-    //     }
-    //     else
-    //         System.out.println("Error in registering vote");
-
-    //     try {
-    //         qd.update(que_sel);
-    //     } catch (Exception e) {
-    //         System.out.println(e);
-    //     }
-
-    // }
-
 }

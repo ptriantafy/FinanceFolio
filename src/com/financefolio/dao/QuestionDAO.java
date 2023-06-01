@@ -129,44 +129,10 @@ public class QuestionDAO implements DAO<Question>{
             statement.setInt(4, que.getDownvotes());
             statement.setInt(5, que.getQuestionId());
             statement.executeUpdate();
-        }
+            con.close();
+        } 
     }
     
-    // public void update(Question que) throws Exception {
-    //     Connection con = null;
-    //     PreparedStatement statement = null;
-    //     try {
-    //         con = this.connect();
-    //         statement = con.prepareStatement("UPDATE question SET title = ?, body = ?, upvotes = ?, downvotes = ? WHERE question_id = ?;");
-    //         statement.setString(1, que.getTitle());
-    //         statement.setString(2, que.getBody());
-    //         statement.setInt(3, que.getUpvotes());
-    //         statement.setInt(4, que.getDownvotes());
-    //         statement.setInt(5, que.getQuestionId());
-    //         statement.executeUpdate();
-    //     } finally {
-    //         if (statement != null) {
-    //             statement.close();
-    //         }
-    //         if (con != null) {
-    //             con.close();
-    //         }
-    //     }
-    // }
-    
-    // public void update(Question que) throws Exception{
-    //     Connection con = this.connect();
-	// 	PreparedStatement statement = con.prepareStatement("UPDATE question SET title = ?, body = ?, "
-	// 			+ "upvotes = ?, downvotes = ? WHERE question_id = ?;");
-	// 	statement.setString(1, que.getTitle());
-	// 	statement.setString(2, que.getBody());
-	// 	statement.setInt(3, que.getUpvotes());
-	// 	statement.setInt(4, que.getDownvotes());
-    //     statement.setInt(5, que.getQuestionId());
-	// 	statement.executeUpdate();
-	// 	con.close();
-    // }
-
     @Override 
     public void delete (Question que) throws Exception{
         Connection con = this.connect();
