@@ -2,6 +2,7 @@ package com.financefolio.addexpenses;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.List;
 
 import com.financefolio.addexpenses.Expense.Bill;
 import com.financefolio.addexpenses.Expense.Miscellaneous;
@@ -80,12 +81,57 @@ public class ExpenseInput {
 	    }
 	    sub1.setAmount(subAmount);
 	    System.out.println("Your Subscription with name: " + sub1.getName() + " has been added to the Expense List");
+	    return;
 	}
 	
 	private void addMiscellaneous() {
-		Miscellaneous misc1 = new Miscellaneous("", 0.0);
-	    misc1.setCategory("Miscellaneous");
-	    System.out.println("The selected category is: " + misc1.getSelectedCategory());
+		ExpenseList miscList1 = new ExpenseList();
+		int numberOfMisc = 0;
+	    System.out.println("How many expenses would you like to add?");
+	    try {
+	        numberOfMisc = sc.nextInt();
+	        sc.nextLine(); // Consume the remaining newline character
+	    } catch (InputMismatchException e) {
+	        System.out.println("Invalid input for the number of expenses. Please enter a numeric value.");
+	        sc.nextLine(); // Consume the invalid input
+	        addMiscellaneous(); // Retry adding miscellaneous expenses
+	        return;
+	    }
+	    
+	    for (int i = 0; i < numberOfMisc; i++) {
+	        System.out.println("\nExpense " + (i + 1));
+	        System.out.println("Enter the name of the Miscellaneous expense:");
+	        String name = sc.nextLine();
+	        System.out.println("Enter the amount of the Miscellaneous expense:");
+	        double amount = 0.0;
+	        try {
+	            amount = sc.nextDouble();
+	            sc.nextLine(); // Consume the remaining newline character
+	        } catch (InputMismatchException e) {
+	            System.out.println("Invalid input for the amount. Please enter a numeric value.");
+	            sc.nextLine(); // Consume the invalid input
+	            i--; // Retry adding the current expense
+	            continue;
+	        }
+	        
+	        Miscellaneous misc1 = new Miscellaneous(name, amount);
+	        miscList1.addExpensesInList(misc1);
+	        System.out.println("Miscellaneous expense " + (i + 1) + " added to the Expense List");
+	        
+	    }
+        
+        System.out.println("\nMiscellaneous Expense List: ");
+        /*for (int i = 0; i < numberOfMisc; i++) {
+            System.out.println(miscList1.getAllExpensesList());
+        }*/
+        List<Expense> allExpenses = miscList1.getAllExpensesList();
+        for (Expense expense : allExpenses) {
+            System.out.println(expense);
+        }
+        
 	}
+	    
+	    
+	
 	
 }

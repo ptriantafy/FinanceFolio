@@ -60,6 +60,10 @@ public class Expense {
         public void setBillCategory(String billCategory) {
         	this.billCategory = billCategory; 
         }
+        
+        public String toString() {
+            return "Name: " + getName() + ", Amount: " + getAmount();
+        }
     }
         
     
@@ -89,11 +93,21 @@ public class Expense {
         public Subscription(String name, double amount) {
             super("Subscription", name, amount);
         }
+        
+        public String toString() {
+            return "Name: " + getName() + ", Amount: " + getAmount();
+        }
     }
 
     public static class Miscellaneous extends Expense {
         public Miscellaneous(String name, double amount) {
             super("Miscellaneous", name, amount);
+        }
+        //overrides the toString method 
+        //so i can present then as needed 
+        //when called from the list
+        public String toString() {
+            return "Name: " + getName() + ", Amount: " + getAmount();
         }
     }
     
