@@ -111,4 +111,33 @@ public class GoalDAO implements DAO<Goal>{
             }
         }
     }
+
+    @Override
+    public void update(Goal goal) throws Exception {
+        try (Connection con = this.connect();
+             PreparedStatement statement = con.prepareStatement("UPDATE goals SET name = ?," + 
+                                                                "state = ?, shared = ?, " + 
+                                                                "time_duration = ?, money_to_spend = ?," + 
+                                                                "difficulty = ?, reward = ?" +
+                                                                "WHERE goal_id = ?;")) {
+            statement.setString(1, goal.getName());
+            statement.setString(2, goal.getState());
+            statement.setBoolean(3, goal.isShared());
+            statement.setLong(4, goal.getTimeDuration());
+            statement.setFloat(5, goal.getMoneyToSpend());
+            statement.setInt(6, goal.getDifficulty());
+            statement.setInt(7, goal.getReward());
+            statement.executeUpdate();
+            con.close();
+        } 
+    }
+
+    @Override 
+    public void delete (Goal goal) throws Exception{
+        Connection con = this.connect();
+		PreparedStatement statement = con.prepareStatement("DELETE FROM goals WHERE goal_id = ?;");
+		statement.setInt(1, goal.getGoalId());
+		statement.executeQuery();
+		con.close();
+    }
 }
