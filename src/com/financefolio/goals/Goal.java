@@ -1,7 +1,13 @@
 package com.financefolio.goals;
 
+import com.financefolio.dao.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 public class Goal {
     //attributes
+    private int goalId;
+    private int ownerId;
     private String name;
     private String state;
     private boolean shared;
@@ -9,8 +15,42 @@ public class Goal {
     private float moneyToSpend;
     private int difficulty;
     private int reward;
+    private List<Goal> activeGoals = new ArrayList<Goal>();
+
 
     //methods
+    public Goal(int goalId, int ownerId, String nameString, String stateString, boolean shared, long timeDuration, float moneyToSpend) {
+        this.goalId = goalId;
+        this.ownerId = ownerId;
+        this.name = nameString;
+        this.state = stateString;
+        this.shared = shared;
+        this.timeDuration = timeDuration;
+        this.moneyToSpend = moneyToSpend;
+    }
+
+
+    //#region getters and setters
+
+    public int getGoalId() {
+        return goalId;
+    }
+
+
+    public void setGoalId(int goalId) {
+        this.goalId = goalId;
+    }
+
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
     public String getName() {
         return name;
     }
@@ -62,13 +102,24 @@ public class Goal {
     public void setReward(int reward) {
         this.reward = reward;
     }
-
-    public int estimateDifficulty(){
-        return 0;
+    
+    public int getReward(){
+        return reward;
     }
 
-    public int getReward(){
-        return 0;
+    //#endregion
+    
+    
+    public void estimateDifficulty(){
+        Random rand = new Random();
+        //produces a random number from 1 to 10
+        int result = rand.nextInt((10 - 1) + 1) + 1; 
+        this.setDifficulty(result);
+    }
+
+
+    public void setActiveGoalsScene(){
+
     }
 
     public void modifyGoal(){}
