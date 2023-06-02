@@ -1,6 +1,7 @@
 package com.financefolio.addexpenses;
 
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 import com.financefolio.addexpenses.Expense.Bill;
 import com.financefolio.addexpenses.Expense.Miscellaneous;
@@ -26,7 +27,10 @@ public class ExpenseInput {
 	        //Expense is of type Miscellaneous
 	    }else if (type.equalsIgnoreCase("Misc")) {
 	    	addMiscellaneous();
-	    }  
+	    }else {
+	    	 System.out.println("Invalid Input. Try again!\n");
+	    	 addExpense();
+	    }
 	}
 	
 	private void addBill() {
@@ -60,6 +64,22 @@ public class ExpenseInput {
 		Subscription sub1 = new Subscription("", 0.0);
 	    sub1.setCategory("Subscription");
 	    System.out.println("The selected category is: " + sub1.getSelectedCategory());
+	    System.out.println("What is the name of the Subscription");
+	    String subName = sc.nextLine();
+	    sub1.setName(subName); 
+	    System.out.println("What is the cost of the Subscription");
+	    double subAmount = 0.0;
+	    try {
+	        subAmount = sc.nextDouble();
+	        sc.nextLine(); // Consume the remaining newline character
+	    } catch (InputMismatchException e) {
+	        System.out.println("Invalid input for the subscription amount. Please enter a numeric value.");
+	        sc.nextLine(); // Consume the invalid input
+	        addSubscription(); // Retry adding the subscription
+	        return;
+	    }
+	    sub1.setAmount(subAmount);
+	    System.out.println("Your Subscription with name: " + sub1.getName() + " has been added to the Expense List");
 	}
 	
 	private void addMiscellaneous() {

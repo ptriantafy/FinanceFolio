@@ -109,6 +109,10 @@ public class Expense {
 	    	ExpenseInput ExpenseInput1 =  new ExpenseInput();
 	    	ExpenseInput1.addExpense(); 
 	    }
+	    else {
+	    	System.out.println("Invalid Input. Try again!\n");
+	    	main(args);
+	    }
     
     }
    
