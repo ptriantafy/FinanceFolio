@@ -42,11 +42,8 @@ public class ExpenseInput {
        	String billType = sc.nextLine();
         //Bill Category: Power
         if(billType.equalsIgnoreCase("power")) {
-        bill1.setBillCategory("Power");
-        Power power1 = new Power("", 0.0);
-        power1.setBillCategory("Power");
-        System.out.println("The selected category is: " + power1.getSelectedCategory());
-        System.out.println("The selected Bill category is: " + power1.getBillCategory());
+        	bill1.setBillCategory("Power");
+        	addPower();
         }else if(billType.equalsIgnoreCase("water")) {
         	bill1.setBillCategory("Water");
         	Water water1 = new Water("", 0.0);
@@ -59,6 +56,29 @@ public class ExpenseInput {
         	System.out.println("The selected category is: " + phone1.getSelectedCategory());
         	System.out.println("The selected Bill category is: " + phone1.getBillCategory());
         }
+	}
+	
+	private void addPower() {
+	     Power power1 = new Power("", 0.0);
+	     power1.setBillCategory("Power");
+	     System.out.println("Write the month of the Power Bill");
+	     String powerMonth = sc.nextLine();
+	     power1.setName(powerMonth);
+	     System.out.println("What is the cost of the Power Bill?");
+		    double subAmount = 0.0;
+		    try {
+		        subAmount = sc.nextDouble();
+		        sc.nextLine(); // Consume the remaining newline character
+		    } catch (InputMismatchException e) {
+		        System.out.println("Invalid input for the Power Bill amount. Please enter a numeric value.");
+		        sc.nextLine(); // Consume the invalid input
+		        addSubscription(); // Retry adding the subscription
+		        return;
+		    }
+		    power1.setAmount(subAmount);
+		    System.out.println("Your Power Bill for the month : " + power1.getName() + " has been added to the Expense List");
+		    return;
+
 	}
 	
 	private void addSubscription() {
@@ -74,13 +94,14 @@ public class ExpenseInput {
 	        subAmount = sc.nextDouble();
 	        sc.nextLine(); // Consume the remaining newline character
 	    } catch (InputMismatchException e) {
-	        System.out.println("Invalid input for the subscription amount. Please enter a numeric value.");
+	        System.out.println("Invalid input for the Subscription amount. Please enter a numeric value.");
 	        sc.nextLine(); // Consume the invalid input
 	        addSubscription(); // Retry adding the subscription
 	        return;
 	    }
 	    sub1.setAmount(subAmount);
 	    System.out.println("Your Subscription with name: " + sub1.getName() + " has been added to the Expense List");
+	    //!theoretically it has to go to the calendar now!
 	    return;
 	}
 	
@@ -119,11 +140,8 @@ public class ExpenseInput {
 	        System.out.println("Miscellaneous expense " + (i + 1) + " added to the Expense List");
 	        
 	    }
-        
+        //add the misc expenses to the expenselist for miscellaneous expenses 
         System.out.println("\nMiscellaneous Expense List: ");
-        /*for (int i = 0; i < numberOfMisc; i++) {
-            System.out.println(miscList1.getAllExpensesList());
-        }*/
         List<Expense> allExpenses = miscList1.getAllExpensesList();
         for (Expense expense : allExpenses) {
             System.out.println(expense);
