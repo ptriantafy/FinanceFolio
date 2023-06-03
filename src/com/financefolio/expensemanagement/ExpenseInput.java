@@ -1,15 +1,16 @@
-package com.financefolio.addexpenses;
+package com.financefolio.expensemanagement;
 
 import java.util.Scanner;
+
+import com.financefolio.expensemanagement.Expense.Bill;
+import com.financefolio.expensemanagement.Expense.Miscellaneous;
+import com.financefolio.expensemanagement.Expense.Phone;
+import com.financefolio.expensemanagement.Expense.Power;
+import com.financefolio.expensemanagement.Expense.Subscription;
+import com.financefolio.expensemanagement.Expense.Water;
+
 import java.util.InputMismatchException;
 import java.util.List;
-
-import com.financefolio.addexpenses.Expense.Bill;
-import com.financefolio.addexpenses.Expense.Miscellaneous;
-import com.financefolio.addexpenses.Expense.Phone;
-import com.financefolio.addexpenses.Expense.Power;
-import com.financefolio.addexpenses.Expense.Subscription;
-import com.financefolio.addexpenses.Expense.Water;
 
 public class ExpenseInput {
 	Scanner sc = new Scanner(System.in);

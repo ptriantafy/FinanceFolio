@@ -1,4 +1,4 @@
-package com.financefolio.addexpenses;
+package com.financefolio.expensemanagement;
 
 import java.util.ArrayList;
 import java.util.List;

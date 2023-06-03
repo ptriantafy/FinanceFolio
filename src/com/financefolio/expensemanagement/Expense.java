@@ -1,10 +1,9 @@
-package com.financefolio.addexpenses;
+package com.financefolio.expensemanagement;
 
 import java.util.List;
 
 import java.util.Scanner;
 
-import com.financefolio.addexpenses.ExpenseInput;
 
 public class Expense {
 	
