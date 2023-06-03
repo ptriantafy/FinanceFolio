@@ -1,16 +1,19 @@
 package com.financefolio.forum;
 
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 import com.financefolio.dao.QuestionDAO;
 
 public class Forum {
     //attributes
     private List<Question> forum = new ArrayList <Question>();
-    //DAO
-    QuestionDAO qd = new QuestionDAO();
+    private List<Question> search_result = new ArrayList<Question>();
     //methods
+    public void setForumScene(){
+        for(int i = 0; i < this.forum.size(); i++){
+            System.out.println((i+1) + "." + this.forum.get(i).getTitle() + "\n");
+        }
+    }
     public void sortByRating()
     {
         Collections.sort(forum, new Comparator<Question>() {    //Custom comparator for float objects
@@ -21,41 +24,63 @@ public class Forum {
         });
     }
 
-    public void getForum() throws Exception{
-        qd.connect();
-        forum = qd.getAll();
-        System.out.println("------Forum Questions------");
-        for(int i = 0; i<this.forum.size(); i++){
-            System.out.println(i + "." + this.forum.get(i).getBody() + " " + this.forum.get(i).getRating());
+    public void getQuestions() throws Exception{
+        int dummy = 0;
+        QuestionDAO qd = new QuestionDAO();
+        try {
+            forum = qd.getAll(dummy).get();
+        } catch (Exception e) {
+            System.out.println(e);
         }
-    }
-
-    public void getAll(Question... que){
-        Collections.addAll(forum, que);
     }
 
     public Question getQuestion(int sel){
         return this.forum.get(sel);
     }
 
-    public void getQuestionSelected(int sel){
-        System.out.println("\n" + "------Question------" + "\n" + this.forum.get(sel).getBody() + "\n" + "\n\n" + 
-        "------Comments------" + this.forum.get(sel).getCommentsDetails());
+    public void setViewQuestionScene(int sel){
+        System.out.println("\n" + "------Question------" + "\n" + 
+        this.forum.get(sel).getTitle() + "\n\n" +
+        this.forum.get(sel).getBody() + "\n" + 
+        "Upvotes:" + this.forum.get(sel).getUpvotes() + "\t" + 
+        "Downvotes:" + this.forum.get(sel).getDownvotes() + "\n");
     }
-    public Question searchQuestion(String input){
-        int final1 = 0;
+    public void searchQuestion(String input){
         for(int i = 0; i < this.forum.size(); i++)
         {
             if(this.forum.get(i).getTitle().contains(input) || this.forum.get(i).getBody().contains(input)){
-                getQuestionSelected(i);
-                final1 = i;
+                search_result.add(this.forum.get(i));
             }
         }
-        return this.forum.get(final1);
+        System.out.println("Questions matching to inputs: " + "\n");
+        for(int j = 0; j < search_result.size(); j++)
+        {
+            System.out.println((j+1) + "." + 
+            search_result.get(j).getTitle() + "\n");
+        }
     }
 
-    public void addQuestion(){
-        //give question_id -1 value
+    public void addQuestion(Question que,String dummy[]){
+        QuestionDAO qd  = new QuestionDAO();
+        try {
+            qd.save(que, dummy);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
+    public void registerVoteOnQuestion(int vote, Question que_sel) {
+        QuestionDAO qd = new QuestionDAO();
+        try {
+            if (vote == 0) {
+                que_sel.setUpvotes(que_sel.getUpvotes() + 1);
+            } else {
+                que_sel.setDownvotes(que_sel.getDownvotes() + 1);
+            }
+            qd.update(que_sel);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
 }
