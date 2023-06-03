@@ -214,6 +214,42 @@ package com.financefolio.goals{
     }
 }
 
+package com.financefolio.statistics
+{
+    class statistics
+    {
+        -totalExpenses: float
+        -totalBillExpenses: float
+        -pwrExpenses: float
+        -wtrExpenses: float
+        -telExpenses: float
+        -totalSubscriptionExpenses: float
+        -totalMiscExpenses: float
+        +calcGlobalStats(): void
+        +checkUserGlobalStanding(): void
+        +calcUserGlobalStats(): void
+    }
+}
+
+package com.financefolio.diagrams
+{
+    class diagram
+    {
+        -xAxis: List<float>
+        -yAxis: List<float>
+        +setXAxis: void
+        +setYAxis: void
+        +getXAxis: void                                             
+        +getYAxis: void                                             
+    }
+    class diagramCalculation
+    {
+        -diagramList: List<diagram>
+        +createDiagram: void
+
+    }
+}
+
 package com.financefolio.dao{
     interface DAO{
         get(): Optional <T>
