@@ -1,18 +1,31 @@
 package com.financefolio.social;
 
+import java.sql.Date;
+
+import com.financefolio.dao.MemberDAO;
+import com.financefolio.social.chat.Chat;
+
 public class Friend {
 
 	private int id;
 	private String name; 
-	private String type;
 	private int sharingLevel;
+	private Chat conversation;
+	private Date friendsSince;
 	
-	public Friend(int id, String name, String type, int sharingLevel) {
+	public Friend(int id, int sharingLevel, int chat_id, Date friendsSince) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.type = type;
 		this.sharingLevel = sharingLevel;
+		this.conversation = new Chat(chat_id);
+		this.friendsSince = friendsSince;
+		MemberDAO mDAO = new MemberDAO();
+		try {
+			this.name = mDAO.get(id).get().getName();
+		} catch (Exception e) {
+			this.setName("Could not get name");
+			e.printStackTrace();
+		}
 	}
 	
 	public int getId() {
@@ -31,14 +44,6 @@ public class Friend {
 		this.name = name;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	public int getSharingLevel() {
 		return sharingLevel;
 	}
@@ -46,4 +51,22 @@ public class Friend {
 	public void setSharingLevel(int sharingLevel) {
 		this.sharingLevel = sharingLevel;
 	}
+
+	public Chat getConversation() {
+		return conversation;
+	}
+
+	public Date getFriendsSince() {
+		return friendsSince;
+	}
+
+	public void setFriendsSince(Date friendsSince) {
+		this.friendsSince = friendsSince;
+	}
+	@Override
+    public String toString() {
+        return "\nid: " + String.valueOf(this.getId())+" name: " + this.getName()+" friendsSince: " + String.valueOf(this.getFriendsSince())
+        + "chat_id: " + this.getConversation().getChat_id() + "\n"
+        +this.getConversation().toString();
+    }
 }
