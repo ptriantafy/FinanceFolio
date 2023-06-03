@@ -151,4 +151,21 @@ CREATE TABLE bill(
   CONSTRAINT `fk_expense_bill_id` FOREIGN KEY (bill_id) REFERENCES expense (expense_id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
 
+CREATE TABLE calendar (
+  calendar_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY  (calendar_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE reminder (
+  reminder_id SMALLINT UNSIGNED NOT NULL,
+  body VARCHAR(120) NOT NULL,
+  day_notify_before DATE NOT NULL,
+  hour_notify_before VARCHAR(8) NOT NULL,
+  payment_frequency VARCHAR(30) NOT NULL,
+  frequency SMALLINT UNSIGNED,
+  date DATE NOT NULL,
+  PRIMARY KEY (reminder_id),
+  CONSTRAINT `fk_calendar_reminder_id` FOREIGN KEY (reminder_id) REFERENCES calendar (calendar_id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
  
