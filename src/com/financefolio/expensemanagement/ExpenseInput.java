@@ -2,12 +2,6 @@ package com.financefolio.expensemanagement;
 
 import java.util.Scanner;
 
-import com.financefolio.expensemanagement.Expense.Bill;
-import com.financefolio.expensemanagement.Expense.Miscellaneous;
-import com.financefolio.expensemanagement.Expense.Phone;
-import com.financefolio.expensemanagement.Expense.Power;
-import com.financefolio.expensemanagement.Expense.Subscription;
-import com.financefolio.expensemanagement.Expense.Water;
 
 import java.util.InputMismatchException;
 import java.util.List;
