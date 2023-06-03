@@ -118,13 +118,14 @@ public class Goal {
     }
 
 
-    public void setActiveGoalsScene(){
-
+    public void modifyGoal(int goalId){
+        GoalDAO gd = new GoalDAO();
+        try {
+            gd.update(this.activeGoals.get(goalId));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
-
-    public void modifyGoal(){}
-        
-    public void updateGoal(){}
 
     public void deleteGoal(){}
 }

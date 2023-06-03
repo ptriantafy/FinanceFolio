@@ -6,9 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import javax.xml.stream.events.StartElement;
-
 import java.sql.*;
 
 import com.financefolio.goals.*;
