@@ -109,26 +109,3 @@ class Miscellaneous extends Expense {
         super.setName(name);
     }
 }
-
-//  //example main
-//  public static void main(String[] args) {
-//     ExpenseList expensesList = new ExpenseList();
-    
-//     Expense bill1 = new Expense("Bill", "Phone BIll", 340.0);
-//     Expense sub1 = new Expense("Subscription", "Spotify", 6.99);
-//     Expense misc1 =  new Expense("Miscellaneous", "Groceries", 52.0);
-    
-//     expensesList.addExpensesInList(bill1);
-//     expensesList.addExpensesInList(sub1);
-//     expensesList.addExpensesInList(misc1); 
-    
-//     List<Expense> expenseList1 = expensesList.getAllExpensesList(); 
-    
-//     for (Expense expense0 : expenseList1) {
-//         System.out.println("Category: " + expense0.getSelectedCategory());
-//         System.out.println("Name: " + expense0.getName());
-//         System.out.println("Amount: " + expense0.getAmount());
-//         System.out.println();
-//     }
-    
-// }
