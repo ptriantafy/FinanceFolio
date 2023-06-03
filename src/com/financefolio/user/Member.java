@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.financefolio.dao.MemberDAO;
+import com.financefolio.points.PointsRecord;
 import com.financefolio.dao.FriendDAO;
 import com.financefolio.dao.FriendRequestDAO;
 import com.financefolio.social.Friend;
@@ -20,7 +21,7 @@ public class Member extends User {
 	private int houseResidents;
 	private FriendsList friends;
 	private FriendRequestsList requestsList;
-	
+	private PointsRecord pointsRecord;
 	
 	public Member(int id, String name, boolean premiumMember, int category, float income, int houseArea,
 			int houseResidents, Date date) {
@@ -32,6 +33,7 @@ public class Member extends User {
 		this.houseResidents = houseResidents;
 		this.friends = new FriendsList();
 		this.requestsList = new FriendRequestsList();
+		this.pointsRecord = new PointsRecord(new ArrayList<>());
 	}
 
 	public void sendFriendRequest(FriendRequest fr) {
@@ -140,6 +142,14 @@ public class Member extends User {
 	public void setCategory(int category) {
 		this.category = category;
 	}
+	public PointsRecord getPointsRecord() {
+		return pointsRecord;
+	}
+
+	public void setPointsRecord(PointsRecord pointsRecord) {
+		this.pointsRecord = pointsRecord;
+	}
+
 	@Override
     public String toString() {
         return "\nid: " + String.valueOf(this.getId())+" name: " + this.getName()+" premium: " + String.valueOf(this.isPremiumMember())
