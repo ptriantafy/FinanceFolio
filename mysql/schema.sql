@@ -111,6 +111,7 @@ CREATE TABLE goals(
 
 CREATE TABLE expense(
   expense_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  expense_type ENUM('Bill','Subscription','Miscellaneous'),
   description VARCHAR(255),
   addition_date DATE NOT NULL,
   cost DECIMAL(10,2) NOT NULL,

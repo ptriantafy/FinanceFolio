@@ -9,14 +9,20 @@ public class Expense {
 	
 	private String category; //Expense type: Bills, Subscriptions or Misc.
 	private String name;
+    private String description = "";
+    private int id;
     private double amount;
 
-	public Expense(String category, String name, double amount){
-		this.category = category;
-		this.name = name; 
-		this.amount = amount;
-	}
-	
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
 
     public void setCategory(String category) {
         this.category = category;
@@ -26,12 +32,24 @@ public class Expense {
     	return category; 	
     }
     
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+
+    public int getId()
+    {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getAmount() {
@@ -42,91 +60,55 @@ public class Expense {
         this.amount = amount;
     }
     
-    //sub-classes for expense and for bill
-    
-    public static class Bill extends Expense {
-    	private String billCategory; //power, water or phone 
-    	
-        public Bill(String name, double amount, String billCategory) {
-            super("Bill", name, amount);
-            this.billCategory = billCategory; 
-        }
-        
-        public String getBillCategory() {
-            return billCategory;
-        }
-        
-        public void setBillCategory(String billCategory) {
-        	this.billCategory = billCategory; 
-        }
-        
-        public String toString() {
-            return "Name: " + getName() + ", Amount: " + getAmount();
-        }
-    }
-        
     
     
-    public static class Power extends Bill {
-        public Power(String name, double amount) {
-            super(name, amount, "Power");
-        }
-    }
     
-    public static class Water extends Bill {
-        public Water(String name, double amount) {
-            super(name, amount, "Water");
-        }
-    }
+    
+    
+}
 
-    public static class Phone extends Bill {
-        public Phone(String name, double amount) {
-            super(name, amount, "Phone");
-        }
-    }
-	
-	//sub-classes of expense
-    
-    public static class Subscription extends Expense {
 
-        public Subscription(String name, double amount) {
-            super("Subscription", name, amount);
-        }
-        
-        public String toString() {
-            return "Name: " + getName() + ", Amount: " + getAmount();
-        }
+class Bill extends Expense {
+    public Bill(String name, double amount) {
+        super.setCategory("Bill");
+        super.setAmount(amount);
+        super.setName(name);
     }
+}
 
-    public static class Miscellaneous extends Expense {
-        public Miscellaneous(String name, double amount) {
-            super("Miscellaneous", name, amount);
-        }
-        //overrides the toString method 
-        //so i can present then as needed 
-        //when called from the list
-        public String toString() {
-            return "Name: " + getName() + ", Amount: " + getAmount();
-        }
+class Power extends Bill {
+    public Power(String name, double amount) {
+        super(name, amount);
     }
-    
-    //example main
-    public static void main(String[] args) {
-		
-    	ExpenseList expensesList = new ExpenseList();
-    	System.out.println("Welcome to Expenses!\nWrite Add to add an expense!");
-	    Scanner sc = new Scanner(System.in);
-	    String choice = sc.nextLine();
-	    
-	    if (choice.equalsIgnoreCase("add")) {
-	    	ExpenseInput ExpenseInput1 =  new ExpenseInput();
-	    	ExpenseInput1.addExpense(); 
-	    }
-	    else {
-	    	System.out.println("Invalid Input. Try again!\n");
-	    	main(args);
-	    }
-    
+}
+
+class Water extends Bill {
+    public Water(String name, double amount) {
+        super(name, amount);
     }
-   
+}
+
+class Phone extends Bill {
+    public Phone(String name, double amount) {
+        super(name, amount);
+    }
+}
+
+//sub-classes of expense
+
+class Subscription extends Expense {
+
+    public Subscription(String name, double amount) {
+        super.setCategory("Subscription");
+        super.setAmount(amount);
+        super.setName(name);
+    }
+}
+
+class Miscellaneous extends Expense {
+    public Miscellaneous(String name, double amount) {
+        super.setCategory("Miscellaneous");
+        super.setAmount(amount);
+        super.setName(name);
+    }
 }
