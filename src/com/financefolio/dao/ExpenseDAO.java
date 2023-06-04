@@ -6,8 +6,8 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.*;
+import java.sql.Date;
 
-import javax.naming.spi.DirStateFactory.Result;
 
 import com.financefolio.expensemanagement.*;
 
@@ -119,12 +119,13 @@ public class ExpenseDAO implements DAO<Expense>{
         if(t instanceof Bill)
         {
             
-            query = "INSERT INTO bill(cost, ) VALUES cost =? , description = ?;";
+            query = "INSERT INTO ( type, owed, cost, dateFrom, dateTo ) VALUES type = ?, owed = ?, cost = ?, dateFrom = ?, dateTo = ?;";
             try(PreparedStatement stmt = con.prepareStatement(query)) 
             {
+                stmt.setString(1,((Bill)t).getType());
+                stmt.setDouble(2, ((Bill)t).getOwed());
+                stmt.setDouble(3,((Bill)t).getAmount());
 
-                stmt.setDouble(1, t.getAmount());
-                stmt.setString(2,t.getDescription());
 
                 stmt.executeUpdate();
             } 

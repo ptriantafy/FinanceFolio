@@ -1,6 +1,6 @@
 package com.financefolio.expensemanagement;
 
-
+import java.sql.Date;
 
 public class Expense {
 	
@@ -9,7 +9,7 @@ public class Expense {
     private String description = "";
     private int id;
     private double amount;
-
+    private Date addition_date;
 
     public void init(int id, double amount, String category, String name, String description)
     {
