@@ -74,21 +74,3 @@ public class Expense {
 }
 
 
-//sub-classes of expense
-
-class Subscription extends Expense {
-
-    public Subscription(String name, double amount) {
-        super.setCategory("Subscription");
-        super.setAmount(amount);
-        super.setName(name);
-    }
-}
-
-class Miscellaneous extends Expense {
-    public Miscellaneous(String name, double amount) {
-        super.setCategory("Miscellaneous");
-        super.setAmount(amount);
-        super.setName(name);
-    }
-}
