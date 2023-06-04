@@ -76,7 +76,7 @@ public class PointsDAO implements DAO<Points>{
 		PreparedStatement statement= con.prepareStatement("INSERT INTO points (member_id, "
 				+ " amount, reason, timestamp) VALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		statement.setInt(1, Integer.parseInt(Objects.requireNonNull(args[0], "ID of member cannot be null")));
-		statement.setInt(1, t.getAmount());
+		statement.setInt(2, t.getAmount());
 		statement.setString(3, t.getReason());
 		statement.setTimestamp(4, t.getTimestamp());
 		statement.executeUpdate();
