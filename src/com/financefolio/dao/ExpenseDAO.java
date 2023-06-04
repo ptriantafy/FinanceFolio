@@ -119,7 +119,7 @@ public class ExpenseDAO implements DAO<Expense>{
         if(t instanceof Bill)
         {
             
-            query = "INSERT INTO bill(cost, description) VALUES cost =? , description = ?;";
+            query = "INSERT INTO bill(cost, ) VALUES cost =? , description = ?;";
             try(PreparedStatement stmt = con.prepareStatement(query)) 
             {
 
@@ -127,15 +127,43 @@ public class ExpenseDAO implements DAO<Expense>{
                 stmt.setString(2,t.getDescription());
 
                 stmt.executeUpdate();
-        } 
-        catch (Exception e) 
-        {
-            System.out.println(e);
-        }
+            } 
+            catch (Exception e) 
+            {
+            	System.out.println(e);
+            }
         }
         else if( t instanceof Subscription)
         {
+        	query = "INSERT INTO subscription(cost, description) VALUES cost =? , description = ?;";
+            try(PreparedStatement stmt = con.prepareStatement(query)) 
+            {
 
+                stmt.setDouble(1, t.getAmount());
+                stmt.setString(2,t.getDescription());
+
+                stmt.executeUpdate();
+            } 
+            catch (Exception e) 
+            {
+            	System.out.println(e);
+            }
+        }
+        else if(t instanceof Miscellaneous)
+        {
+        	query = "INSERT INTO miscellaneous(cost, description) VALUES cost =? , description = ?;";
+            try(PreparedStatement stmt = con.prepareStatement(query)) 
+            {
+
+                stmt.setDouble(1, t.getAmount());
+                stmt.setString(2,t.getDescription());
+
+                stmt.executeUpdate();
+            } 
+            catch (Exception e) 
+            {
+            	System.out.println(e);
+            }
         }
 
 
