@@ -2,19 +2,17 @@ package com.financefolio.expensemanagement;
 
 import java.util.Scanner;
 
-
 import java.util.InputMismatchException;
 import java.util.List;
 
 public class ExpenseInput {
 	Scanner sc = new Scanner(System.in);
 	public void addExpense() {		
-		Expense expense1 = new Expense("", "", 0.0);
 	    //expenseinput
 	    System.out.println("Add an Expense!\n");
 	    System.out.println("Type Bill for Bill, Sub for Subscription or Misc for Miscellaneous");
 	    String type = sc.nextLine();
-	    // Expense is of type Bill
+	    	// Expense is of type Bill
 	    if(type.equalsIgnoreCase("Bill")) {
 	    	addBill();
 	        //Expense is of type Subscription
@@ -30,35 +28,29 @@ public class ExpenseInput {
 	}
 	
 	private void addBill() {
-		Bill bill1 = new Bill("", 0.0, "");
+		Bill bill1 = new Bill("","", 0.0);
         bill1.setCategory("Bill");
         System.out.println("The selected category is: " + bill1.getSelectedCategory());
         System.out.println("Is it Power, Water or Phone?");
        	String billType = sc.nextLine();
         //Bill Category: Power
         if(billType.equalsIgnoreCase("power")) {
-        	bill1.setBillCategory("Power");
-        	addPower();
+        	bill1.setType("power");
+        	addPower(bill1);
         }else if(billType.equalsIgnoreCase("water")) {
-        	bill1.setBillCategory("Water");
-        	Water water1 = new Water("", 0.0);
-        	System.out.println("The selected category is: " + water1.getSelectedCategory());
-        	System.out.println("The selected Bill category is: " + water1.getBillCategory());	
+        	bill1.setType("water");
+        	addWater(bill1);
         //Bill Category: Phone
         }else if(billType.equalsIgnoreCase("phone")) {
-        	bill1.setBillCategory("Phone");
-        	Phone phone1 = new Phone("", 0.0);
-        	System.out.println("The selected category is: " + phone1.getSelectedCategory());
-        	System.out.println("The selected Bill category is: " + phone1.getBillCategory());
+        	bill1.setType("telephony");
+        	addPhone(bill1);
         }
 	}
 	
-	private void addPower() {
-	     Power power1 = new Power("", 0.0);
-	     power1.setBillCategory("Power");
+	private void addPower(Bill bl) {
 	     System.out.println("Write the month of the Power Bill");
 	     String powerMonth = sc.nextLine();
-	     power1.setName(powerMonth);
+	     bl.setName(powerMonth);
 	     System.out.println("What is the cost of the Power Bill?");
 		    double subAmount = 0.0;
 		    try {
@@ -70,8 +62,50 @@ public class ExpenseInput {
 		        addSubscription(); // Retry adding the subscription
 		        return;
 		    }
-		    power1.setAmount(subAmount);
-		    System.out.println("Your Power Bill for the month : " + power1.getName() + " has been added to the Expense List");
+		    bl.setAmount(subAmount);
+		    System.out.println("Your Power Bill for the month : " + bl.getName() + " has been added to the Expense List");
+		    return;
+
+	}
+	
+	private void addWater(Bill bl) {
+	     System.out.println("Write the month of the Water Bill");
+	     String waterMonth = sc.nextLine();
+	     bl.setName(waterMonth);
+	     System.out.println("What is the cost of the Water Bill?");
+		    double subAmount = 0.0;
+		    try {
+		        subAmount = sc.nextDouble();
+		        sc.nextLine(); // Consume the remaining newline character
+		    } catch (InputMismatchException e) {
+		        System.out.println("Invalid input for the Water Bill amount. Please enter a numeric value.");
+		        sc.nextLine(); // Consume the invalid input
+		        addSubscription(); // Retry adding the subscription
+		        return;
+		    }
+		    bl.setAmount(subAmount);
+		    System.out.println("Your Water Bill for the month : " + bl.getName() + " has been added to the Expense List");
+		    return;
+
+	}
+	
+	private void addPhone(Bill bl) {
+	     System.out.println("Write the month of the Phone Bill");
+	     String powerMonth = sc.nextLine();
+	     bl.setName(powerMonth);
+	     System.out.println("What is the cost of the Phone Bill?");
+		    double subAmount = 0.0;
+		    try {
+		        subAmount = sc.nextDouble();
+		        sc.nextLine(); // Consume the remaining newline character
+		    } catch (InputMismatchException e) {
+		        System.out.println("Invalid input for the Phone Bill amount. Please enter a numeric value.");
+		        sc.nextLine(); // Consume the invalid input
+		        addSubscription(); // Retry adding the subscription
+		        return;
+		    }
+		    bl.setAmount(subAmount);
+		    System.out.println("Your Phone Bill for the month : " + bl.getName() + " has been added to the Expense List");
 		    return;
 
 	}
