@@ -28,7 +28,7 @@ public class ExpenseInput {
 	}
 	
 	private void addBill() {
-		Bill bill1 = new Bill("","", 0.0);
+		Bill bill1 = new Bill("","", 0.0, 0.0);
         bill1.setCategory("Bill");
         System.out.println("The selected category is: " + bill1.getSelectedCategory());
         System.out.println("Is it Power, Water or Phone?");
