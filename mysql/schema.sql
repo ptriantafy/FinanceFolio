@@ -172,6 +172,7 @@ CREATE TABLE comment(
   CONSTRAINT `fk_author_id` FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+<<<<<<< HEAD
 CREATE TABLE calendar (
   calendar_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
   PRIMARY KEY  (calendar_id)
@@ -190,3 +191,6 @@ CREATE TABLE reminder (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
 
  
+=======
+ 
+>>>>>>> origin/main

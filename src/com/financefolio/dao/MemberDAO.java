@@ -32,22 +32,25 @@ public class MemberDAO implements DAO<Member> {
 		Connection con = DriverManager.getConnection(
 				db_url,usrname,password);
 		
-		System.out.println("Connection Established Successfully!");
+//		System.out.println("Connection Established Successfully!");
 		return con;
 	}
 //	fetches specific member given their id
 	@Override
-	public Optional<Member> get(int member_id) throws SQLException, Exception {
-		Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("SELECT * FROM member INNER JOIN user ON member_id = user_id WHERE member_id = ?;");
-		statement.setInt(1, member_id);
-		ResultSet rs = statement.executeQuery();
-		Member result = new Member(rs.getInt("member_id"), rs.getString("username"), rs.getBoolean("premium_member"), rs.getInt("category"),
-															rs.getFloat("income"), rs.getInt("house_area"), rs.getInt("residents"), rs.getDate("register_date"));
-		con.close();
-		return Optional.ofNullable(result);
+	public Optional<Member> get(int member_id) throws Exception {
+	    try (Connection con = this.connect();
+	         PreparedStatement statement = con.prepareStatement("SELECT * FROM member INNER JOIN user ON member_id = user_id WHERE member_id = ?;")) {
+	        statement.setInt(1, member_id);
+	        try (ResultSet rs = statement.executeQuery()) {
+	            if (rs.next()) {
+	                Member result = new Member(rs.getInt("member_id"), rs.getString("username"), rs.getBoolean("premium_member"), rs.getInt("category"),
+	                        rs.getFloat("income"), rs.getInt("house_area"), rs.getInt("residents"), rs.getDate("register_date"));
+	                return Optional.of(result);
+	            }
+	        }
+	    }
+	    return Optional.empty();
 	}
-	
 // fetches all members
 	@Override
 	public Optional<List<Member>> getAll(int optional_id) throws SQLException, Exception {

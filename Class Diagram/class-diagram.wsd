@@ -269,6 +269,55 @@ package com.financefolio.diagrams
     }
 }
 
+
+' forum package relations
+Forum *-- Question
+Question *-- Comment
+
+' calendar package relations
+Calendar o-- Reminder
+User o-- Calendar
+
+' user package relations
+User <|-- Member
+User <|-- Expert
+Expert o-- Review
+
+
+' points package relations
+Member *-- PointsRecord
+
+' chat package relations
+Chat *-- Message
+'social  package relations
+Friend --o FriendsList
+FriendRequest --o FriendRequestsList
+Member *--FriendRequestsList
+Member *--FriendsList
+Friend *--Chat
+
+'diagrams package relations 
+DiagramsRecord *-- Diagram
+Member o-- DiagramsRecord
+
+'goals package relations
+GoalsHistory --* Member
+Goal --o GoalsHistory
+Achievement --o AchievementList
+Achievement --|> Goal
+
+'expense package relations
+Expense <|-- Miscellaneous
+Expense <|-- Bill
+Bill <|-- Power
+Bill <|-- Water
+Bill <|-- Phone
+Miscellaneous --* MiscellaneousList
+Expense <|-- Subscription
+ExpenseList *-- Expense
+
+newpage
+
 package com.financefolio.dao{
     interface DAO{
         +get(): Optional <T>
@@ -357,53 +406,6 @@ package com.financefolio.dao{
 
     class ReminderDAO{} 
 }
-
-' forum package relations
-Forum *-- Question
-Question *-- Comment
-
-' calendar package relations
-Calendar o-- Reminder
-User o-- Calendar
-
-' user package relations
-User <|-- Member
-User <|-- Expert
-Expert o-- Review
-
-
-' points package relations
-Member *-- PointsRecord
-
-' chat package relations
-Chat *-- Message
-'social  package relations
-Friend --o FriendsList
-FriendRequest --o FriendRequestsList
-Member *--FriendRequestsList
-Member *--FriendsList
-Friend *--Chat
-
-'diagrams package relations 
-DiagramsRecord *-- Diagram
-Member o-- DiagramsRecord
-
-'goals package relations
-GoalsHistory --* Member
-Goal --o GoalsHistory
-Achievement --o AchievementList
-Achievement --|> Goal
-
-'expense package relations
-Expense <|-- Miscellaneous
-Expense <|-- Bill
-Bill <|-- Power
-Bill <|-- Water
-Bill <|-- Phone
-Miscellaneous --* MiscellaneousList
-Expense <|-- Subscription
-ExpenseList *-- Expense
-
 'dao package relations
 DAO <|.. QuestionDAO
 DAO <|.. CommentDAO

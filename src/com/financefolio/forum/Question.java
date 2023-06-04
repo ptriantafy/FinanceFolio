@@ -3,6 +3,9 @@ package com.financefolio.forum;
 import java.sql.Date;
 import java.util.*;
 
+import com.financefolio.dao.CommentDAO;
+import com.financefolio.dao.QuestionDAO;
+
 
 public class Question implements Comparable<Question>{
     private int questionId;
@@ -22,14 +25,8 @@ public class Question implements Comparable<Question>{
         this.body = body;
         this.date = date;
         this.author_id = author_id;
-        this.upvotes = 0;
-        this.downvotes = 0;
-        if(this.upvotes == 0 && this.downvotes == 0)
-            this.rating = 0;
-        else
-            this.rating = (float)this.upvotes/this.downvotes;
     }
-
+//#region
     public int getQuestionId() {
         return questionId;
     }
@@ -62,49 +59,74 @@ public class Question implements Comparable<Question>{
         return downvotes;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
+    
     public void setTitle(String title) {
         this.title = title;
     }
-
+    
     public void setComments(Comment... com) {
         Collections.addAll(comments , com);
     }
     public void setUpvotes(int upvotes) {
         this.upvotes = upvotes;
     }
-
+    
     public void setDownvotes(int downvotes) {
         this.downvotes = downvotes;
     }
-
-    public String getCommentsDetails() {
-        String temp = "";
-        for(int i = 0; i < comments.size(); i++){
-           temp = temp + "\n\n" + i + "." + this.comments.get(i).getBody() + "\n" +  
-           "\n" + "Upvotes: " + this.comments.get(i).getUpvotes() + "\t" + "Downvotes: " + this.comments.get(i).getDownvotes();
-        }
-        return temp;
-    }
-
-
+    
     public float getRating() {
         return rating;
     }
 
-    public void addCommentToQuestion(Comment sel){
-        this.comments.add(sel);
+    public void setRating(){
+        this.rating = this.upvotes-this.downvotes;
+    }
+// #endregion
+
+    public Comment getComment(int sel){
+        return this.comments.get(sel);
     }
 
-    // public void registerVoteOnSelectedComment(int sel, int updown){
-    //     if(updown == 0)
-    //         comments.get(sel).setUpvotes();
-    //     else
-    //         comments.get(sel).setDownvotes();
-    // }
+    public void getComments() throws Exception {
+        CommentDAO cd = new CommentDAO();
+        try {
+            comments = cd.getAll(this.questionId).get();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void setViewCommentsScene() {
+        System.out.println("-------Comments------");
+        for(int i = 0; i < comments.size(); ++i){
+            System.out.println((i+1) + "." + 
+            this.comments.get(i).getBody() + "\n\n" +  
+            "Upvotes: " + this.comments.get(i).getUpvotes() + "\t" + 
+            "Downvotes: " + this.comments.get(i).getDownvotes() + "\n");
+        }
+    }
+
+    public void addCommentToQuestion(Comment sel, String[] dummy) {
+        CommentDAO cd = new CommentDAO();
+        try {
+            cd.save(sel, dummy);
+        } catch (Exception e) {
+            e.printStackTrace(); // Print the exception stack trace for debugging
+        }
+    }
+    public void registerVoteOnSelectedComment(Comment com, int vote){
+    
+        CommentDAO cd = new CommentDAO();
+        try {
+          if(vote == 0)
+              com.setUpvotes(com.getUpvotes() + 1);
+          else
+              com.setDownvotes(com.getDownvotes() + 1);
+          cd.update(com);
+        } catch (Exception e) {
+          System.out.println(e);
+        }  
+      }
 
     @Override
     public int compareTo(Question o) {

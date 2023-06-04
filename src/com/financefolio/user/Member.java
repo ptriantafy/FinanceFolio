@@ -1,8 +1,10 @@
 package com.financefolio.user;
-
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.financefolio.dao.MemberDAO;
 import com.financefolio.dao.FriendDAO;
 import com.financefolio.dao.FriendRequestDAO;
 import com.financefolio.social.Friend;
@@ -32,6 +34,34 @@ public class Member extends User {
 		this.requestsList = new FriendRequestsList();
 	}
 
+	public void sendFriendRequest(FriendRequest fr) {
+		FriendRequestDAO frDAO = new FriendRequestDAO();
+		try {
+			frDAO.save(fr, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public List<Member> searchMember(String searchQuery) {
+	    MemberDAO memberDAO = new MemberDAO();
+	    List<Member> filteredMembersList = new ArrayList<>();
+	    try {
+	        List<Member> allMembersList = memberDAO.getAll(0).get();
+	        for (Member mem : allMembersList) {
+	            if (mem.getName().contains(searchQuery)) {
+	                filteredMembersList.add(mem);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	    return filteredMembersList;
+	}
+
+	
 	public void acceptFriendRequest(FriendRequest fr) {
 //		setting chat id -1; DAO will take care of it
 		Friend newFriend = new Friend(fr.getSenderId(), 1, -1, Date.valueOf(LocalDate.now()));
@@ -112,8 +142,8 @@ public class Member extends User {
 	}
 	@Override
     public String toString() {
-        return "id:" + String.valueOf(this.getId())+" name:" + this.getName()+" premium" + String.valueOf(this.isPremiumMember())
+        return "\nid: " + String.valueOf(this.getId())+" name: " + this.getName()+" premium: " + String.valueOf(this.isPremiumMember())
         		+"\n Friends: " + this.getFriends().toString()
-        		+"\n Friend Requests:" + this.getRequestsList();
+        		+"\n Friend Requests: " + this.getRequestsList();
     }
 }

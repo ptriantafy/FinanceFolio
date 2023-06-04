@@ -2,8 +2,9 @@ package com.financefolio.social;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.financefolio.dao.FriendDAO;
+import com.financefolio.dao.MessageDAO;
+import com.financefolio.social.chat.Message;
 
 import java.util.ArrayList;
 
@@ -18,8 +19,11 @@ public class FriendsList {
 
 	public void removeFriend(Friend friend) {
 		FriendDAO fDAO = new FriendDAO();
+		MessageDAO messDAO = new MessageDAO();
 		try {
 			fDAO.delete(friend);
+//			passing a dummy message as argument in case conversation = null
+			messDAO.delete(new Message(-1, -1, -1, "Dummy Message", null, friend.getConversation().getChat_id()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,6 +39,9 @@ public class FriendsList {
 	}
 	public List<Friend> getFriendsList() {
 		return friendsList;
+	}
+	public void setFriendsList(List<Friend> friendsList) {
+		this.friendsList = friendsList;
 	}
     public String toString() {
         return this.getFriendsList().stream().map(Object::toString)
