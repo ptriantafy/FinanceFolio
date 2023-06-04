@@ -13,6 +13,14 @@ public class Bill extends Expense {
         this.owed = owed;
     }
     
+    public double getOwed() {
+        return owed;
+    }
+
+    public void setOwed(double owed) {
+        this.owed = owed;
+    }
+
     public String getType()
     {
         return type;
