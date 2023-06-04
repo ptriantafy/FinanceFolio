@@ -114,21 +114,32 @@ public class ExpenseDAO implements DAO<Expense>{
         Connection con = this.connect();
         
         //DB query
-        String query = "INSERT expense(cost, description) cost =? , description = ? WHERE expense_id = ?;";
-
-        try(PreparedStatement stmt = con.prepareStatement(query)) 
+        String query;
+        
+        if(t instanceof Bill)
         {
+            
+            query = "INSERT INTO bill(cost, description) VALUES cost =? , description = ?;";
+            try(PreparedStatement stmt = con.prepareStatement(query)) 
+            {
 
-           stmt.setDouble(1, t.getAmount());
-           stmt.setString(2,t.getDescription());
-           stmt.setInt(3,t.getId());
+                stmt.setDouble(1, t.getAmount());
+                stmt.setString(2,t.getDescription());
 
-           stmt.executeUpdate();
+                stmt.executeUpdate();
         } 
         catch (Exception e) 
         {
             System.out.println(e);
         }
+        }
+        else if( t instanceof Subscription)
+        {
+
+        }
+
+
+        
 
         con.close();
     }

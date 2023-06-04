@@ -1,8 +1,5 @@
 package com.financefolio.expensemanagement;
 
-import java.util.List;
-
-import java.util.Scanner;
 
 
 public class Expense {
@@ -76,18 +73,6 @@ public class Expense {
     
 }
 
-
-class Bill extends Expense {
-
-    private String type = "power";
-
-    public Bill(String type, String name, double amount) {
-        super.setCategory("Bill");
-        super.setAmount(amount);
-        super.setName(name);
-        this.type = type;
-    }
-}
 
 //sub-classes of expense
 
