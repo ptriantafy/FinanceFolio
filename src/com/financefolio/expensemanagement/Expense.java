@@ -14,6 +14,15 @@ public class Expense {
     private double amount;
 
 
+    public void init(int id, double amount, String category, String name, String description)
+    {
+        this.id = id;
+        this.amount = amount;
+        this.category = category;
+        this.name = name;
+        this.description = description;
+    }
+
     public String getDescription() {
         return description;
     }

@@ -34,7 +34,7 @@ public class ExpenseDAO implements DAO<Expense>{
     {
         //Create Expense object
         Expense result = new Expense();
-
+        
         //Create connection object
         Connection con = this.connect();
         
@@ -45,11 +45,11 @@ public class ExpenseDAO implements DAO<Expense>{
         //Try to query the database
         try(PreparedStatement stmt = con.prepareStatement(query)) 
         {
-
+            
             stmt.setInt(1,id);
-
+            
             ResultSet rs = stmt.executeQuery();
-
+            
             //Get row if exists 
             if(rs.next())
             {
@@ -64,11 +64,11 @@ public class ExpenseDAO implements DAO<Expense>{
         }
         
         //Terminate connection
-
+        
         con.close();
         return Optional.ofNullable(result);
     }
-
+    
     @Override
     public Optional<List<Expense>> getAll (int id) throws SQLException, Exception
     {
