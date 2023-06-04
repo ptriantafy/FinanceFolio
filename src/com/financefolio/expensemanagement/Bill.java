@@ -2,13 +2,15 @@ package com.financefolio.expensemanagement;
 
 public class Bill extends Expense {
 
-    private String type = "power";
+    private String type = "";
+    private double owed = 0.0;
 
-    public Bill(String type, String name, double amount) {
+    public Bill(String type, String name, double amount, double owed) {
         super.setCategory("Bill");
         super.setAmount(amount);
         super.setName(name);
         this.type = type;
+        this.owed = owed;
     }
     
     public String getType()
