@@ -78,28 +78,14 @@ public class Expense {
 
 
 class Bill extends Expense {
-    public Bill(String name, double amount) {
+
+    private String type = "power";
+
+    public Bill(String type, String name, double amount) {
         super.setCategory("Bill");
         super.setAmount(amount);
         super.setName(name);
-    }
-}
-
-class Power extends Bill {
-    public Power(String name, double amount) {
-        super(name, amount);
-    }
-}
-
-class Water extends Bill {
-    public Water(String name, double amount) {
-        super(name, amount);
-    }
-}
-
-class Phone extends Bill {
-    public Phone(String name, double amount) {
-        super(name, amount);
+        this.type = type;
     }
 }
 
