@@ -48,11 +48,10 @@ public class GoalDAO implements DAO<Goal>{
 		return null;
     }
 
-    @Override 
+    @Override
     public Optional<List<Goal>> getAll(int dummy) throws Exception {
         Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("SELECT * FROM Goal;");
-		// statement.setInt(1, goal_id);
+		PreparedStatement statement = con.prepareStatement("SELECT * FROM goals;");
 		ResultSet rs = statement.executeQuery();
 		List<Goal> result = new ArrayList<Goal>();
 		while(rs.next()) {
@@ -111,12 +110,14 @@ public class GoalDAO implements DAO<Goal>{
 
     @Override
     public void update(Goal goal) throws Exception {
-        try (Connection con = this.connect();
-             PreparedStatement statement = con.prepareStatement("UPDATE goals SET name = ?," + 
-                                                                "state = ?, shared = ?, " + 
-                                                                "time_duration = ?, money_to_spend = ?," + 
-                                                                "difficulty = ?, reward = ?" +
-                                                                "WHERE goal_id = ?;")) {
+        Connection con = null;
+        PreparedStatement statement = null;
+        
+        try {
+            con = this.connect();
+            statement = con.prepareStatement("UPDATE goals SET name = ?, state = ?, shared = ?, time_duration = ?, " +
+                    "money_to_spend = ?, difficulty = ?, reward = ? WHERE goal_id = ?;");
+            
             statement.setString(1, goal.getName());
             statement.setString(2, goal.getState());
             statement.setBoolean(3, goal.isShared());
@@ -124,17 +125,39 @@ public class GoalDAO implements DAO<Goal>{
             statement.setFloat(5, goal.getMoneyToSpend());
             statement.setInt(6, goal.getDifficulty());
             statement.setInt(7, goal.getReward());
+            statement.setInt(8, goal.getGoalId());
+            
             statement.executeUpdate();
-            con.close();
-        } 
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 
     @Override 
-    public void delete (Goal goal) throws Exception{
-        Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("DELETE FROM goals WHERE goal_id = ?;");
-		statement.setInt(1, goal.getGoalId());
-		statement.executeQuery();
-		con.close();
+    public void delete(Goal goal) throws Exception {
+        Connection con = null;
+        PreparedStatement statement = null;
+        
+        try {
+            con = this.connect();
+            statement = con.prepareStatement("DELETE FROM goals WHERE goal_id = ?;");
+            statement.setInt(1, goal.getGoalId());
+            statement.executeUpdate();
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            
+            if (con != null) {
+                con.close();
+            }
+        }
     }
+    
 }

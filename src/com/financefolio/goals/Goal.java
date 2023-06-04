@@ -117,15 +117,21 @@ public class Goal {
         this.setDifficulty(result);
     }
 
-
-    public void modifyGoal(int goalId){
+    public void modifyGoal(){
         GoalDAO gd = new GoalDAO();
         try {
-            gd.update(this.activeGoals.get(goalId));
+            gd.update(this);
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public void deleteGoal(){}
+    public void deleteGoal(){
+        GoalDAO gd = new GoalDAO();
+        try {
+            gd.delete(this);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
