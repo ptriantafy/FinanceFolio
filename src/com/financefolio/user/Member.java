@@ -1,10 +1,13 @@
 package com.financefolio.user;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.financefolio.dao.MemberDAO;
+import com.financefolio.dao.PointsDAO;
+import com.financefolio.points.Points;
 import com.financefolio.points.PointsRecord;
 import com.financefolio.dao.FriendDAO;
 import com.financefolio.dao.FriendRequestDAO;
@@ -36,15 +39,17 @@ public class Member extends User {
 		this.pointsRecord = new PointsRecord(new ArrayList<>());
 	}
 
-	public void sendFriendRequest(FriendRequest fr) {
-		FriendRequestDAO frDAO = new FriendRequestDAO();
+	public void adjustPoints(int amount, String reason) {
+		Points newPoints = new Points(-1, amount, new Timestamp(System.currentTimeMillis()), reason);
+		PointsDAO pDAO = new PointsDAO();
+		String[] arg = new String[] {String.valueOf(this.getId())};
 		try {
-			frDAO.save(fr, null);
+			pDAO.save(newPoints, arg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		this.getPointsRecord().addToRecord(newPoints);
 	}
-	
 	
 	public List<Member> searchMember(String searchQuery) {
 	    MemberDAO memberDAO = new MemberDAO();
@@ -63,6 +68,14 @@ public class Member extends User {
 	    return filteredMembersList;
 	}
 
+	public void sendFriendRequest(FriendRequest fr) {
+		FriendRequestDAO frDAO = new FriendRequestDAO();
+		try {
+			frDAO.save(fr, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void acceptFriendRequest(FriendRequest fr) {
 //		setting chat id -1; DAO will take care of it
