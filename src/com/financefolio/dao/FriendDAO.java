@@ -95,7 +95,7 @@ public class FriendDAO implements DAO<Friend> {
 		t.getConversation().setChat_id(chatId);
 		statement.executeUpdate();
 		con.close();
-		System.out.println(chatId);
+//		System.out.println(chatId);
 	}
 
 //	edit existing friendship
