@@ -1,29 +1,26 @@
 package com.financefolio.calendar;
 
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Reminder {
+    private static final AtomicInteger count = new AtomicInteger(0); 
+	private int reminder_id;
     private String body;
     private String DayNotifyBefore;
     private String HourNotifyBefore;
     private String payment_frequency;
     private int frequency;
     private String date;
-    
-    
-    public Reminder(String body, String payment_frequency, int frequency, String date) {
-    	this.body = body;
-    	this.payment_frequency = payment_frequency;
-    	 this.frequency = frequency;
-    	this.date = date;	
-    }
-    
 
-    public Reminder(String body, String DayNotifyBefore, String HourNotifyBefore, String date) {
+    public Reminder(int reminder_id, String body, String DayNotifyBefore, String HourNotifyBefore, String payment_frequency, int frequency, String date) {
+    	this.reminder_id = count.incrementAndGet();
         this.body = body;
         this.DayNotifyBefore = DayNotifyBefore;
         this.HourNotifyBefore = HourNotifyBefore;
-        this.date = date;
+        this.payment_frequency = payment_frequency;
+   	    this.frequency = frequency;
+   	    this.date = date;
     }
 
     public String getBody() {
@@ -75,6 +72,16 @@ public class Reminder {
 
 	public void setPayment_frequency(String payment_frequency) {
 		this.payment_frequency = payment_frequency;
+	}
+
+
+	public int getReminder_id() {
+		return reminder_id;
+	}
+
+
+	public void setReminder_id(int reminder_id) {
+		this.reminder_id = reminder_id;
 	}
 	
 	
