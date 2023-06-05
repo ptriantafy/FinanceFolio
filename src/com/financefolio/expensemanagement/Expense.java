@@ -11,11 +11,11 @@ public class Expense {
     private double amount;
     private Date addition_date;
 
-    public Date getAddition_date() {
+    public Date getAdditionDate() {
         return addition_date;
     }
 
-    public void setAddition_date(Date addition_date) {
+    public void setAdditionDate(Date addition_date) {
         this.addition_date = addition_date;
     }
 

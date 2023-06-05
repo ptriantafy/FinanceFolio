@@ -95,7 +95,7 @@ public class ExpenseDAO implements DAO<Expense>{
                 Expense temp_result = new Expense();
                 temp_result.setId(rs.getInt("expense_id"));
                 temp_result.setAmount(rs.getDouble("cost")); 
-                temp_result.setAddition_date(rs.getDate("addition_date"));
+                temp_result.setAdditionDate(rs.getDate("addition_date"));
                 result.add(temp_result);
             }
         } 
