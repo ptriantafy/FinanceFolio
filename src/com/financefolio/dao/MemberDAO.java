@@ -76,7 +76,11 @@ public class MemberDAO implements DAO<Member> {
 		statement.setDate(2, t.getRegisterDate());
 		statement.executeQuery();
 		ResultSet last_id = statement.getGeneratedKeys();
-		t.setId(last_id.getInt(1));
+		int memberId = 0;
+		if (last_id.next()) {
+			memberId = last_id.getInt(1);
+		}
+		t.setId(memberId);
 		statement = con.prepareStatement("INSERT INTO member (member_id, category, income, house_area, residents, premium_user)"
 				+ "VALUES (?, ?, ?, ?, ?, ?);");
 		statement.setInt(1, t.getId());
@@ -101,7 +105,7 @@ public class MemberDAO implements DAO<Member> {
 		statement.setInt(3, t.getHouseArea());
 		statement.setInt(4, t.getHouseResidents());
 		statement.setBoolean(5, t.isPremiumMember());
-		statement.executeQuery();
+		statement.executeUpdate();
 		con.close();
 	}
 
@@ -112,9 +116,10 @@ public class MemberDAO implements DAO<Member> {
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("DELETE FROM member WHERE member_id = ?;");
 		statement.setInt(1, t.getId());
+		statement.executeUpdate();
 		statement = con.prepareStatement("DELETE FROM user WHERE user_id = ?;");
 		statement.setInt(1, t.getId());
-		statement.executeQuery();
+		statement.executeUpdate();
 		con.close();
 	}
 

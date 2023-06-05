@@ -9,6 +9,7 @@ import com.financefolio.dao.MemberDAO;
 import com.financefolio.dao.PointsDAO;
 import com.financefolio.points.Points;
 import com.financefolio.points.PointsRecord;
+import com.financefolio.premiumfeatures.PremiumFeatureToken;
 import com.financefolio.dao.FriendDAO;
 import com.financefolio.dao.FriendRequestDAO;
 import com.financefolio.social.Friend;
@@ -25,6 +26,7 @@ public class Member extends User {
 	private FriendsList friends;
 	private FriendRequestsList requestsList;
 	private PointsRecord pointsRecord;
+	private List<PremiumFeatureToken> tokens;
 	
 	public Member(int id, String name, boolean premiumMember, int category, float income, int houseArea,
 			int houseResidents, Date date) {
@@ -37,8 +39,16 @@ public class Member extends User {
 		this.friends = new FriendsList();
 		this.requestsList = new FriendRequestsList();
 		this.pointsRecord = new PointsRecord(new ArrayList<>());
+		this.tokens = new ArrayList<>();
 	}
-
+	public boolean buyToken(PremiumFeatureToken token) {
+		if(token.getTokenFor().getCost()>this.getPointsRecord().getCurrentTotal()) {
+//			insufficient points to buy token
+			return false;
+		}
+		this.getTokens().add(token);
+		return true;
+	}
 	public void adjustPoints(int amount, String reason) {
 		Points newPoints = new Points(-1, amount, new Timestamp(System.currentTimeMillis()), reason);
 		PointsDAO pDAO = new PointsDAO();
@@ -161,6 +171,14 @@ public class Member extends User {
 
 	public void setPointsRecord(PointsRecord pointsRecord) {
 		this.pointsRecord = pointsRecord;
+	}
+
+	public List<PremiumFeatureToken> getTokens() {
+		return tokens;
+	}
+
+	public void setTokens(List<PremiumFeatureToken> tokens) {
+		this.tokens = tokens;
 	}
 
 	@Override
