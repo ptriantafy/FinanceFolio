@@ -27,8 +27,9 @@ public class Calendar {
 		 Scanner sc = new Scanner(System.in);
 		 
 		 while(running) {
+			 
 			
-	     System.out.println("Please select a date to set a reminder(in YYYY-MM-DD format): ");
+	     System.out.println("Please select a date (in YYYY-MM-DD format): ");
 	     String DayNotifyBefore = sc.next();
 	     
 	     if(!dayList.contains(DayNotifyBefore)){
@@ -47,6 +48,11 @@ public class Calendar {
 	            }
 	        }
 	        dayList.add(DayNotifyBefore);
+	        
+	        System.out.println("Do you want to set, delete or update a reminder? ");
+	        String desicion = sc.nextLine();
+	        
+	        if(desicion.equalsIgnoreCase("set")) {
 	 	 
 	        
 	        if(count>=1 && count2>=1) {
@@ -172,26 +178,28 @@ public class Calendar {
 		            }
 		       }
 		     }
-		 System.out.println("Do you want to add another reminder?");
+	        }
+	        else if(desicion.equalsIgnoreCase("delete")) {
+	        	System.out.println("Please select the reminder you want to delete. Reminder id: " );
+	        	int reminderid = sc.nextInt();
+	        	sc.nextLine();
+	        	calendar.deleteReminder(reminderid);
+	        	
+	        }
+		 System.out.println("Do you want to continue using calendar?");
 		 String option = sc.nextLine();
 		 if (!option.equalsIgnoreCase("yes")) {
 		        running = false; 
 		    }
 		 }
 	}
-		     
-		 
-		 
 	
-	
-	
-	
-   
     public Calendar() {
         reminderList = new ArrayList<>();
     }
 
     public void saveReminderToCalendar(Reminder reminder) {
+    	
         reminderList.add(reminder);
     }
     
@@ -213,9 +221,23 @@ public class Calendar {
         }
     }
 
-    public void deleteReminder(Reminder reminder) {
-        reminderList.remove(reminder);
+    public void deleteReminder(int reminderId) {
+    	Reminder foundReminder = null;
+        for (Reminder reminder : reminderList) {
+            if (reminder.getReminder_id() == reminderId) {
+                foundReminder = reminder;
+                break;
+            }
+        }
+
+        if (foundReminder != null) {
+            reminderList.remove(foundReminder);
+            System.out.println("Reminder with ID " + reminderId + " removed successfully.");
+        } else {
+            System.out.println("Reminder with ID " + reminderId + " not found.");
+        }
     }
+    
 
     public List<Reminder> getReminderList() {
         return reminderList;
