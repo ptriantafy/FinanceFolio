@@ -19,11 +19,10 @@ public class Goal {
 
 
     //methods
-    public Goal(int goalId, int ownerId, String nameString, String stateString, boolean shared, long timeDuration, float moneyToSpend) {
+    public Goal(int goalId, int ownerId, String nameString, boolean shared, long timeDuration, float moneyToSpend) {
         this.goalId = goalId;
         this.ownerId = ownerId;
         this.name = nameString;
-        this.state = stateString;
         this.shared = shared;
         this.timeDuration = timeDuration;
         this.moneyToSpend = moneyToSpend;
@@ -115,6 +114,15 @@ public class Goal {
         //produces a random number from 1 to 10
         int result = rand.nextInt((10 - 1) + 1) + 1; 
         this.setDifficulty(result);
+    }
+
+    public void addGoal(){
+        GoalDAO gd = new GoalDAO();
+        try {
+            gd.save(this, null);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public void modifyGoal(){
