@@ -95,6 +95,7 @@ public class ExpenseDAO implements DAO<Expense>{
                 Expense temp_result = new Expense();
                 temp_result.setId(rs.getInt("expense_id"));
                 temp_result.setAmount(rs.getDouble("cost")); 
+                temp_result.setAddition_date(rs.getDate("addition_date"));
                 result.add(temp_result);
             }
         } 
@@ -125,6 +126,8 @@ public class ExpenseDAO implements DAO<Expense>{
                 stmt.setString(1,((Bill)t).getType());
                 stmt.setDouble(2, ((Bill)t).getOwed());
                 stmt.setDouble(3,((Bill)t).getAmount());
+                stmt.setDate(4, ((Bill)t).getDateFrom());
+                stmt.setDate(4, ((Bill)t).getDateTo());
 
 
                 stmt.executeUpdate();
@@ -136,12 +139,12 @@ public class ExpenseDAO implements DAO<Expense>{
         }
         else if( t instanceof Subscription)
         {
-        	query = "INSERT INTO subscription(cost, description) VALUES cost =? , description = ?;";
+        	query = "INSERT INTO subscription(cost, next_billing_date) VALUES cost =? , next_billing_date = ?;";
             try(PreparedStatement stmt = con.prepareStatement(query)) 
             {
 
-                stmt.setDouble(1, t.getAmount());
-                stmt.setString(2,t.getDescription());
+                stmt.setDouble(1, ((Subscription)t).getAmount());
+                stmt.setDate(2, ((Subscription)t).getNextBillingDate());
 
                 stmt.executeUpdate();
             } 

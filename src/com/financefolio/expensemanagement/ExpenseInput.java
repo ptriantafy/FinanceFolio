@@ -31,7 +31,7 @@ public class ExpenseInput {
 		Bill bill1 = new Bill("","", 0.0, 0.0);
         bill1.setCategory("Bill");
         System.out.println("The selected category is: " + bill1.getSelectedCategory());
-        System.out.println("Is it Power, Water or Phone?");
+        System.out.println("power, water or phone?");
        	String billType = sc.nextLine();
         //Bill Category: Power
         if(billType.equalsIgnoreCase("power")) {

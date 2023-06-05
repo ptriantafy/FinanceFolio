@@ -11,9 +11,16 @@ public class Expense {
     private double amount;
     private Date addition_date;
 
-    public void init(int id, double amount, String category, String name, String description)
+    public Date getAddition_date() {
+        return addition_date;
+    }
+
+    public void setAddition_date(Date addition_date) {
+        this.addition_date = addition_date;
+    }
+
+    public void init(double amount, String category, String name, String description)
     {
-        this.id = id;
         this.amount = amount;
         this.category = category;
         this.name = name;

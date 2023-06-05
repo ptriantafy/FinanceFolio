@@ -15,12 +15,6 @@ public class FinanceFolio
         try{
             exp = expDAO.getAll(1).get();
             
-            exp.get(2).setAmount(19.32);
-            expDAO.update(exp.get(2),null);
-
-            expDAO.delete(exp.get(0));
-
-            exp = expDAO.getAll(1).get();
         }
         catch(Exception e)
         {
@@ -29,7 +23,8 @@ public class FinanceFolio
         
         for(int i=0; i<exp.size(); i++)
         {
-            System.out.println(exp.get(i).getAmount());
+            System.out.print(exp.get(i).getAmount()+" | ");
+            System.out.println(exp.get(i).getAddition_date());
         }
         
     }
