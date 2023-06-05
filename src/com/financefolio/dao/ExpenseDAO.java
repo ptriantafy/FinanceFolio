@@ -2,7 +2,6 @@ package com.financefolio.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.*;
@@ -39,8 +38,25 @@ public class ExpenseDAO implements DAO<Expense>{
         Connection con = this.connect();
         
         //DB query
-        String query = "SELECT cost FROM expense WHERE expense_id = ? ;";
-        
+        String query = "SELECT * FROM expense WHERE expense_id = ? ;";
+        if(params[0] == "Bill")
+        {
+            query = "SELECT * FROM Bill WHERE expense_id = ? ;";
+        }
+        else if(params[0] == "Subscription")
+        {
+
+        }
+        else if(params[0] == "Miscellaneous")
+        {
+
+        }
+        else
+        {
+            query = "SELECT * FROM expense WHERE expense_id = ? ;";
+        }
+
+    
 
         //Try to query the database
         try(PreparedStatement stmt = con.prepareStatement(query)) 
@@ -53,9 +69,17 @@ public class ExpenseDAO implements DAO<Expense>{
             //Get row if exists 
             if(rs.next())
             {
-                float cost = rs.getFloat("cost");
-                result.setAmount(cost); 
-                System.out.println(cost);
+                result.setCategory(rs.getString("expense_type"));
+                result.setId(rs.getInt("expense_id"));
+                result.setAmount(rs.getDouble("cost")); 
+                result.setAdditionDate(rs.getDate("addition_date"));
+
+                if(params[0]=="Bill")
+                {
+                    ((Bill)result).setType(rs.getString("bill_type"));
+                    ((Bill)result).getOwed(rs.getDouble("owed"));
+                }
+
             }
         } 
         catch (Exception e) 
@@ -79,13 +103,23 @@ public class ExpenseDAO implements DAO<Expense>{
         Connection con = this.connect();
         
         //DB query
-        String query = "SELECT * FROM expense;";
+        String query;
+        if(id < 0)
+        {
+            query = "SELECT * FROM expense;";
+        }
+        else
+        {
+            query = "SELECT * FROM misc_micro_expenses WHERE parent_expense_id = ?;";
+        }
 
         //Try to query the database
         try(PreparedStatement stmt = con.prepareStatement(query)) 
         {
-
-            //stmt.setInt(1,id);
+            if(id > -1)
+            {
+                stmt.setInt(1,id);
+            }
 
             ResultSet rs = stmt.executeQuery();
 
@@ -93,9 +127,11 @@ public class ExpenseDAO implements DAO<Expense>{
             while(rs.next())
             {
                 Expense temp_result = new Expense();
+                temp_result.setCategory(rs.getString("expense_type"));
                 temp_result.setId(rs.getInt("expense_id"));
                 temp_result.setAmount(rs.getDouble("cost")); 
                 temp_result.setAdditionDate(rs.getDate("addition_date"));
+
                 result.add(temp_result);
             }
         } 
