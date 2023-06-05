@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import com.financefolio.dao.FriendDAO;
 import com.financefolio.dao.MessageDAO;
+import com.financefolio.premiumfeatures.PremiumFeatureToken;
 import com.financefolio.social.chat.Message;
 
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ public class FriendsList {
 		this.friendsList = new ArrayList<>();
 	}
 	
-
 	public void removeFriend(Friend friend) {
 		FriendDAO fDAO = new FriendDAO();
 		MessageDAO messDAO = new MessageDAO();

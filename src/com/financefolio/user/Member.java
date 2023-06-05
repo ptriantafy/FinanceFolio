@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.financefolio.dao.MemberDAO;
 import com.financefolio.dao.PointsDAO;
+import com.financefolio.dao.PremiumFeatureTokenDAO;
 import com.financefolio.points.Points;
 import com.financefolio.points.PointsRecord;
 import com.financefolio.premiumfeatures.PremiumFeatureToken;
@@ -41,13 +42,41 @@ public class Member extends User {
 		this.pointsRecord = new PointsRecord(new ArrayList<>());
 		this.tokens = new ArrayList<>();
 	}
+
+	public boolean giftTokenToFriend(Friend friend, PremiumFeatureToken token) {
+		if(token.getTokenFor().getCost() > this.getPointsRecord().getCurrentTotal()) {
+//			insufficient points to gift token
+			return false;
+		}
+		PremiumFeatureTokenDAO pftDAO = new PremiumFeatureTokenDAO();
+		String[] arg = new String[] {String.valueOf(friend.getId())};
+		try {
+			pftDAO.save(token, arg);
+			this.adjustPoints(token.getTokenFor().getCost(), "Gift to: "+friend.getName() + " Premium Feature Token: " + token.getTokenFor().getDescripiton());
+
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public boolean buyToken(PremiumFeatureToken token) {
-		if(token.getTokenFor().getCost()>this.getPointsRecord().getCurrentTotal()) {
+		if(token.getTokenFor().getCost() > this.getPointsRecord().getCurrentTotal()) {
 //			insufficient points to buy token
 			return false;
 		}
 		this.getTokens().add(token);
-		return true;
+		PremiumFeatureTokenDAO pftDAO = new PremiumFeatureTokenDAO();
+		String[] arg = new String[] {String.valueOf(this.getId())};
+		try {
+			pftDAO.save(token, arg);
+			this.adjustPoints(token.getTokenFor().getCost(), "Bought Premium Feature Token: " + token.getTokenFor().getDescripiton());
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	public void adjustPoints(int amount, String reason) {
 		Points newPoints = new Points(-1, amount, new Timestamp(System.currentTimeMillis()), reason);

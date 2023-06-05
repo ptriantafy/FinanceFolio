@@ -3,6 +3,8 @@ package com.financefolio.social;
 import java.sql.Date;
 
 import com.financefolio.dao.MemberDAO;
+import com.financefolio.dao.PremiumFeatureTokenDAO;
+import com.financefolio.premiumfeatures.PremiumFeatureToken;
 import com.financefolio.social.chat.Chat;
 
 public class Friend {
@@ -27,7 +29,6 @@ public class Friend {
 			e.printStackTrace();
 		}
 	}
-	
 	public int getId() {
 		return id;
 	}
