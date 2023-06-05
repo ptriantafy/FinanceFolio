@@ -58,10 +58,10 @@ public class GoalDAO implements DAO<Goal>{
 			Goal tempresult = new Goal(rs.getInt("goal_id"), 
                                        rs.getInt("owner_id"), 
                                        rs.getString("name"), 
-                                    //    rs.getString("state"),
                                        rs.getBoolean("shared"),
                                        rs.getLong("time_duration"),
                                        rs.getFloat("money_to_spend"));
+            tempresult.setState(rs.getString("state"));
 			result.add(tempresult);
 		}
 		con.close();
