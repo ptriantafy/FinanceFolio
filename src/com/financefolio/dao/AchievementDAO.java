@@ -59,6 +59,7 @@ public class AchievementDAO implements DAO<Achievement>{
                                        rs.getString("type"),
                                        rs.getInt("time_to_complete")); 
             tempresult.setState(rs.getString("state"));
+            tempresult.setReward();
 			result.add(tempresult);
 		}
 		con.close();

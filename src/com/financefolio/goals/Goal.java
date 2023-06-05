@@ -108,7 +108,7 @@ public class Goal {
 
     //#endregion
     
-    
+    //#region methods
     public void estimateDifficulty(){
         Random rand = new Random();
         //produces a random number from 1 to 10
@@ -142,4 +142,6 @@ public class Goal {
             System.out.println(e);
         }
     }
+
+    //#endregion
 }

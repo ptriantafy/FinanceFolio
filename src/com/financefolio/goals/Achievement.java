@@ -51,6 +51,10 @@ public class Achievement {
         return reward;
     }
 
+    public void setReward(){
+        this.reward += this.timeToComplete*0.5;
+    }
+
     public int getTimeToComplete() {
         return timeToComplete;
     }
@@ -61,10 +65,7 @@ public class Achievement {
     //#endregion
     
     //#region methods
-
-    public void setReward(){
-        this.reward += this.timeToComplete*0.5;
-    }
+    
 
     //#endregion
 }
