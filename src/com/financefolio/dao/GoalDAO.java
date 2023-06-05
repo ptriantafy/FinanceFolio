@@ -68,7 +68,7 @@ public class GoalDAO implements DAO<Goal>{
 		return Optional.ofNullable(result);
     }
 
-
+    @Override
     public void save(Goal goal, String arg[]) throws Exception { 
         Connection con = null;
         PreparedStatement statement = null;
@@ -76,17 +76,16 @@ public class GoalDAO implements DAO<Goal>{
         
         try {
             con = this.connect();
-            statement = con.prepareStatement("INSERT INTO goals(owner_id,name,state," + 
+            statement = con.prepareStatement("INSERT INTO goals(owner_id,name," + 
                                             "shared,time_duration,money_to_spend,difficulty," +
-                                            "reward) VALUES (?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+                                            "reward) VALUES (?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, goal.getOwnerId());
             statement.setString(2, goal.getName());
-            statement.setString(3, goal.getState());
-            statement.setBoolean(4, goal.isShared());
-            statement.setLong(5, goal.getTimeDuration());
-            statement.setFloat(6, goal.getMoneyToSpend());
-            statement.setInt(7, goal.getDifficulty());
-            statement.setInt(8, goal.getReward());
+            statement.setBoolean(3, goal.isShared());
+            statement.setLong(4, goal.getTimeDuration());
+            statement.setFloat(5, goal.getMoneyToSpend());
+            statement.setInt(6, goal.getDifficulty());
+            statement.setInt(7, goal.getReward());
             
             statement.executeUpdate();
             
