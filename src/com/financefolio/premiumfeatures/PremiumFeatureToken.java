@@ -1,7 +1,6 @@
 package com.financefolio.premiumfeatures;
 
 import java.sql.Date;
-import java.sql.SQLException;
 
 import com.financefolio.dao.PremiumFeatureDAO;
 

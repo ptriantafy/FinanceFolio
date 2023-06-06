@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.financefolio.points.Points;
-import com.financefolio.user.Member;
 
 public class PointsDAO implements DAO<Points>{
 	private String usrname;

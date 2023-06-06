@@ -52,7 +52,7 @@ public class Member extends User {
 		String[] arg = new String[] {String.valueOf(friend.getId())};
 		try {
 			pftDAO.save(token, arg);
-			this.adjustPoints(token.getTokenFor().getCost(), "Gift to: "+friend.getName() + " Premium Feature Token: " + token.getTokenFor().getDescripiton());
+			this.adjustPoints(-1*token.getTokenFor().getCost(), "Gift to: "+friend.getName() + " Premium Feature Token: " + token.getTokenFor().getDescripiton());
 
 			return true;
 		} catch (Exception e) {
@@ -71,7 +71,7 @@ public class Member extends User {
 		String[] arg = new String[] {String.valueOf(this.getId())};
 		try {
 			pftDAO.save(token, arg);
-			this.adjustPoints(token.getTokenFor().getCost(), "Bought Premium Feature Token: " + token.getTokenFor().getDescripiton());
+			this.adjustPoints(-1*token.getTokenFor().getCost(), "Bought Premium Feature Token: " + token.getTokenFor().getDescripiton());
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,6 +132,7 @@ public class Member extends User {
 		this.friends.addFriend(newFriend);
 		this.requestsList.deleteRequest(fr);
 	}
+	
 	public void declineFriendRequest(FriendRequest fr) {
 		FriendRequestDAO frDAO = new FriendRequestDAO();
 		try {

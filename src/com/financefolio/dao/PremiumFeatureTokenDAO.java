@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.financefolio.premiumfeatures.PremiumFeatureToken;
-import com.financefolio.user.Member;
 
 public class PremiumFeatureTokenDAO implements DAO<PremiumFeatureToken> {
 	private String db_url = "jdbc:mysql://localhost:3306/financefolio";

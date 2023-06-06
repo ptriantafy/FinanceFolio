@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import com.financefolio.dao.FriendDAO;
 import com.financefolio.dao.MessageDAO;
-import com.financefolio.premiumfeatures.PremiumFeatureToken;
 import com.financefolio.social.chat.Message;
 
 import java.util.ArrayList;
@@ -24,10 +23,10 @@ public class FriendsList {
 			fDAO.delete(friend);
 //			passing a dummy message as argument in case conversation = null
 			messDAO.delete(new Message(-1, -1, -1, "Dummy Message", null, friend.getConversation().getChat_id()));
+			this.friendsList.remove(friend);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.friendsList.remove(friend);
 	}
 	
 	public void addFriend(Friend newFriend) {

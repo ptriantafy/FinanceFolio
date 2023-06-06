@@ -8,12 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import com.financefolio.premiumfeatures.PremiumFeature;
-import com.financefolio.premiumfeatures.PremiumFeatureToken;
-import com.financefolio.user.Member;
 
 public class PremiumFeatureDAO implements DAO<PremiumFeature> {
 	private String db_url = "jdbc:mysql://localhost:3306/financefolio";
