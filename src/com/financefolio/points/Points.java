@@ -39,4 +39,8 @@ public class Points {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
+	@Override
+	public String toString() {
+		return "\n id:" + String.valueOf(this.getId()) + " amount: "+String.valueOf(this.getAmount()) + " reason: "+String.valueOf(this.getReason()) + " time: " + String.valueOf(this.getTimestamp()) +"\n";
+	}
 }

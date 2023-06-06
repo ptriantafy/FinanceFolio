@@ -200,11 +200,11 @@ CREATE TABLE premium_features(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE premium_feature_tokens(
-  token_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  token_id BIGINT AUTO_INCREMENT,
   received_on DATE NOT NULL,
   member_id SMALLINT UNSIGNED NOT NULL,
   feature_id INT UNSIGNED NOT NULL,
-  PRIMARY KEY (feature_id),
+  PRIMARY KEY (token_id),
   FOREIGN KEY (member_id) REFERENCES member(member_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (feature_id) REFERENCES feature (feature_id) ON DELETE RESTRICT ON UPDATE CASCADE
+  FOREIGN KEY (feature_id) REFERENCES premium_features (feature_id) ON DELETE RESTRICT ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

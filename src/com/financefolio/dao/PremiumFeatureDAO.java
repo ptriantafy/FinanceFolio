@@ -73,7 +73,7 @@ public class PremiumFeatureDAO implements DAO<PremiumFeature> {
 		PreparedStatement statement = con.prepareStatement("INSERT INTO premium_features(cost, description) VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS);
 		statement.setInt(1, t.getCost());
 		statement.setString(2, t.getDescripiton());
-		statement.executeQuery();
+		statement.executeUpdate();
 		ResultSet newFeatureId = statement.getGeneratedKeys();
 		int featureId = 0;
 		if (newFeatureId.next()) {

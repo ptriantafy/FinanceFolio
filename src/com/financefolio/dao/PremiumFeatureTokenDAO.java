@@ -45,7 +45,7 @@ public class PremiumFeatureTokenDAO implements DAO<PremiumFeatureToken> {
 		        statement.setInt(1, id);
 		        try (ResultSet rs = statement.executeQuery()) {
 		            if (rs.next()) {
-		                PremiumFeatureToken result = new PremiumFeatureToken(rs.getInt("tokenid"), rs.getDate("received_on"), null);
+		                PremiumFeatureToken result = new PremiumFeatureToken(rs.getInt("token_id"), rs.getDate("received_on"), null);
 		                result.fetchPremiumFeature(rs.getInt("feature_id"));
 		                return Optional.of(result);
 		            }
@@ -57,6 +57,7 @@ public class PremiumFeatureTokenDAO implements DAO<PremiumFeatureToken> {
 	public Optional<List<PremiumFeatureToken>> getAll(int member_id) throws SQLException, Exception {
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("SELECT * FROM premium_feature_tokens WHERE member_id = ?;");
+		statement.setInt(1, member_id);
 		ResultSet rs = statement.executeQuery();
 		List<PremiumFeatureToken> result = new ArrayList<>();
 		while(rs.next()) {
@@ -76,7 +77,7 @@ public class PremiumFeatureTokenDAO implements DAO<PremiumFeatureToken> {
 		statement.setDate(1, t.getReceivedOn());
 		statement.setInt(2, Integer.parseInt(Objects.requireNonNull(args[0], "ID of member cannot be null")));
 		statement.setInt(3, t.getTokenFor().getId());
-		statement.executeQuery();
+		statement.executeUpdate();
 		ResultSet newTokenId = statement.getGeneratedKeys();
 		int tokenId = 0;
 		if (newTokenId.next()) {

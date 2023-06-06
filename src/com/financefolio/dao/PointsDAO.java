@@ -42,7 +42,7 @@ public class PointsDAO implements DAO<Points>{
 	@Override
 	public Optional<Points> get(int point_id) throws SQLException, Exception {
 		try (Connection con = this.connect();
-		         PreparedStatement statement = con.prepareStatement("SELECT * FROM points point_id = ?;")) {
+		         PreparedStatement statement = con.prepareStatement("SELECT * FROM points WHERE point_id = ?;")) {
 		        statement.setInt(1, point_id);
 		        try (ResultSet rs = statement.executeQuery()) {
 		            if (rs.next()) {
@@ -99,7 +99,7 @@ public class PointsDAO implements DAO<Points>{
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("DELETE FROM points WHERE point_id = ?;");
 		statement.setInt(1, t.getId());
-		statement.executeQuery();
+		statement.executeUpdate();
 		con.close();
 	}
 

@@ -43,4 +43,8 @@ public class PremiumFeatureToken {
 	public void setTokenFor(PremiumFeature tokenFor) {
 		this.tokenFor = tokenFor;
 	}
+	@Override
+    public String toString() {
+		return "\nid: " + String.valueOf(this.getId()) + " ReceivedOn: " + String.valueOf(this.getReceivedOn()) + " For: " + this.getTokenFor().getDescripiton() +"\n";
+    }
 }

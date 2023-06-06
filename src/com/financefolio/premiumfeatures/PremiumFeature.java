@@ -29,4 +29,8 @@ public class PremiumFeature {
 	public void setDescripiton(String descripiton) {
 		this.descripiton = descripiton;
 	}
+	@Override
+    public String toString() {
+		return "\nid: " + String.valueOf(this.getId()) + " cost: " + String.valueOf(this.getCost()) + " description: " + this.getDescripiton() +"\n";
+    }
 }
