@@ -16,7 +16,6 @@ public class FriendsList {
 		this.friendsList = new ArrayList<>();
 	}
 	
-
 	public void removeFriend(Friend friend) {
 		FriendDAO fDAO = new FriendDAO();
 		MessageDAO messDAO = new MessageDAO();
@@ -24,10 +23,10 @@ public class FriendsList {
 			fDAO.delete(friend);
 //			passing a dummy message as argument in case conversation = null
 			messDAO.delete(new Message(-1, -1, -1, "Dummy Message", null, friend.getConversation().getChat_id()));
+			this.friendsList.remove(friend);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.friendsList.remove(friend);
 	}
 	
 	public void addFriend(Friend newFriend) {

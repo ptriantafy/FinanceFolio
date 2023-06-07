@@ -1,10 +1,16 @@
 package com.financefolio.user;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.financefolio.dao.MemberDAO;
+import com.financefolio.dao.PointsDAO;
+import com.financefolio.dao.PremiumFeatureTokenDAO;
+import com.financefolio.points.Points;
+import com.financefolio.points.PointsRecord;
+import com.financefolio.premiumfeatures.PremiumFeatureToken;
 import com.financefolio.dao.FriendDAO;
 import com.financefolio.dao.FriendRequestDAO;
 import com.financefolio.social.Friend;
@@ -20,7 +26,8 @@ public class Member extends User {
 	private int houseResidents;
 	private FriendsList friends;
 	private FriendRequestsList requestsList;
-	
+	private PointsRecord pointsRecord;
+	private List<PremiumFeatureToken> tokens;
 	
 	public Member(int id, String name, boolean premiumMember, int category, float income, int houseArea,
 			int houseResidents, Date date) {
@@ -32,17 +39,56 @@ public class Member extends User {
 		this.houseResidents = houseResidents;
 		this.friends = new FriendsList();
 		this.requestsList = new FriendRequestsList();
+		this.pointsRecord = new PointsRecord(new ArrayList<>());
+		this.tokens = new ArrayList<>();
 	}
 
-	public void sendFriendRequest(FriendRequest fr) {
-		FriendRequestDAO frDAO = new FriendRequestDAO();
+	public boolean giftTokenToFriend(Friend friend, PremiumFeatureToken token) {
+		if(token.getTokenFor().getCost() > this.getPointsRecord().getCurrentTotal()) {
+//			insufficient points to gift token
+			return false;
+		}
+		PremiumFeatureTokenDAO pftDAO = new PremiumFeatureTokenDAO();
+		String[] arg = new String[] {String.valueOf(friend.getId())};
 		try {
-			frDAO.save(fr, null);
+			pftDAO.save(token, arg);
+			this.adjustPoints(-1*token.getTokenFor().getCost(), "Gift to: "+friend.getName() + " Premium Feature Token: " + token.getTokenFor().getDescripiton());
+
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 	
+	public boolean buyToken(PremiumFeatureToken token) {
+		if(token.getTokenFor().getCost() > this.getPointsRecord().getCurrentTotal()) {
+//			insufficient points to buy token
+			return false;
+		}
+		this.getTokens().add(token);
+		PremiumFeatureTokenDAO pftDAO = new PremiumFeatureTokenDAO();
+		String[] arg = new String[] {String.valueOf(this.getId())};
+		try {
+			pftDAO.save(token, arg);
+			this.adjustPoints(-1*token.getTokenFor().getCost(), "Bought Premium Feature Token: " + token.getTokenFor().getDescripiton());
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public void adjustPoints(int amount, String reason) {
+		Points newPoints = new Points(-1, amount, new Timestamp(System.currentTimeMillis()), reason);
+		PointsDAO pDAO = new PointsDAO();
+		String[] arg = new String[] {String.valueOf(this.getId())};
+		try {
+			pDAO.save(newPoints, arg);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.getPointsRecord().addToRecord(newPoints);
+	}
 	
 	public List<Member> searchMember(String searchQuery) {
 	    MemberDAO memberDAO = new MemberDAO();
@@ -61,6 +107,14 @@ public class Member extends User {
 	    return filteredMembersList;
 	}
 
+	public void sendFriendRequest(FriendRequest fr) {
+		FriendRequestDAO frDAO = new FriendRequestDAO();
+		try {
+			frDAO.save(fr, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void acceptFriendRequest(FriendRequest fr) {
 //		setting chat id -1; DAO will take care of it
@@ -78,6 +132,7 @@ public class Member extends User {
 		this.friends.addFriend(newFriend);
 		this.requestsList.deleteRequest(fr);
 	}
+	
 	public void declineFriendRequest(FriendRequest fr) {
 		FriendRequestDAO frDAO = new FriendRequestDAO();
 		try {
@@ -140,6 +195,22 @@ public class Member extends User {
 	public void setCategory(int category) {
 		this.category = category;
 	}
+	public PointsRecord getPointsRecord() {
+		return pointsRecord;
+	}
+
+	public void setPointsRecord(PointsRecord pointsRecord) {
+		this.pointsRecord = pointsRecord;
+	}
+
+	public List<PremiumFeatureToken> getTokens() {
+		return tokens;
+	}
+
+	public void setTokens(List<PremiumFeatureToken> tokens) {
+		this.tokens = tokens;
+	}
+
 	@Override
     public String toString() {
         return "\nid: " + String.valueOf(this.getId())+" name: " + this.getName()+" premium: " + String.valueOf(this.isPremiumMember())

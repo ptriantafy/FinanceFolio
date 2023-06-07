@@ -104,7 +104,7 @@ public class MessageDAO implements DAO<Message> {
 	}
 
 	
-//	delete existing message
+//	delete existing chat
 	@Override
 	public void delete(Message t) throws SQLException, Exception {
 		Connection con = this.connect();

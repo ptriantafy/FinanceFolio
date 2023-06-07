@@ -33,10 +33,10 @@ public class Chat {
 		MessageDAO mDAO = new MessageDAO();
 		try {
 			mDAO.save(message, null);
+			this.messages.add(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.messages.add(message);
 	}
 	@Override
     public String toString() {

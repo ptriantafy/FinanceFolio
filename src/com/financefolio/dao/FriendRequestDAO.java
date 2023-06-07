@@ -1,5 +1,4 @@
 package com.financefolio.dao;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
