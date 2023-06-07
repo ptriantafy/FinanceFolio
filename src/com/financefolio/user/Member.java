@@ -8,6 +8,8 @@ import java.util.List;
 import com.financefolio.dao.MemberDAO;
 import com.financefolio.dao.PointsDAO;
 import com.financefolio.dao.PremiumFeatureTokenDAO;
+import com.financefolio.goals.Achievement;
+import com.financefolio.goals.Goal;
 import com.financefolio.points.Points;
 import com.financefolio.points.PointsRecord;
 import com.financefolio.premiumfeatures.PremiumFeatureToken;
@@ -142,6 +144,24 @@ public class Member extends User {
 		}
 		this.requestsList.deleteRequest(fr);
 	}
+
+	public void completeGoal(Goal goal) {
+		this.adjustPoints(goal.getReward(), "Completed Goal");
+	}
+
+	public void completeAchievement(Achievement ach) {
+		this.adjustPoints(ach.getReward(), "Completed Achievement");
+	}
+
+	public void setViewFriendsScene(){
+		System.out.println("------Friends------");
+		for (int i = 0; i < this.friends.getFriendsList().size(); i++) {
+			System.out.println((i+1) + "." + this.friends.getFriendsList().get(i).getName() + "\t" + 
+                                "Sharing level: " + this.friends.getFriendsList().get(i).getSharingLevel() +  "\n");
+		}
+	}
+
+	//#region
 	
 	public FriendsList getFriends() {
 		return friends;
@@ -210,6 +230,8 @@ public class Member extends User {
 	public void setTokens(List<PremiumFeatureToken> tokens) {
 		this.tokens = tokens;
 	}
+
+	//#endregion
 
 	@Override
     public String toString() {
