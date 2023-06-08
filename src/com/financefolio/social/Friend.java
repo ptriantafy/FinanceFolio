@@ -27,7 +27,6 @@ public class Friend {
 			e.printStackTrace();
 		}
 	}
-	
 	public int getId() {
 		return id;
 	}
