@@ -30,12 +30,11 @@ public class Bill extends Expense {
     }
 
 
-    public Bill(String type, String name, double amount, double owed) {
+    public Bill(String name, double amount) {
         super.setCategory("Bill");
         super.setAmount(amount);
         super.setName(name);
-        this.type = type;
-        this.owed = owed;
+       
     }
     
     public double getOwed() {

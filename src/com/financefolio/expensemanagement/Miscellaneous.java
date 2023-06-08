@@ -1,12 +1,11 @@
 package com.financefolio.expensemanagement;
 
-import java.security.cert.PKIXBuilderParameters;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Miscellaneous extends Expense {
 
-	List<Expense> microExpenses = new ArrayList<Expense>();
+	private List<Expense> microExpenses = new ArrayList<Expense>();
 	
 	//update sum is called every time a micro expense is added in the miscellaneous 
 	//expense category. it is used for calculating the total cost of the 
@@ -29,6 +28,11 @@ public class Miscellaneous extends Expense {
 	        super.setCategory("Miscellaneous");
 	        super.setAmount(amount);
 	        super.setName(name);
+	}
+
+	public void appendEnMass(List<Expense> t)
+	{
+		this.microExpenses = t;
 	}
 
 	public void appendMicroExpenses(Expense t)

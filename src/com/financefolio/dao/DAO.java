@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DAO<T> {
-	public Optional<T> get(int id, String[] args) throws SQLException, Exception;
+	public Optional<T> get(int id) throws SQLException, Exception;
 	public Optional<List<T>> getAll(int optional_id) throws SQLException, Exception;
     public void save(T t, String args[]) throws SQLException, Exception;
     public void update(T t, String args[]) throws SQLException, Exception;

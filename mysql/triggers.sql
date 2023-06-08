@@ -8,7 +8,7 @@ CREATE TRIGGER financefolio.bill_addition BEFORE INSERT ON bill
 FOR EACH ROW 
 BEGIN
 	DECLARE id SMALLINT UNSIGNED ;
-    INSERT INTO expense(description,expense_type, addition_date, cost) VALUES('','Bill',CURDATE(),NEW.cost);
+    INSERT INTO expense(description,expense_category, addition_date, cost) VALUES('','Bill',CURDATE(),NEW.cost);
 	SELECT MAX(expense_id) INTO id FROM expense;
     SET NEW.bill_id = id;
     IF(NEW.dateTo is NULL) THEN
@@ -27,7 +27,7 @@ CREATE TRIGGER financefolio.misc_addition BEFORE INSERT ON miscellaneous
 FOR EACH ROW 
 BEGIN
 	DECLARE id SMALLINT UNSIGNED ;
-    INSERT INTO expense(description,expense_type, addition_date, cost) VALUES('','Miscellaneous',CURDATE(),NEW.cost);
+    INSERT INTO expense(expense_name,description,expense_category, addition_date, cost) VALUES(new.misc_exp_name,'','Miscellaneous',CURDATE(),NEW.cost);
 	SELECT MAX(expense_id) INTO id FROM expense;
     SET NEW.misc_id = id;
 END$
@@ -70,7 +70,7 @@ CREATE TRIGGER financefolio.subscription_addition BEFORE INSERT ON subscription
 FOR EACH ROW 
 BEGIN
 	DECLARE id SMALLINT UNSIGNED ;
-    INSERT INTO expense(description,expense_type, addition_date, cost) VALUES('','Subscription',CURDATE(),NEW.cost);
+    INSERT INTO expense(expense_name, description,expense_category, addition_date, cost) VALUES(new.sub_name,'','Subscription',CURDATE(),NEW.cost);
 	SELECT MAX(expense_id) INTO id FROM expense;
     SET NEW.subscription_id = id;
 END$

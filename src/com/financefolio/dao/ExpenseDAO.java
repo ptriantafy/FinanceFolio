@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.*;
-import java.sql.Date;
+
 
 
 import com.financefolio.expensemanagement.*;
@@ -28,8 +28,13 @@ public class ExpenseDAO implements DAO<Expense>{
         return con;
         
     }
+
+
+
+
+
     @Override
-    public Optional<Expense> get(int id, String[] params ) throws SQLException, Exception 
+    public Optional<Expense> get(int id) throws SQLException, Exception 
     {
         //Create Expense object
         Expense result = new Expense();
@@ -39,57 +44,158 @@ public class ExpenseDAO implements DAO<Expense>{
         
         //DB query
         String query = "SELECT * FROM expense WHERE expense_id = ? ;";
-        if(params[0] == "Bill")
-        {
-            query = "SELECT * FROM Bill WHERE expense_id = ? ;";
-        }
-        else if(params[0] == "Subscription")
-        {
 
-        }
-        else if(params[0] == "Miscellaneous")
-        {
+        //Expense type
+        String expense_type = "";
 
-        }
-        else
-        {
-            query = "SELECT * FROM expense WHERE expense_id = ? ;";
-        }
 
-    
-
-        //Try to query the database
-        try(PreparedStatement stmt = con.prepareStatement(query)) 
+        //Search object in the expense table and find its attributes
+        try(PreparedStatement stmt = con.prepareStatement(query))
         {
-            
             stmt.setInt(1,id);
-            
+        
             ResultSet rs = stmt.executeQuery();
-            
-            //Get row if exists 
             if(rs.next())
             {
-                result.setCategory(rs.getString("expense_type"));
+                result.setName(rs.getString("expense_name"));
+                result.setCategory(rs.getString("expense_category"));
                 result.setId(rs.getInt("expense_id"));
                 result.setAmount(rs.getDouble("cost")); 
                 result.setAdditionDate(rs.getDate("addition_date"));
-
-                if(params[0]=="Bill")
-                {
-                    ((Bill)result).setType(rs.getString("bill_type"));
-                    ((Bill)result).getOwed(rs.getDouble("owed"));
-                }
-
-            }
+             }
         } 
-        catch (Exception e) 
-        {
+        catch (Exception e) {
             System.out.println(e);
         }
+
+
+        //Based on the type of the expense retrieved, fetch from the corresonding table
+        if(result.getSelectedCategory().equals("Miscellaneous"))
+        {
+            Miscellaneous misc = new Miscellaneous(result.getName(),result.getAmount());
+            List<Expense> micros = new ArrayList<Expense>();
+
+            //Query the misc table
+            query = "SELECT * FROM Miscellaneous WHERE misc_id = ? ;";
+
+
+            try(PreparedStatement stmt = con.prepareStatement(query))
+            {
+                stmt.setInt(1,id);
+            
+                ResultSet rs = stmt.executeQuery();
+                if(rs.next())
+                {
+
+                    //fetch misc expense's micro expenses
+                    micros = this.getAll(2).get();
+                    misc.appendEnMass(micros);
+                    
+                    //cast misc as expense
+                    result = (Expense)misc;
+                }
+
+            } 
+            catch (Exception e) {
+                // TODO: handle exception
+            }
+
+        }
+
+        else if(result.getSelectedCategory().equals("Bill"))
+        {
+            
+        }
+
+        // //Query the database
+
+        // try(PreparedStatement stmt = con.prepareStatement(query))
+        // {
+        //     stmt.setInt(1,id);
+            
+        //     ResultSet rs = stmt.executeQuery();
+        //     if(rs.next())
+        //     {
+        //         result.setCategory(rs.getString("expense_type"));
+        //         result.setId(rs.getInt("expense_id"));
+        //         result.setAmount(rs.getDouble("cost")); 
+        //         result.setAdditionDate(rs.getDate("addition_date"));
+        //     }
+
+        //     if(result.getSelectedCategory().equals("Bill"))
+        //     {
+        //         query = "SELECT * FROM Bill WHERE bill_id = ? ;";
+
+        //     }
+        //     else if(result.getSelectedCategory().equals("Subscription"))
+        //     {
+        //         query = "SELECT * FROM Subscription WHERE subscription_id = ? ;";
+
+        //     }
+        //     else if(result.getSelectedCategory().equals("Miscellaneous"))
+        //     {
+        //         System.out.println("Check");
+        //         query = "SELECT * FROM Miscellaneous WHERE misc_id = ? ;";
+
+        //     }
+
+            
+        // } 
+        // catch (Exception e)
+        // {
+        //     //System.out.println(e);
+        // }
+
+        
+        // //Try to query the database
+        // try(PreparedStatement stmt = con.prepareStatement(query)) 
+        // {
+            
+        //     stmt.setInt(1,id);
+            
+        //     ResultSet rs = stmt.executeQuery();
+            
+        //     //Get row if exists 
+        //     if(rs.next())
+        //     {
+                
+            
+        //         if(result.getSelectedCategory().equals("Bill"))
+        //         {
+        //             Bill bill = (Bill) result;
+        //             bill.setType(rs.getString("bill_type"));
+        //             bill.setOwed(rs.getDouble("owed"));
+        //             bill.setDateFrom(rs.getDate("dateFrom"));
+        //             bill.setDateTo(rs.getDate("dateTo"));
+        //             //result = bill;
+        //         }
+        //         else if(result.getSelectedCategory().equals("Miscellaneous"))
+        //         {
+        //             Miscellaneous misc = (Miscellaneous) result;
+        //             List<Expense> micro_expenses = new ArrayList<Expense>();
+        //             micro_expenses = this.getAll(id).get();
+        //             misc.appendEnMass(micro_expenses);
+        //             //result = misc;
+        //         }
+        //         else if(result.getSelectedCategory().equals("Subscription"))
+        //         {
+        //             Subscription sub = (Subscription) result;
+        //             sub.setNextBillingDate(rs.getDate("next_billing_date"));
+        //             //result = sub;
+        //         }
+
+        //     }
+        // } 
+        // catch (Exception e) 
+        // {
+        //     System.out.println(e);
+        // }
+
         
         //Terminate connection
-        
         con.close();
+
+
         return Optional.ofNullable(result);
     }
     
@@ -107,38 +213,60 @@ public class ExpenseDAO implements DAO<Expense>{
         if(id < 0)
         {
             query = "SELECT * FROM expense;";
+            //Try to query the database
+            try(PreparedStatement stmt = con.prepareStatement(query)) 
+            {
+                
+                ResultSet rs = stmt.executeQuery();
+    
+                //Get row if exists 
+                while(rs.next())
+                {
+                    Expense temp_result = new Expense();
+                    temp_result.setName(rs.getString("expense_name"));
+                    temp_result.setCategory(rs.getString("expense_category"));
+                    temp_result.setId(rs.getInt("expense_id"));
+                    temp_result.setAmount(rs.getDouble("cost")); 
+                    temp_result.setAdditionDate(rs.getDate("addition_date"));
+    
+                    result.add(temp_result);
+                }
+            } 
+            catch (Exception e) 
+            {
+                System.out.println(e);
+            }
         }
         else
         {
             query = "SELECT * FROM misc_micro_expenses WHERE parent_expense_id = ?;";
-        }
-
-        //Try to query the database
-        try(PreparedStatement stmt = con.prepareStatement(query)) 
-        {
-            if(id > -1)
+            //Try to query the database
+            try(PreparedStatement stmt = con.prepareStatement(query)) 
             {
+    
+                
                 stmt.setInt(1,id);
-            }
-
-            ResultSet rs = stmt.executeQuery();
-
-            //Get row if exists 
-            while(rs.next())
+                
+                ResultSet rs = stmt.executeQuery();
+    
+                //Get row if exists 
+                while(rs.next())
+                {
+                    Expense temp_result = new Expense();
+                    temp_result.setId(rs.getInt("micro_expense_id"));
+                    temp_result.setAmount(rs.getDouble("cost")); 
+                    temp_result.setName(rs.getString("micro_expense_name")); 
+    
+                    result.add(temp_result);
+                }
+            } 
+            catch (Exception e) 
             {
-                Expense temp_result = new Expense();
-                temp_result.setCategory(rs.getString("expense_type"));
-                temp_result.setId(rs.getInt("expense_id"));
-                temp_result.setAmount(rs.getDouble("cost")); 
-                temp_result.setAdditionDate(rs.getDate("addition_date"));
+                System.out.println(e);
 
-                result.add(temp_result);
             }
-        } 
-        catch (Exception e) 
-        {
-            System.out.println(e);
         }
+
         
         con.close();
         return Optional.ofNullable(result);
