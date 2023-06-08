@@ -49,9 +49,10 @@ public class GoalDAO implements DAO<Goal>{
     }
 
     @Override
-    public Optional<List<Goal>> getAll(int dummy) throws Exception {
+    public Optional<List<Goal>> getAll(int ownerId) throws Exception {
         Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("SELECT * FROM goals;");
+		PreparedStatement statement = con.prepareStatement("SELECT * FROM goals where owner_id = ?;");
+        statement.setInt(1, ownerId);
 		ResultSet rs = statement.executeQuery();
 		List<Goal> result = new ArrayList<Goal>();
 		while(rs.next()) {
@@ -62,6 +63,8 @@ public class GoalDAO implements DAO<Goal>{
                                        rs.getLong("time_duration"),
                                        rs.getFloat("money_to_spend"));
             tempresult.setState(rs.getString("state"));
+            tempresult.setReward(rs.getInt("reward"));
+            tempresult.setDifficulty(rs.getInt("difficulty"));
 			result.add(tempresult);
 		}
 		con.close();

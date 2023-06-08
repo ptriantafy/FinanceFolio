@@ -80,6 +80,7 @@ public class Member extends User {
 			return false;
 		}
 	}
+
 	public void adjustPoints(int amount, String reason) {
 		Points newPoints = new Points(-1, amount, new Timestamp(System.currentTimeMillis()), reason);
 		PointsDAO pDAO = new PointsDAO();
@@ -145,20 +146,31 @@ public class Member extends User {
 		this.requestsList.deleteRequest(fr);
 	}
 
-	public void completeGoal(Goal goal) {
-		this.adjustPoints(goal.getReward(), "Completed Goal");
+	public void goalCompletion(Goal goal, boolean comp) {
+		if(comp == true){
+			this.adjustPoints(goal.getReward(), "Goal Completed!");
+			System.out.println("Goal completed!" + "\n");
+		} else 
+			this.adjustPoints(goal.getReward()*(-15/100), "Goal failed!");
+			
 	}
 
-	public void completeAchievement(Achievement ach) {
+	public void achievementCompletion(Achievement ach) {
 		this.adjustPoints(ach.getReward(), "Completed Achievement");
+		System.out.println("Achievement completed!");
 	}
 
 	public void setViewFriendsScene(){
 		System.out.println("------Friends------");
 		for (int i = 0; i < this.friends.getFriendsList().size(); i++) {
-			System.out.println((i+1) + "." + this.friends.getFriendsList().get(i).getName() + "\t" + 
-                                "Sharing level: " + this.friends.getFriendsList().get(i).getSharingLevel() +  "\n");
+			System.out.println((i+1) + "." + this.friends.getFriendsList().get(i).getName() + "\n" +
+				"Sharing level: " + this.friends.getFriendsList().get(i).getSharingLevel() + "\n");
 		}
+		
+	}
+
+	public int getCurrentPoints(){
+		return this.pointsRecord.getCurrentTotal();
 	}
 
 	//#region
