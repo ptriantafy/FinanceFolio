@@ -54,8 +54,4 @@ public class GoalsHistory {
             }
         }
     }
-
-    public void setOverallGoalsScene(){
-
-    }
 }
