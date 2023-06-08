@@ -54,6 +54,7 @@ public class ExpenseManagement {
             {
                 Expense micro = ((Miscellaneous)exp).getMicroExpense(i);
                 //Print micro expense attributes
+                System.out.println("");
                 System.out.print("  ");
                 System.out.print(micro.getName());
                 System.out.print(" | ");
@@ -86,7 +87,7 @@ public class ExpenseManagement {
         Expense curr_exp = new Expense();
         while(true)
         {
-            System.out.println("Enter index number of the expense you want to see the details for. Enter add to add expense");
+            System.out.println("Enter index number of the expense you want to see the details for. Enter 0 to add expense");
             String input_buffer = sc.nextLine();
             try {
 
@@ -97,7 +98,6 @@ public class ExpenseManagement {
                     //Get the expense_id of the indexed expense
                     int id; 
                     id =  expenseList.get(index).getId();
-                    System.out.println(id);
                     //Fetch expense data from db
                     curr_exp = expDAO.get(id).get();
                     
@@ -117,7 +117,6 @@ public class ExpenseManagement {
             
         }
         sc.close();
-        System.out.println(((Miscellaneous)curr_exp).getNumberOfMicroExpenses());
         this.printExpenseDetails(curr_exp);
     }
 

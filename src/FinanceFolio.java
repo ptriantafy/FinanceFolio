@@ -22,6 +22,7 @@ public class FinanceFolio
         }
         System.out.println(((Miscellaneous)exp).getNumberOfMicroExpenses());
         //Print basic expense attributes
+        System.out.println("");
         System.out.print(exp.getName());
         System.out.print(" | ");
         System.out.print(exp.getAmount());
