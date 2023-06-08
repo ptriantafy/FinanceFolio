@@ -143,5 +143,10 @@ public class Goal {
         }
     }
 
+    public void setViewGoalScene(Goal goal){
+        System.out.println("\n" + goal.getName() + "\t" + "Status:" + goal.getState() + "\n" +
+                            "Reward: " + goal.getReward() + "\t" + "Difficulty: " + goal.getDifficulty() + "\n");
+    }
+
     //#endregion
 }
