@@ -20,8 +20,8 @@ public class MemberDAO implements DAO<Member> {
 	//constructor
 	public MemberDAO()
 	{
-		this.usrname = "FinanceFolioJava";
-		this.password = "FinFolJavPass";
+		this.usrname = "root";
+        this.password = "Dfg5c12af49gr58";
 	}
 	
 	public Connection connect() throws Exception
