@@ -115,7 +115,7 @@ package com.financefolio.premiumfeatures{
 }
 ' premiumfeatures package relations
 PremiumFeature --o PremiumFeatureToken
-PremiumFeatureToken --* Member
+PremiumFeatureToken --o Member
 
 package com.financefolio.points{ 
     class PointsRecord{
@@ -197,8 +197,8 @@ package com.financefolio.social{
 'social  package relations
 Friend --* FriendsList
 FriendRequest --* FriendRequestsList
-Member *--FriendRequestsList
-Member *--FriendsList
+Member o--FriendRequestsList
+Member o--FriendsList
 
 package com.financefolio.diagrams{
     class DiagramsRecord{
