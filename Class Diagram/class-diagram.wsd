@@ -38,6 +38,7 @@ package com.financefolio.forum{
 
 package com.financefolio.calendar{ 
     class Calendar{
+        -calendar_id: int
         -reminderList: List<Reminder>
         +saveReminderToCalendar(): void
         +updateReminder(): void
@@ -45,10 +46,13 @@ package com.financefolio.calendar{
     }
 
     class Reminder{
+        -reminder_id: int
         -body: String
-        -notifyBefore: Date
+        -DaynotifyBefore: String
+        -HourNotifyBefore: String
+        -payment_frequency: String
         -frequency: int
-        -date: Date
+        -date: String
     }
 }
 
@@ -60,6 +64,13 @@ package com.financefolio.user{
         --
         setters/getters
     }
+
+    class UserInput{
+        +handleMembershipChoice(): void
+        +handlePersonalUse(): void
+        +handleCollectiveUse(): void
+    }
+
 
     class Expert{
         -averageRating: int
@@ -329,6 +340,7 @@ User o-- Calendar
 ' user package relations
 User <|-- Member
 User <|-- Expert
+'User o-- UserInput
 Expert o-- Review
 
 'diagrams package relations 
