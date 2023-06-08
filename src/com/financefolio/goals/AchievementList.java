@@ -5,9 +5,6 @@ import com.financefolio.dao.AchievementDAO;
 
 public class AchievementList {
     private List<Achievement> achList = new ArrayList<Achievement>(); 
-    private List<Achievement> unlockedAch = new ArrayList<Achievement>();
-    private List<Achievement> lockedAch = new ArrayList<Achievement>();
-    private List<Achievement> orderedAch = new ArrayList<Achievement>();
 
     //methods
 
@@ -20,22 +17,27 @@ public class AchievementList {
         }
     }
 
-    public void sortUnlockedLocked(){
-        for (int i = 0; i < achList.size(); i++) {
-            if(achList.get(i).getState().equals("UNLOCKED"))
-                unlockedAch.add(achList.get(i));
-            else
-                lockedAch.add(achList.get(i));
-        }
-        orderedAch.addAll(unlockedAch);
-        orderedAch.addAll(lockedAch);
+    public Achievement getAchievement(int index){
+        return this.achList.get(index);
     }
+
     public void setViewAchievementsScene() {
-        System.out.println("------Achievements------");
-        for (int i = 0; i < orderedAch.size(); i++) {
-            System.out.println((i + 1) + "." + orderedAch.get(i).getDescription() + "\n" + 
-                                "Reward: " + orderedAch.get(i).getReward() + "\t" + 
-                                "State: " + orderedAch.get(i).getState() + "\n");
+        System.out.println("\n" + "------Unlocked Achievements------" + "\n");
+        for (int i = 0; i < achList.size(); i++) {
+            if(achList.get(i).getState().equals("UNLOCKED")){
+                System.out.println((i + 1) + "." + achList.get(i).getDescription() + "\n" + 
+                                "Reward: " + achList.get(i).getReward() + "\t" + 
+                                "State: " + achList.get(i).getState() + "\n");
+            }
+            
+        }
+        System.out.println("\n" + "------Locked Achievements------" + "\n");
+        for (int i = 0; i < achList.size(); i++) {
+            if(achList.get(i).getState().equals("LOCKED")){
+                System.out.println((i + 1) + "." + achList.get(i).getDescription() + "\n" + 
+                                "Reward: " + achList.get(i).getReward() + "\t" + 
+                                "State: " + achList.get(i).getState() + "\n");
+            }
         }
     }
 }

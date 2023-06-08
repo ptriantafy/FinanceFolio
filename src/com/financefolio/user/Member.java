@@ -13,8 +13,10 @@ import com.financefolio.goals.Goal;
 import com.financefolio.points.Points;
 import com.financefolio.points.PointsRecord;
 import com.financefolio.premiumfeatures.PremiumFeatureToken;
+import com.financefolio.dao.AchievementDAO;
 import com.financefolio.dao.FriendDAO;
 import com.financefolio.dao.FriendRequestDAO;
+import com.financefolio.dao.GoalDAO;
 import com.financefolio.social.Friend;
 import com.financefolio.social.FriendRequest;
 import com.financefolio.social.FriendRequestsList;
@@ -147,16 +149,37 @@ public class Member extends User {
 	}
 
 	public void goalCompletion(Goal goal, boolean comp) {
+		GoalDAO gd = new GoalDAO();
 		if(comp == true){
 			this.adjustPoints(goal.getReward(), "Goal Completed!");
+			goal.setState("completed");
+			try {
+				gd.update(goal);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 			System.out.println("Goal completed!" + "\n");
-		} else 
+		} else {
 			this.adjustPoints(goal.getReward()*(-15/100), "Goal failed!");
+			goal.setState("failed");
+			try {
+				gd.update(goal);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
 			
 	}
 
 	public void achievementCompletion(Achievement ach) {
+		AchievementDAO ad = new AchievementDAO();
 		this.adjustPoints(ach.getReward(), "Completed Achievement");
+		ach.setState("UNLOCKED");
+		try {
+			ad.update(ach);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		System.out.println("Achievement completed!");
 	}
 

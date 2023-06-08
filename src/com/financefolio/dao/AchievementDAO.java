@@ -59,6 +59,7 @@ public class AchievementDAO implements DAO<Achievement>{
                                        rs.getString("type"),
                                        rs.getInt("time_to_complete")); 
             tempresult.setState(rs.getString("state"));
+            tempresult.setAchievementId(rs.getInt("achievement_id"));
             tempresult.setReward();
 			result.add(tempresult);
 		}
@@ -104,7 +105,28 @@ public class AchievementDAO implements DAO<Achievement>{
     }
 
     @Override
-    public void update(Achievement ach) throws Exception {}
+    public void update(Achievement ach) throws Exception {
+        Connection con = null;
+        PreparedStatement statement = null;
+        
+        try {
+            con = this.connect();
+            statement = con.prepareStatement("UPDATE achievements SET state = ? WHERE achievement_id = ?;");
+            
+            statement.setString(1, ach.getState());
+            statement.setInt(2, ach.getAchievementId());
+            
+            statement.executeUpdate();
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 
     @Override 
     public void delete(Achievement ach) throws Exception {}
