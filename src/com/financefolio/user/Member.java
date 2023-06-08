@@ -31,11 +31,14 @@ public class Member extends User {
 	protected void displayMemberInfo() {
 	    System.out.println("Premium Member: " + premiumMember);
 	    System.out.println("Category:" + category);
+	    if(income!=0) {
 	    System.out.println("Income: " + income);
+	    }	
+	    if(houseArea!=0 && houseResidents!=0) {
 	    System.out.println("Square Meters: " + houseArea);
 	    System.out.println("Number of Residents: " + houseResidents);
-	  
-	}	
+	    }
+	}
 	
 	public void updateHouseDetails(int area, int residents) {
 		this.setHouseArea(area);

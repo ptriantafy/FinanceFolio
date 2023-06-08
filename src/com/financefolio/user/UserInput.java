@@ -27,17 +27,27 @@ public class UserInput{
 	        String goal = sc.nextLine();
 	        System.out.println("Kind of consumer: ");
 	        String consumer = sc.nextLine();
-	        System.out.println("Please fill in the square meters of your house and how many people live in it.\n Square meters: ");
+	        System.out.println("Please fill in the square meters of your house and how many people live in it. (If you don't plan to fill in your house details, write 0 in the next 2 inputs.)\n Square meters: ");
 	        int houseArea = sc.nextInt();
 	        member.setHouseArea(houseArea);
 	        System.out.println("Number of people: ");
 	        int houseResidents = sc.nextInt();
 	        member.setHouseResidents(houseResidents);
 	        sc.nextLine();
+	        if (houseArea==0 && houseResidents==0) {
+	        	System.out.println("Note: You are excluded from comparing household bills with other users in your category!");
+	        	
+	        }
 	        System.out.println("Please enter your work status and your income range. Work status: ");
 	        String status = sc.nextLine();
 	        System.out.println("Income range: ");
 	        float income = sc.nextFloat();
+	        if(status=="" && income==0) {
+	        	
+	           System.out.println("Note: You are exluded from comparing expenses with other users in your category. When you achieve goals, you will earn the minimum points.");
+	        	
+	        	
+	        }
 	        if (income >= 0 && income < 4000) {
 	            member.setCategory(1);
 	        } else if (income >= 4000 && income < 5500) {
