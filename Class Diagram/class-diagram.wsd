@@ -4,13 +4,10 @@ skinparam classAttributeIconSize 0
 package com.financefolio.forum{ 
     class Forum {
      -posts: List<Question>
-     +requestFetch(): void
      +sortByRating(): void
-     +getQuestionSelected(): Question
-     +insertToList(): void
-     +searchQuestion(): List<Question>
-     +addCommentToQuestion(): void
-     +registerVoteOnSelectedComment(): void
+     +getQuestionSelected(): void
+     +searchQuestion(): Question
+    '  +addCommentToQuestion(): void
     }
 
     class Question{
@@ -20,9 +17,11 @@ package com.financefolio.forum{
         -upvotes: int
         -downvotes: int
         -comments: List<Comment>
-        +requestInsert():void
-        +requestUpdate():void
-        +addVote(): void
+        +registerVoteOnSelectedComment(): void
+        +addCommentToQuestion()
+        ' +requestInsert():void
+        ' +requestUpdate():void
+        ' +addVote(): void
     }
 
     class Comment{
@@ -39,6 +38,7 @@ package com.financefolio.forum{
 
 package com.financefolio.calendar{ 
     class Calendar{
+        -calendar_id: int
         -reminderList: List<Reminder>
         +saveReminderToCalendar(): void
         +updateReminder(): void
@@ -46,11 +46,13 @@ package com.financefolio.calendar{
     }
 
     class Reminder{
+        -reminder_id: int
         -body: String
-        -notifyBefore: Date
+        -DaynotifyBefore: String
+        -HourNotifyBefore: String
+        -payment_frequency: String
         -frequency: int
-        -date: Date
-        +getFrequency(): int
+        -date: String
     }
 }
 
@@ -58,7 +60,17 @@ package com.financefolio.user{
     class User{
         -name: String
         -id: int
+        -registerDate: Date
+        --
+        setters/getters
     }
+
+    class UserInput{
+        +handleMembershipChoice(): void
+        +handlePersonalUse(): void
+        +handleCollectiveUse(): void
+    }
+
 
     class Expert{
         -averageRating: int
@@ -66,20 +78,24 @@ package com.financefolio.user{
     }
 
     class Member{
-        -premiumMember: boolean
         -category: int
-        -income: float
+        -friends: FriendsList
         -houseArea: int
         -houseResidents: int
-        -friends: List<Friend>
-        +updateHouseDetails(): void
-        +updateIncome(): void
-        +updateMembership(): void
-        ' +savePreferences(): void
+        -income: float
+        -pointsRecord: PointsRecord
+        -premiumMember: boolean
+        -requestsList: FriendRequestsList
+        -tokens: List<PremiumFeatureToken>
+        +acceptFriendRequest(): void
+        +adjustPoints(): void
+        +buyToken(): void
+        +declineFriendRequest(): void
+        +giftTokenToFriend(): void
+        +searchMember(): List<Member>
         +sendFriendRequest(): void
-        +addFriend(): void
-        +removeFriend(): void
-        +isFriendsListEmpty(): boolean
+        --
+        setters/getters
     }
 
     class Review{
@@ -90,39 +106,110 @@ package com.financefolio.user{
     }
 }
 
-'note: Panagiwtakis left the chat.'
-package com.financefolio.chat{ 
-    class Chat{
-        -conversation: List<Message>
-        +sendMessageTo(): void
+package com.financefolio.premiumfeatures{
+    class PremiumFeature{
+        -cost: int
+        -description: String
+        -id: int
+        --
+        setters/getters
     }
 
-    class Message{
-        -body: String
-        -sentOn: Time
+    class PremiumFeatureToken{
+        -id: int
+        -receivedOn: Date
+        -tokenFor: PremiumFeature
+        +fetchPremiumFeature(): void
+        --
+        setters/getters
     }
 }
-
+' premiumfeatures package relations
+PremiumFeature --o PremiumFeatureToken
+PremiumFeatureToken --* Member
 
 package com.financefolio.points{ 
     class PointsRecord{
-        'TODO: needs some thought '
+        -record: List<Points>
+        +addToRecord(): void
+        --
+        setters/getters
+    }
+    class Points{
+        -amount: int
+        -id: int
+        -reason: String
+        -timestamp: Timestamp
+        --
+        setters/getters
     }
 }
+' points package relations
+Points --* PointsRecord
+Member *-- PointsRecord
 
 package com.financefolio.social{ 
+    package com.financefolio.social.chat{ 
+        class Chat{
+            -messages: List<Message>
+            -chat_id: int
+            +sendMessage(): void
+            --
+            setters/getters
+        }
 
+        class Message{
+            -body: String
+            -chat_id: int
+            -id: int
+            -receiver_id: int
+            -sender_id: int
+            -sentOn: Timestamp
+            --
+            setters/getters
+        }
+    }
+    ' chat package relations
+    Chat *-- Message
+    Friend *-- Chat
+
+    class FriendRequest{
+        -receiverId: int
+        -requestId: int
+        -senderId: int
+        -senderSharingLevel: int
+        -sentOn: Timestamp
+        --
+        setters/getters
+    }
+    class FriendRequestsList{
+        -requests: List<FriendRequest>
+        +deleteRequest(): void
+        --
+        setters/getters
+    }
+    class FriendsList{
+        -friendsList: List<Friends>
+        +addFriend(): void
+        +removeFriend():void
+        --
+        setters/getters
+    }
     class Friend{
+        -conversation: Chat
+        -friendsSince: Date
         -id: int
         -name: String
-        -dateAdded: Date
         -sharingLevel: int
-        -type: String
-    }
-
-    class Sharing{
+        --
+        setters/getters
     }
 }
+'social  package relations
+Friend --* FriendsList
+FriendRequest --* FriendRequestsList
+Member *--FriendRequestsList
+Member *--FriendsList
 
 package com.financefolio.diagrams{
     class DiagramsRecord{
@@ -139,20 +226,17 @@ package com.financefolio.diagrams{
 package com.financefolio.expense{
     class Expense{
         ' -name: String'
-        -date: Date
-        -description: String
-        -cost: float
+        -category: String
+        -name: String
+        -amount: int
+        +getSelectedCategory(): String 
     }
 
     class Subscription{
-        -nextDate: Date
-        +setReminder(): void
-        +updateReminder(): void
     }
 
     class Miscellaneous{
-        -name: String
-        -cost: float
+
     }
 
     class MiscellaneousList{
@@ -160,9 +244,7 @@ package com.financefolio.expense{
     }
 
     class Bill{
-        -owed: float
-        -dateFrom: Date
-        -dateto: Date
+
     }
 
     class Power{ 
@@ -175,12 +257,11 @@ package com.financefolio.expense{
     }
 
     class ExpenseList{
-        -expenses: List<Expense>
-        +pushToList(): void
-        +calcDiagram(): void
-        +getExpense():Expense
-        +requestUpdate(): void
+        -number: int
+        -expensesInList: List<Expense>
         +updateInList(): void
+        +getAllExpensesList(): List<Expense>
+        +addExpensesInList(): void
     }
 }
 
@@ -214,37 +295,39 @@ package com.financefolio.goals{
     }
 }
 
-package com.financefolio.dao{
-    interface DAO{
-        get(): Optional <T>
-        getAll(): List<T> 
-        save(): void
-        update(): void
-        delete(): void
+package com.financefolio.statistics
+{
+    class statistics
+    {
+        -totalExpenses: float
+        -totalBillExpenses: float
+        -pwrExpenses: float
+        -wtrExpenses: float
+        -telExpenses: float
+        -totalSubscriptionExpenses: float
+        -totalMiscExpenses: float
+        +calcGlobalStats(): void
+        +checkUserGlobalStanding(): void
+        +calcUserGlobalStats(): void
     }
-
-    class QuestionDAO{}
-    
-    class MemberDAO{}
-    
-    class CommentDAO{}
-    
-    class SubscriptionDAO{}
-    
-    class MiscellaneousDAO{}
-    
-    class PhoneDAO{}
-    
-    class PowerDAO{}
-    
-    class WaterDAO{}
-
-    class GoalDAO{}
-
-    class AchievementDAO{}
-
-    class ReminderDAO{} 
 }
+
+package com.financefolio.diagrams
+{
+    class diagram
+    {
+        -xAxis: List<float>
+        -yAxis: List<float>
+        setters/getters                                           
+    }
+    class diagramCalculation
+    {
+        -diagramList: List<diagram>
+        +createDiagram: void
+
+    }
+}
+
 
 ' forum package relations
 Forum *-- Question
@@ -257,17 +340,8 @@ User o-- Calendar
 ' user package relations
 User <|-- Member
 User <|-- Expert
+'User o-- UserInput
 Expert o-- Review
-
-' chat package relations
-Chat *-- Message
-
-' points package relations
-Member *-- PointsRecord
-
-'social  package relations
-Friend -- Sharing
-Member o-- Friend
 
 'diagrams package relations 
 DiagramsRecord *-- Diagram
@@ -289,8 +363,138 @@ Miscellaneous --* MiscellaneousList
 Expense <|-- Subscription
 ExpenseList *-- Expense
 
+newpage
+
+package com.financefolio.dao{
+    interface DAO{
+        +get(): Optional <T>
+        +getAll(): Optinal <List<T>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+    class MemberDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +connect(): Connection
+        +get(): Optional <Member>
+        +getAll(): Optinal <List<Member>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+    class MessageDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +connect(): Connection
+        +get(): Optional <Message>
+        +getAll(): Optinal <List<Message>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+
+    class FriendRequestDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +connect(): Connection
+        +get(): Optional <FriendRequest>
+        +getAll(): Optinal <List<FriendRequest>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+
+    class FriendDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +connect(): Connection
+        +get(): Optional <Friend>
+        +getAll(): Optinal <List<Friend>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+    class QuestionDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +connect(): Connection
+        +get(): Optional <Question>
+        +getAll(): Optinal <List<Question>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+    
+    class CommentDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +connect(): Connection
+        +get(): Optional <Comment>
+        +getAll(): Optinal <List<Comment>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+    
+    class PointsDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +connect(): Connection
+        +get(): Optional <Points>
+        +getAll(): Optinal <List<Points>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+
+    class PremiumFeatureTokenDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +connect(): Connection
+        +get(): Optional <PremiumFeatureToken>
+        +getAll(): Optinal <List<PremiumFeatureToken>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+
+    class PremiumFeatureDAO{
+        -db_url: String
+        -password: String
+        -usrname: String
+        +connect(): Connection
+        +get(): Optional <PremiumFeature>
+        +getAll(): Optinal <List<PremiumFeature>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+    class SubscriptionDAO{}
+    
+    class MiscellaneousDAO{}
+    
+    class PhoneDAO{}
+    
+    class PowerDAO{}
+    
+    class WaterDAO{}
+
+    class GoalDAO{}
+
+    class AchievementDAO{}
+
+    class ReminderDAO{} 
+}
 'dao package relations
-DAO <|.. MemberDAO
 DAO <|.. QuestionDAO
 DAO <|.. CommentDAO
 DAO <|.. SubscriptionDAO
@@ -301,20 +505,12 @@ DAO <|.. PowerDAO
 DAO <|.. AchievementDAO
 DAO <|.. GoalDAO
 DAO <|.. ReminderDAO
-
+DAO <|.. MessageDAO
+DAO <|.. MemberDAO
+DAO <|.. FriendDAO
+DAO <|.. FriendRequestDAO
+DAO <|.. PointsDAO
+DAO <|.. PremiumFeatureDAO
+DAO <|.. PremiumFeatureTokenDAO
 ' notes
-' note top of com.financefolio.chat: "Not updated since sequence revision. Will also need a DAO."
-' note top of Power: "Missing attributes."
-' note top of Water: "Missing attributes."
-' note top of Phone: "Missing attributes."
-' note top of Sharing: "No clue."
-' note top of com.financefolio.points: "Assigned to Panagiwtakis"
-' note top of ReminderDAO: "Not in sequence diagram, probably should be."
-' note top of GoalsHistory: "Not in sequence diagram, probably should be."
-' note top of AchievementList: "Not in sequence diagram, probably should be."
-' note top of com.financefolio.social: "No clue friend."
-' note top of Review: "Belongs in this package?"
-' note top of Expert: "Design Missing."
-' note top of com.financefolio.forum: "Not updated since sequence revision."
-' note top of com.financefolio.calendar: "Not updated since sequence revision."
 @enduml

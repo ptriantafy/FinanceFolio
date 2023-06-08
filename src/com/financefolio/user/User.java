@@ -8,7 +8,7 @@ import com.financefolio.user.User;
 public class User {
 	private int id;
 	private String name;
-	private Date creationDate;
+	private Date registerDate;
 	
    public static void main(String[] args) {
 	   
@@ -22,7 +22,7 @@ public class User {
 	
 	 User newUser = new User(userId, userName);
 	 newUser.displayUserInfo();
-	 System.out.println("Creation Date: " + newUser.getCreationDate());
+	 System.out.println("Creation Date: " + newUser.getRegisterDate());
 	 
 	 Member member = new Member(newUser.getId(), newUser.getName(), false, 0, 0.0f, 0, 0);
 	 UserInput userinput = new UserInput();
@@ -36,7 +36,7 @@ public class User {
 		super();
 		this.id = id;
 		this.name = name;
-		this.creationDate = new Date();
+		this.registerDate = new Date();
 	}
 	
 	protected void displayUserInfo() {
@@ -58,12 +58,12 @@ public class User {
 		this.name = name;
 	}
 
-	public Date getCreationDate() {
-		return creationDate;
+	public Date getRegisterDate() {
+		return registerDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
+	public void setRegisterDate(Date registerDate) {
+		this.registerDate = registerDate;
 	}
 	
 	

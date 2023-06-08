@@ -19,7 +19,7 @@ public class UserInput{
 	        }
 	    }
 
-	    private void handlePersonalUse(Member member, Scanner sc) {
+	   public void handlePersonalUse(Member member, Scanner sc) {
 	        System.out.println("Please describe the reason why you are using the app, the goals you want to achieve, and what kind of customer you think you are.\n"
 	                + "Reason: ");
 	        String reason = sc.nextLine();
@@ -81,7 +81,7 @@ public class UserInput{
 	        }
 	    }
 
-	    private void handleCollectiveUse(Member member, Scanner sc) {
+	   public void handleCollectiveUse(Member member, Scanner sc) {
 	    	System.out.println("Please fill in the number of people that will use the app and how many of them have income. \n Number of people:  ");
 	        int number_of_people = sc.nextInt();
 	        System.out.println("With income: ");
