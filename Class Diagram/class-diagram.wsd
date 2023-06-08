@@ -3,31 +3,37 @@ skinparam classAttributeIconSize 0
 ' package Declarations
 package com.financefolio.forum{ 
     class Forum {
-     -posts: List<Question>
+     -forum: List<Question>
+     -searchResult: List<Question>
      +sortByRating(): void
-     +getQuestionSelected(): void
+     +getQuestion(): Question
+     +getQuestions(): void 
      +searchQuestion(): Question
-    '  +addCommentToQuestion(): void
+     +addQuestion(): void
+     +registerVoteOnQuestion(): void
     }
 
     class Question{
+        -questionId: int
+        -title: String
         -body: String
         -date: Date
-        -author: String
+        -authorId: int
         -upvotes: int
         -downvotes: int
+        -rating: float
         -comments: List<Comment>
-        +registerVoteOnSelectedComment(): void
-        +addCommentToQuestion()
-        ' +requestInsert():void
-        ' +requestUpdate():void
-        ' +addVote(): void
+        +gettersAndSetters()
+        +registerVoteOnComment(): void
+        +addCommentToQuestion() : void
     }
 
     class Comment{
+        -questionId: int
+        -commentId: int
         -body: String
         -date: Date
-        -author: String
+        -authorId: int
         -upvotes: int
         -downvotes: int
         +requestInsert():void
@@ -38,6 +44,7 @@ package com.financefolio.forum{
 
 package com.financefolio.calendar{ 
     class Calendar{
+        -calendar_id: int
         -reminderList: List<Reminder>
         +saveReminderToCalendar(): void
         +updateReminder(): void
@@ -45,10 +52,13 @@ package com.financefolio.calendar{
     }
 
     class Reminder{
+        -reminder_id: int
         -body: String
-        -notifyBefore: Date
+        -DaynotifyBefore: String
+        -HourNotifyBefore: String
+        -payment_frequency: String
         -frequency: int
-        -date: Date
+        -date: String
     }
 }
 
@@ -60,6 +70,13 @@ package com.financefolio.user{
         --
         setters/getters
     }
+
+    class UserInput{
+        +handleMembershipChoice(): void
+        +handlePersonalUse(): void
+        +handleCollectiveUse(): void
+    }
+
 
     class Expert{
         -averageRating: int
@@ -329,6 +346,7 @@ User o-- Calendar
 ' user package relations
 User <|-- Member
 User <|-- Expert
+'User o-- UserInput
 Expert o-- Review
 
 'diagrams package relations 
