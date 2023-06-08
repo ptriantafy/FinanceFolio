@@ -14,12 +14,12 @@ import com.financefolio.forum.Question;
 
 public class QuestionDAO implements DAO<Question>{
     private String db_url = "jdbc:mysql://localhost:3306/financefolio";
-    private String username;
+    private String usrname;
     private String password;
 
     public QuestionDAO()
     {
-        this.username = "root";
+        this.usrname = "root";
         this.password = "Dfg5c12af49gr58";
     }
 
@@ -28,7 +28,7 @@ public class QuestionDAO implements DAO<Question>{
         //Driver
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        Connection con = DriverManager.getConnection(db_url, username, password);
+        Connection con = DriverManager.getConnection(db_url, usrname, password);
 
         System.out.println("Connection established");
 
@@ -37,16 +37,6 @@ public class QuestionDAO implements DAO<Question>{
 
     @Override
     public Optional<Question> get(int question_id) throws Exception{
-        // Connection con = this.connect();
-		// PreparedStatement statement = con.prepareStatement("SELECT * FROM question WHERE question_id = ?;");
-		// statement.setInt(1, question_id);
-		// ResultSet rs = statement.executeQuery();
-		// Question result = new Question(rs.getInt("question_id"), rs.getString("title"), 
-        //                                 rs.getString("body"), rs.getDate("cdate"),rs.getInt("author_id"));
-        // result.setUpvotes(rs.getInt("upvotes"));
-        // result.setDownvotes(rs.getInt("downvotes"));
-        // result.setRating();
-		// con.close();
 		return null;
     }
 
@@ -73,19 +63,6 @@ public class QuestionDAO implements DAO<Question>{
     }
 
     @Override
-    // public void save(Question que, String arg[]) throws Exception { 
-    //     Connection con = this.connect();
-	// 	PreparedStatement statement = con.prepareStatement("INSERT INTO question(title, body, "
-	// 			+ "cdate, author_id) VALUES (?, ?, curdate(), ?);", Statement.RETURN_GENERATED_KEYS);
-	// 	statement.setString(1, que.getTitle());
-	// 	statement.setString(2, que.getBody());
-	// 	statement.setInt(3, que.getAuthorId());
-    //     statement.executeUpdate();
-	// 	ResultSet last_id = statement.getGeneratedKeys();
-	// 	que.setQuestionId(last_id.getInt(1));
-    //     last_id.close();
-    //     con.close();
-    // }
     public void save(Question que, String arg[]) throws Exception { 
         Connection con = null;
         PreparedStatement statement = null;

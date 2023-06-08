@@ -1,8 +1,6 @@
 package com.financefolio.goals;
 
 import com.financefolio.dao.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 public class Goal {
     //attributes
@@ -15,8 +13,6 @@ public class Goal {
     private float moneyToSpend;
     private int difficulty;
     private int reward;
-    private List<Goal> activeGoals = new ArrayList<Goal>();
-
 
     //methods
     public Goal(int goalId, int ownerId, String nameString, boolean shared, long timeDuration, float moneyToSpend) {

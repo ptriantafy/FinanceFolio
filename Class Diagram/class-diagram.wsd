@@ -36,9 +36,7 @@ package com.financefolio.forum{
         -authorId: int
         -upvotes: int
         -downvotes: int
-        +requestInsert():void
-        +requestUpdate():void
-        +addVote(): void
+        +gettersAndSetters()
     }
 }
 
@@ -273,6 +271,8 @@ package com.financefolio.expense{
 
 package com.financefolio.goals{
     class Goal{
+        -goalId: int
+        -ownerId: int
         -name: String
         -state: String
         -shared: boolean
@@ -280,24 +280,34 @@ package com.financefolio.goals{
         -moneyToSpend: float
         -difficulty: int
         -reward: int
-        +estimateDifficulty(): int
-        +getReward(): int
+        +gettersAndSetters()
+        +estimateDifficulty(): void
+        +addGoal(): void
         +modifyGoal(): void
-        +updateGoal(): void
         +deleteGoal(): void       
-    }
-
-    class Achievement{
-        -state: String
-        +calcPoints(): int
-    }
-
-    class AchievementList{ 
-        -achList: List<Achievement>
     }
 
     class GoalsHistory{ 
         -goalHistory: List<Goal>
+        +getGoal(): Goal
+        +getGoals(): void
+    }
+
+    class Achievement{
+        -achievementId: int
+        -description: String
+        -type: String
+        -state: String
+        -reward: int
+        -timeToComplete: int
+        +gettersAndSetters()
+
+    }
+
+    class AchievementList{ 
+        -achList: List<Achievement>
+        +getAchievements(): void
+        +getAchievement(): void
     }
 }
 
@@ -494,9 +504,29 @@ package com.financefolio.dao{
     
     class WaterDAO{}
 
-    class GoalDAO{}
+    class GoalDAO{
+        -db_url: String
+        -usrname: String
+        -password: String
+        +connect(): Connection
+        +get(): Optional <Goal>
+        +getAll(): Optinal <List<Goal>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
 
-    class AchievementDAO{}
+    class AchievementDAO{
+        -db_url: String
+        -usrname: String
+        -password: String
+        +connect(): Connection
+        +get(): Optional <Achievement>
+        +getAll(): Optinal <List<Achievement>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
 
     class ReminderDAO{} 
 }

@@ -12,12 +12,12 @@ import com.financefolio.goals.Achievement;
 
 public class AchievementDAO implements DAO<Achievement>{
     private String db_url = "jdbc:mysql://localhost:3306/financefolio";
-    private String username;
+    private String usrname;
     private String password;
 
     public AchievementDAO()
     {
-        this.username = "root";
+        this.usrname = "root";
         this.password = "Dfg5c12af49gr58";
     }
 
@@ -26,7 +26,7 @@ public class AchievementDAO implements DAO<Achievement>{
         //Driver
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        Connection con = DriverManager.getConnection(db_url, username, password);
+        Connection con = DriverManager.getConnection(db_url, usrname, password);
 
         System.out.println("Connection established");
 
@@ -35,16 +35,6 @@ public class AchievementDAO implements DAO<Achievement>{
 
     @Override
     public Optional<Achievement> get(int Achievement_id) throws Exception{
-        // Connection con = this.connect();
-		// PreparedStatement statement = con.prepareStatement("SELECT * FROM question WHERE question_id = ?;");
-		// statement.setInt(1, question_id);
-		// ResultSet rs = statement.executeQuery();
-		// Question result = new Question(rs.getInt("question_id"), rs.getString("title"), 
-        //                                 rs.getString("body"), rs.getDate("cdate"),rs.getInt("author_id"));
-        // result.setUpvotes(rs.getInt("upvotes"));
-        // result.setDownvotes(rs.getInt("downvotes"));
-        // result.setRating();
-		// con.close();
 		return null;
     }
 

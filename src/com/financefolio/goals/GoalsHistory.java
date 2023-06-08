@@ -7,19 +7,17 @@ import com.financefolio.dao.GoalDAO;
 
 public class GoalsHistory {
 
-    private List<Goal> Goals = new ArrayList<Goal>();
+    private List<Goal> goalsHistory = new ArrayList<Goal>();
 
 
     public Goal getGoal(int index){
-        return this.Goals.get(index);
+        return this.goalsHistory.get(index);
     }
 
     public void getGoals(int ownerId) {
         GoalDAO gd = new GoalDAO();
-        int dummy = 0;
         try {
-            Goals = gd.getAll(ownerId).get();
-            // System.out.println("Hello");
+            goalsHistory = gd.getAll(ownerId).get();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -27,30 +25,30 @@ public class GoalsHistory {
 
     public void setGoalsScene(){
         System.out.println("------Active Goals------");
-        for (int i = 0; i < this.Goals.size(); i++) {
-            if(Goals.get(i).getState().equals("in_progress"))
-                System.out.println((i+1) + "." + this.Goals.get(i).getName() + "\t" + 
-                                "Status: " + this.Goals.get(i).getState() +  "\n" +
-                                "Difficulty: " + this.Goals.get(i).getDifficulty() + "\t" +
-                                "Time Duration: " + this.Goals.get(i).getTimeDuration() + "\n");
+        for (int i = 0; i < this.goalsHistory.size(); i++) {
+            if(goalsHistory.get(i).getState().equals("in_progress"))
+                System.out.println((i+1) + "." + this.goalsHistory.get(i).getName() + "\t" + 
+                                "Status: " + this.goalsHistory.get(i).getState() +  "\n" +
+                                "Difficulty: " + this.goalsHistory.get(i).getDifficulty() + "\t" +
+                                "Time Duration: " + this.goalsHistory.get(i).getTimeDuration() + "\n");
             }
     
         System.out.println("------Completed Goals------");
-        for (int i = 0; i < this.Goals.size(); i++) {
-            if(Goals.get(i).getState().equals("completed")){
-                System.out.println((i+1) + "." + this.Goals.get(i).getName() + "\t" + 
-                                "Status: " + this.Goals.get(i).getState() +  "\n" +
-                                "Difficulty: " + this.Goals.get(i).getDifficulty() + "\t" +
-                                "Time Duration: " + this.Goals.get(i).getTimeDuration() + "\n");
+        for (int i = 0; i < this.goalsHistory.size(); i++) {
+            if(goalsHistory.get(i).getState().equals("completed")){
+                System.out.println((i+1) + "." + this.goalsHistory.get(i).getName() + "\t" + 
+                                "Status: " + this.goalsHistory.get(i).getState() +  "\n" +
+                                "Difficulty: " + this.goalsHistory.get(i).getDifficulty() + "\t" +
+                                "Time Duration: " + this.goalsHistory.get(i).getTimeDuration() + "\n");
             }
         }
         System.out.println("------Failed Goals------");
-        for (int i = 0; i < this.Goals.size(); i++) {
-            if(Goals.get(i).getState().equals("failed")){
-                System.out.println((i+1) + "." + this.Goals.get(i).getName() + "\t" + 
-                                "Status: " + this.Goals.get(i).getState() +  "\n" +
-                                "Difficulty: " + this.Goals.get(i).getDifficulty() + "\t" +
-                                "Time Duration: " + this.Goals.get(i).getTimeDuration() + "\n");
+        for (int i = 0; i < this.goalsHistory.size(); i++) {
+            if(goalsHistory.get(i).getState().equals("failed")){
+                System.out.println((i+1) + "." + this.goalsHistory.get(i).getName() + "\t" + 
+                                "Status: " + this.goalsHistory.get(i).getState() +  "\n" +
+                                "Difficulty: " + this.goalsHistory.get(i).getDifficulty() + "\t" +
+                                "Time Duration: " + this.goalsHistory.get(i).getTimeDuration() + "\n");
             }
         }
     }

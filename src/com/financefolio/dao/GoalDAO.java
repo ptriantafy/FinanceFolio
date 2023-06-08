@@ -12,12 +12,12 @@ import com.financefolio.goals.*;
 
 public class GoalDAO implements DAO<Goal>{
     private String db_url = "jdbc:mysql://localhost:3306/financefolio";
-    private String username;
+    private String usrname;
     private String password;
 
     public GoalDAO()
     {
-        this.username = "root";
+        this.usrname = "root";
         this.password = "Dfg5c12af49gr58";
     }
 
@@ -26,7 +26,7 @@ public class GoalDAO implements DAO<Goal>{
         //Driver
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        Connection con = DriverManager.getConnection(db_url, username, password);
+        Connection con = DriverManager.getConnection(db_url, usrname, password);
 
         System.out.println("Connection established");
 
@@ -35,16 +35,6 @@ public class GoalDAO implements DAO<Goal>{
 
     @Override
     public Optional<Goal> get(int goal_id) throws Exception{
-        // Connection con = this.connect();
-		// PreparedStatement statement = con.prepareStatement("SELECT * FROM question WHERE question_id = ?;");
-		// statement.setInt(1, question_id);
-		// ResultSet rs = statement.executeQuery();
-		// Question result = new Question(rs.getInt("question_id"), rs.getString("title"), 
-        //                                 rs.getString("body"), rs.getDate("cdate"),rs.getInt("author_id"));
-        // result.setUpvotes(rs.getInt("upvotes"));
-        // result.setDownvotes(rs.getInt("downvotes"));
-        // result.setRating();
-		// con.close();
 		return null;
     }
 
