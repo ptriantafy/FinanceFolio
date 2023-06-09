@@ -1,11 +1,14 @@
 package com.financefolio.expensemanagement;
 
 import java.util.Scanner;
-
+import java.text.SimpleDateFormat;
+import java.util.Formatter;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.sql.Date;
 
 public class ExpenseInput {
+
 	Scanner sc = new Scanner(System.in);
 	public void addExpense() {		
 	    //expenseinput
@@ -25,10 +28,13 @@ public class ExpenseInput {
 	    	 System.out.println("Invalid Input. Try again!\n");
 	    	 addExpense();
 	    }
+
+		sc.close();
 	}
 	
 	private void addBill() {
-		Bill bill1 = new Bill("","", 0.0, 0.0);
+		Scanner sc = new Scanner(System.in);
+		Bill bill1 = new Bill("", 0.0);
         bill1.setCategory("Bill");
         System.out.println("The selected category is: " + bill1.getSelectedCategory());
         System.out.println("power, water or phone?");
@@ -45,12 +51,24 @@ public class ExpenseInput {
         	bill1.setType("telephony");
         	addPhone(bill1);
         }
+		else {
+			System.out.println("Invalid Input. Try again!\n");
+			addBill();
+	   }
+		sc.close();
 	}
 	
 	private void addPower(Bill bl) {
-	     System.out.println("Write the month of the Power Bill");
-	     String powerMonth = sc.nextLine();
-	     bl.setName(powerMonth);
+	     System.out.println("Time to set the time frame of the Power Bill");
+	     System.out.println("Date from:");
+	     String date_from = sc.nextLine();
+		 Date date_f = Date.valueOf(date_from);
+		 bl.setDateFrom(date_f);
+
+
+		 System.out.println("Date to:");
+	     String date_to = sc.nextLine();
+		 Date date_t = Date.valueOf(date_from);
 	     System.out.println("What is the cost of the Power Bill?");
 		    double subAmount = 0.0;
 		    try {

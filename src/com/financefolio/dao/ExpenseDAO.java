@@ -232,6 +232,8 @@ public class ExpenseDAO implements DAO<Expense>{
         return Optional.ofNullable(result);
     }
 
+
+
     @Override 
     public void save (Expense t, String [] args) throws SQLException, Exception
     {
@@ -244,7 +246,7 @@ public class ExpenseDAO implements DAO<Expense>{
         if(t instanceof Bill)
         {
             
-            query = "INSERT INTO ( type, owed, cost, dateFrom, dateTo ) VALUES type = ?, owed = ?, cost = ?, dateFrom = ?, dateTo = ?;";
+            query = "INSERT INTO bill ( type, owed, cost, dateFrom, dateTo ) VALUES type = ?, owed = ?, cost = ?, dateFrom = ?, dateTo = ?;";
             try(PreparedStatement stmt = con.prepareStatement(query)) 
             {
                 stmt.setString(1,((Bill)t).getType());
@@ -293,9 +295,6 @@ public class ExpenseDAO implements DAO<Expense>{
             	System.out.println(e);
             }
         }
-
-
-        
 
         con.close();
     }
