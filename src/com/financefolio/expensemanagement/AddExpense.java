@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Formatter;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.sql.Date;
+import java.sql.*;
 
-public class ExpenseInput {
+public class AddExpense {
 
 	Scanner sc = new Scanner(System.in);
 	public void addExpense() {		
