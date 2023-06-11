@@ -23,7 +23,9 @@ public class Chat {
 		this.chat_id = chat_id;
 	}
 
-
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
 	public List<Message> getMessages() {
 		return messages;
 	}
@@ -31,10 +33,10 @@ public class Chat {
 		MessageDAO mDAO = new MessageDAO();
 		try {
 			mDAO.save(message, null);
+			this.messages.add(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.messages.add(message);
 	}
 	@Override
     public String toString() {

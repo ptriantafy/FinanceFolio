@@ -1,5 +1,4 @@
 package com.financefolio.dao;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,7 +31,7 @@ public class FriendRequestDAO implements DAO<FriendRequest> {
 		Connection con = DriverManager.getConnection(
 				db_url,usrname,password);
 		
-		System.out.println("Connection Established Successfully!");
+//		System.out.println("Connection Established Successfully!");
 		return con;
 	}
 
@@ -73,10 +72,8 @@ public class FriendRequestDAO implements DAO<FriendRequest> {
 		statement.setInt(2, t.getReceiverId());
 		statement.setInt(3, t.getSenderSharingLevel());
 		statement.setTimestamp(4, t.getSentOn());
-		statement.executeQuery();
-		ResultSet last_id = statement.getGeneratedKeys();
+		statement.executeUpdate();
 		con.close();
-		t.setRequestId(last_id.getInt(1));
 	}
 
 	@Override
@@ -97,7 +94,7 @@ public class FriendRequestDAO implements DAO<FriendRequest> {
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("DELETE FROM friend_requests WHERE request_id = ?;");
 		statement.setInt(1, t.getRequestId());
-		statement.executeQuery();
+		statement.executeUpdate();
 		con.close();
 	}
 

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +33,7 @@ public class MessageDAO implements DAO<Message> {
 		Connection con = DriverManager.getConnection(
 				db_url,usrname,password);
 		
-		System.out.println("Connection Established Successfully!");
+//		System.out.println("Connection Established Successfully!");
 		return con;
 	}
 	
@@ -70,16 +71,20 @@ public class MessageDAO implements DAO<Message> {
 	public void save(Message t, String[] args) throws SQLException, Exception {
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("INSERT INTO messages(sender_id, receiver_id, "
-				+ "body, sent_on, chat_id) VALUES (?, ?, ?, ?, ?);");
+				+ "body, sent_on, chat_id) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		statement.setInt(1, t.getSender_id());
 		statement.setInt(2, t.getReceiver_id());
 		statement.setString(3, t.getBody());
 		statement.setTimestamp(4, t.getSentOn());
 		statement.setInt(5, t.getChat_id());
-		statement.executeQuery();
+		statement.executeUpdate();
 		ResultSet last_id = statement.getGeneratedKeys();
+	    int messId = 0;
+		if (last_id.next()) {
+	        messId = last_id.getInt(1);
+	    }
+		t.setId(messId);		
 		con.close();
-		t.setId(last_id.getInt(1));		
 	}
 
 //	edit existing message
@@ -94,18 +99,21 @@ public class MessageDAO implements DAO<Message> {
 		statement.setTimestamp(4, t.getSentOn());
 		statement.setInt(5, t.getChat_id());
 		statement.setInt(6, t.getId());
-		statement.executeQuery();
+		statement.executeUpdate();
 		con.close();
 	}
 
 	
-//	delete existing message
+//	delete existing chat
 	@Override
 	public void delete(Message t) throws SQLException, Exception {
 		Connection con = this.connect();
-		PreparedStatement statement = con.prepareStatement("DELETE FROM messages WHERE message_id = ?;");
-		statement.setInt(1, t.getId());
-		statement.executeQuery();
+		PreparedStatement statement = con.prepareStatement("DELETE FROM messages WHERE chat_id = ?;");
+		statement.setInt(1, t.getChat_id());
+		statement.executeUpdate();
+		statement = con.prepareStatement("DELETE FROM chat WHERE chat_id = ?;");
+		statement.setInt(1, t.getChat_id());
+		statement.executeUpdate();
 		con.close();
 	}
 

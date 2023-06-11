@@ -2,6 +2,8 @@ package com.financefolio.forum;
 
 import java.sql.Date;
 
+import com.financefolio.dao.CommentDAO;
+
 public class Comment {
     //attributes
     private int questionId;
@@ -21,6 +23,10 @@ public class Comment {
         this.upvotes = 0;
         this.downvotes = 0;
     }
+
+    public int getQuestionId(){
+        return questionId;
+    }
     public int getCommentId() {
         return commentId;
     }
@@ -36,10 +42,6 @@ public class Comment {
     public int getDownvotes() {
         return downvotes;
     }
-    public void requestInsert(){}
-    public void requestUpdate(){}
-    public void addVote(){
-    }
 
     public void setCommentId(int commentId){
         this.commentId = commentId;
@@ -51,5 +53,5 @@ public class Comment {
     public void setDownvotes(int downvotes) {
         this.downvotes = downvotes;
     }
-    
+
 }

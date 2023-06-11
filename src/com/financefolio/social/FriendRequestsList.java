@@ -23,15 +23,14 @@ public class FriendRequestsList {
 	}
 	
 	public void deleteRequest(FriendRequest fr) {
-//		update db
 		this.requests.remove(fr);
-	}
-	public void addRequest(FriendRequest fr) {
-//		update db
-		this.requests.add(fr);
 	}
 	@Override
     public String toString() {
         return this.getRequests().toString();
     }
+
+	public void setRequestsList(List<FriendRequest> list) {
+		this.requests = list;
+	}
 }

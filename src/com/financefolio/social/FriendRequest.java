@@ -58,6 +58,6 @@ public class FriendRequest {
 	}
 	@Override
     public String toString() {
-        return "id:" + String.valueOf(this.getSenderId())+" sentOn:" + this.getSentOn()+ " senderSharingLevel" + this.getSenderSharingLevel();
+        return "requestId: "+this.getRequestId() +  "id:" + String.valueOf(this.getSenderId())+" sentOn:" + this.getSentOn()+ " senderSharingLevel: " + this.getSenderSharingLevel();
     }
 }
