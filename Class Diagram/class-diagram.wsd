@@ -232,40 +232,51 @@ package com.financefolio.expense{
         ' -name: String'
         -category: String
         -name: String
-        -amount: int
-        +getSelectedCategory(): String 
+        -description: String
+        -id: int
+        -amount: double
+        -addition_date: Date
+        --
+        +init(): void
+        setters/getters 
     }
 
     class Subscription{
+        -next_billing_date: Date
+        +getNextBillingDate(): Date
+        +setNextBillingDate(): void
     }
 
     class Miscellaneous{
+        -microExpenses: List<Expense>
+        +updateSum(): void
+        +appendEnMass(): void
+        +appendMicroExpenses(): void
+        +removeMicroExpenses(): void
+        +removeMicroExpenses(): void
+        +getNumberOfMicroExpenses(): int
+        +getMicroExpense(): Expense
+
+
 
     }
 
-    class MiscellaneousList{
-        -miscList: List<Miscellaneous>
-    }
-
+    
     class Bill{
-
-    }
-
-    class Power{ 
-    }
-
-    class Phone{
-    }
-
-    class Water{
+        -type: String
+        -owed: double
+        -date_from: Date
+        -date_to: Date
+        --
+        setters/getters
     }
 
     class ExpenseList{
         -number: int
         -expensesInList: List<Expense>
+        +addExpensesInList(): void
         +updateInList(): void
         +getAllExpensesList(): List<Expense>
-        +addExpensesInList(): void
     }
 }
 
@@ -372,10 +383,6 @@ Achievement --|> Goal
 'expense package relations
 Expense <|-- Miscellaneous
 Expense <|-- Bill
-Bill <|-- Power
-Bill <|-- Water
-Bill <|-- Phone
-Miscellaneous --* MiscellaneousList
 Expense <|-- Subscription
 ExpenseList *-- Expense
 
@@ -489,20 +496,24 @@ package com.financefolio.dao{
         -usrname: String
         +connect(): Connection
         +get(): Optional <PremiumFeature>
-        +getAll(): Optinal <List<PremiumFeature>> 
+        +getAll(): Optional <List<PremiumFeature>> 
         +save(): void
         +update(): void
         +delete(): void
     }
-    class SubscriptionDAO{}
-    
-    class MiscellaneousDAO{}
-    
-    class PhoneDAO{}
-    
-    class PowerDAO{}
-    
-    class WaterDAO{}
+
+    class ExpenseDAO{
+        -db_url: String 
+        -username: String
+        -password: String
+        +connect(): Connection
+        +get(): Optional<Expense>
+        +getAll(): Optional<List<Expense>>
+        +save():void
+        +update(): void
+        +delete(): void
+
+    }
 
     class GoalDAO{
         -db_url: String
@@ -533,11 +544,7 @@ package com.financefolio.dao{
 'dao package relations
 DAO <|.. QuestionDAO
 DAO <|.. CommentDAO
-DAO <|.. SubscriptionDAO
-DAO <|.. MiscellaneousDAO
-DAO <|.. PhoneDAO
-DAO <|.. WaterDAO
-DAO <|.. PowerDAO
+DAO <|.. ExpenseDAO
 DAO <|.. AchievementDAO
 DAO <|.. GoalDAO
 DAO <|.. ReminderDAO
