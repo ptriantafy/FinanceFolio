@@ -278,6 +278,14 @@ package com.financefolio.expense{
         +updateInList(): void
         +getAllExpensesList(): List<Expense>
     }
+
+    class ExpenseManagement{
+        -expenseList: List<Expense>
+        +printList(): void
+        +printExpenseDetails(): void
+        +manageExpensesScene(): void
+        +
+    }
 }
 
 package com.financefolio.goals{
@@ -385,6 +393,7 @@ Expense <|-- Miscellaneous
 Expense <|-- Bill
 Expense <|-- Subscription
 ExpenseList *-- Expense
+ExpenseManagement *-- Expense
 
 newpage
 
