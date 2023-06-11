@@ -100,7 +100,7 @@ public class FriendDAO implements DAO<Friend> {
 
 //	edit existing friendship
 	@Override
-	public void update(Friend t) throws SQLException, Exception {
+	public void update(Friend t, String arg[]) throws SQLException, Exception {
 //		not implemented yet
 	}
 

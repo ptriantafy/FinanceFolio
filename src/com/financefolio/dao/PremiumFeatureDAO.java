@@ -81,7 +81,7 @@ public class PremiumFeatureDAO implements DAO<PremiumFeature> {
 	}
 
 	@Override
-	public void update(PremiumFeature t) throws SQLException, Exception {
+	public void update(PremiumFeature t, String arg[]) throws SQLException, Exception {
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("UPDATE premium_features SET cost = ?, description = ? WHERE feature_id = ?;");
 		statement.setInt(1, t.getCost());

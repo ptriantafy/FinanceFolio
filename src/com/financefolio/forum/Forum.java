@@ -77,7 +77,7 @@ public class Forum {
             } else {
                 que_sel.setDownvotes(que_sel.getDownvotes() + 1);
             }
-            qd.update(que_sel);
+            qd.update(que_sel, null);
         } catch (Exception e) {
             System.out.println(e);
         }
