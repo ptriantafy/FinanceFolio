@@ -154,7 +154,7 @@ public class Member extends User {
 			this.adjustPoints(goal.getReward(), "Goal Completed!");
 			goal.setState("completed");
 			try {
-				gd.update(goal);
+				gd.update(goal, null);
 			} catch (Exception e) {
 				System.out.println(e);
 			}
@@ -163,7 +163,7 @@ public class Member extends User {
 			this.adjustPoints(goal.getReward()*(-15/100), "Goal failed!");
 			goal.setState("failed");
 			try {
-				gd.update(goal);
+				gd.update(goal, null);
 			} catch (Exception e) {
 				System.out.println(e);
 			}
@@ -176,7 +176,7 @@ public class Member extends User {
 		this.adjustPoints(ach.getReward(), "Completed Achievement");
 		ach.setState("UNLOCKED");
 		try {
-			ad.update(ach);
+			ad.update(ach, null);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
