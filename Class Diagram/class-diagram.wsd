@@ -220,10 +220,15 @@ package com.financefolio.diagrams{
         diagramsRecord: List<Diagram>
     }
     
+
     class Diagram{
         -category: String
         -timeInterval: Time
         -creationDate: Date
+        -xAxis: List<float>
+        -yAxis: List<float>
+        setters/getters    
+        +createDiagram: void
     }
 }
 
@@ -255,7 +260,11 @@ package com.financefolio.expense{
         +removeMicroExpenses(): void
         +getNumberOfMicroExpenses(): int
         +getMicroExpense(): Expense
+
+
+
     }
+
     
     class Bill{
         -type: String
@@ -276,20 +285,10 @@ package com.financefolio.expense{
 
     class ExpenseManagement{
         -expenseList: List<Expense>
-        +printExpenseDetails(): void
+        -printExpenseDetails(): void
         +printList(): void
         +manageExpensesScene(): void
-    }
-
-    class AddExpense{
-        +addExpense(): void
-        +addBill(): void
-        +addPower(): void
-        +addWater(): void
-        +addPhone(): void
-        +addSubscription(): void
-        +addMiscellaneous(): void
-
+        +
     }
 }
 
@@ -352,21 +351,6 @@ package com.financefolio.statistics
     }
 }
 
-package com.financefolio.diagrams
-{
-    class diagram
-    {
-        -xAxis: List<float>
-        -yAxis: List<float>
-        setters/getters                                           
-    }
-    class diagramCalculation
-    {
-        -diagramList: List<diagram>
-        +createDiagram: void
-
-    }
-}
 
 
 ' forum package relations
@@ -397,7 +381,6 @@ Achievement --|> Goal
 Expense <|-- Miscellaneous
 Expense <|-- Bill
 Expense <|-- Subscription
-Expense <|-- AddExpense
 ExpenseList *-- Expense
 ExpenseManagement *-- Expense
 
