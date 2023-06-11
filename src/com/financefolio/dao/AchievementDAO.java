@@ -18,7 +18,7 @@ public class AchievementDAO implements DAO<Achievement>{
     public AchievementDAO()
     {
         this.usrname = "root";
-        this.password = "Dfg5c12af49gr58";
+        this.password = "test";
     }
 
     public Connection connect() throws Exception

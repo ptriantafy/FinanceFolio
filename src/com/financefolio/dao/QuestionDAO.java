@@ -1,13 +1,9 @@
 package com.financefolio.dao;
 
-// import java.beans.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+// import java.beans.Statement;
 import java.sql.*;
 
 import com.financefolio.forum.Question;
@@ -20,7 +16,7 @@ public class QuestionDAO implements DAO<Question>{
     public QuestionDAO()
     {
         this.usrname = "root";
-        this.password = "Dfg5c12af49gr58";
+        this.password = "test";
     }
 
     public Connection connect() throws Exception

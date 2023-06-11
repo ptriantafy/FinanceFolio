@@ -23,7 +23,7 @@ public class FriendDAO implements DAO<Friend> {
 	public FriendDAO()
 	{
 		this.usrname = "root";
-        this.password = "Dfg5c12af49gr58";
+        this.password = "test";
 	}
 	
 	public Connection connect() throws Exception
