@@ -19,6 +19,7 @@ import com.financefolio.social.FriendRequestsList;
 import com.financefolio.social.FriendsList;
 
 public class Member extends User {
+
 	private boolean premiumMember;
 	private float income;
 	private int category;
@@ -159,11 +160,24 @@ public class Member extends User {
 		this.requestsList = requestsList;
 	}
 
+	protected void displayMemberInfo() {
+	    System.out.println("Premium Member: " + premiumMember);
+	    System.out.println("Category:" + category);
+	    if(income!=0) {
+	    System.out.println("Income: " + income);
+	    }	
+	    if(houseArea!=0 && houseResidents!=0) {
+	    System.out.println("Square Meters: " + houseArea);
+	    System.out.println("Number of Residents: " + houseResidents);
+	    }
+	}
+	
 	
 	public void updateHouseDetails(int area, int residents) {
 		this.setHouseArea(area);
 		this.setHouseResidents(residents);
 	}
+
 	
 	public boolean isPremiumMember() {
 		return premiumMember;
@@ -218,3 +232,5 @@ public class Member extends User {
         		+"\n Friend Requests: " + this.getRequestsList();
     }
 }
+
+
