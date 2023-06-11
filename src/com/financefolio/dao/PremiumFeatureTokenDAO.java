@@ -87,7 +87,7 @@ public class PremiumFeatureTokenDAO implements DAO<PremiumFeatureToken> {
 	}
 
 	@Override
-	public void update(PremiumFeatureToken t) throws SQLException, Exception {
+	public void update(PremiumFeatureToken t, String arg[]) throws SQLException, Exception {
 //		unimplemented
 	}
 

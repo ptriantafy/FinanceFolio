@@ -101,7 +101,7 @@ public class GoalDAO implements DAO<Goal>{
     }
 
     @Override
-    public void update(Goal goal) throws Exception {
+    public void update(Goal goal, String arg[]) throws Exception {
         Connection con = null;
         PreparedStatement statement = null;
         

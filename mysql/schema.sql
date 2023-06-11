@@ -101,6 +101,8 @@ CREATE TABLE goals(
 
 CREATE TABLE expense(
   expense_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  expense_name VARCHAR(42),
+  expense_category ENUM('Bill','Subscription','Miscellaneous'),
   description VARCHAR(255),
   addition_date DATE NOT NULL,
   cost DECIMAL(10,2) NOT NULL,
@@ -109,6 +111,7 @@ CREATE TABLE expense(
 
 CREATE TABLE subscription(
   subscription_id SMALLINT UNSIGNED NOT NULL,
+  sub_name VARCHAR(42),
   next_billing_date  DATE,
   cost DECIMAL(10,2) NOT NULL,
   CONSTRAINT `fk_expense_sub_id` FOREIGN KEY (subscription_id) REFERENCES expense (expense_id) ON DELETE CASCADE ON UPDATE CASCADE

@@ -96,7 +96,7 @@ public class MemberDAO implements DAO<Member> {
 
 //	edit member info
 	@Override
-	public void update(Member t) throws SQLException, Exception {
+	public void update(Member t, String arg[]) throws SQLException, Exception {
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("UPDATE user SET username = ?;");
 		statement.setString(1, t.getName());
