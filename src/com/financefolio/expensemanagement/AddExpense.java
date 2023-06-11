@@ -36,7 +36,7 @@ public class AddExpense {
 		Scanner sc = new Scanner(System.in);
 		Bill bill1 = new Bill("", 0.0);
         bill1.setCategory("Bill");
-        System.out.println("The selected category is: " + bill1.getSelectedCategory());
+        System.out.println("The selected category is: " + bill1.getCategory());
         System.out.println("power, water or phone?");
        	String billType = sc.nextLine();
         //Bill Category: Power
@@ -131,7 +131,7 @@ public class AddExpense {
 	private void addSubscription() {
 		Subscription sub1 = new Subscription("", 0.0);
 	    sub1.setCategory("Subscription");
-	    System.out.println("The selected category is: " + sub1.getSelectedCategory());
+	    System.out.println("The selected category is: " + sub1.getCategory());
 	    System.out.println("What is the name of the Subscription");
 	    String subName = sc.nextLine();
 	    sub1.setName(subName); 

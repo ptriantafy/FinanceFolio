@@ -12,7 +12,7 @@ BEGIN
 	SELECT MAX(expense_id) INTO id FROM expense;
     SET NEW.bill_id = id;
     IF(NEW.dateTo is NULL) THEN
-        SET NEW.dateTo = DATE_ADD(NEW.dateFrom, INTERVAL 1 MONTH); 
+        SET NEW.dateTo = DATE_SUB(NEW.dateFrom, INTERVAL 2 MONTH); 
     END IF;
 
 END$

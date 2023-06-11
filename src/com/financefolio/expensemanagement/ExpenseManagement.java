@@ -20,7 +20,7 @@ public class ExpenseManagement {
         }
     }
 
-    private void printExpenseDetails(Expense exp)
+    public void printExpenseDetails(Expense exp)
     {
         //Print basic expense attributes
         System.out.print(exp.getName());
@@ -29,7 +29,7 @@ public class ExpenseManagement {
         System.out.print(" | ");
         System.out.print(exp.getAdditionDate());
         System.out.print(" | ");
-        System.out.print(exp.getSelectedCategory());
+        System.out.print(exp.getCategory());
         //Extended bill attributes
         if(exp instanceof Bill)
         {
