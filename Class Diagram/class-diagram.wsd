@@ -253,7 +253,6 @@ package com.financefolio.expense{
         +appendEnMass(): void
         +appendMicroExpenses(): void
         +removeMicroExpenses(): void
-        +removeMicroExpenses(): void
         +getNumberOfMicroExpenses(): int
         +getMicroExpense(): Expense
 
@@ -281,8 +280,8 @@ package com.financefolio.expense{
 
     class ExpenseManagement{
         -expenseList: List<Expense>
+        -printExpenseDetails(): void
         +printList(): void
-        +printExpenseDetails(): void
         +manageExpensesScene(): void
         +
     }
