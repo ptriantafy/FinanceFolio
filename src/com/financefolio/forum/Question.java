@@ -122,7 +122,7 @@ public class Question implements Comparable<Question>{
               com.setUpvotes(com.getUpvotes() + 1);
           else
               com.setDownvotes(com.getDownvotes() + 1);
-          cd.update(com, null);
+          cd.update(com);
         } catch (Exception e) {
           System.out.println(e);
         }  

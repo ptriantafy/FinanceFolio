@@ -107,7 +107,7 @@ public class CommentDAO implements DAO<Comment>{
     }
 
     @Override
-    public void update(Comment com, String arg[]) throws Exception{
+    public void update(Comment com) throws Exception{
         Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("UPDATE comment SET body = ?, "
 				+ "upvotes = ?, downvotes = ? WHERE comment_id = ?;");

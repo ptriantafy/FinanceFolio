@@ -97,7 +97,7 @@ public class QuestionDAO implements DAO<Question>{
     
 
     @Override
-    public void update(Question que, String arg[]) throws Exception {
+    public void update(Question que) throws Exception {
         try (Connection con = this.connect();
              PreparedStatement statement = con.prepareStatement("UPDATE question SET title = ?, body = ?, upvotes = ?, downvotes = ? WHERE question_id = ?;")) {
             statement.setString(1, que.getTitle());

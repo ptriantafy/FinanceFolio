@@ -124,7 +124,7 @@ public class Goal {
     public void modifyGoal(){
         GoalDAO gd = new GoalDAO();
         try {
-            gd.update(this, null);
+            gd.update(this);
         } catch (Exception e) {
             System.out.println(e);
         }

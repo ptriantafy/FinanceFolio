@@ -95,7 +95,7 @@ public class AchievementDAO implements DAO<Achievement>{
     }
 
     @Override
-    public void update(Achievement ach, String arg[]) throws Exception {
+    public void update(Achievement ach) throws Exception {
         Connection con = null;
         PreparedStatement statement = null;
         

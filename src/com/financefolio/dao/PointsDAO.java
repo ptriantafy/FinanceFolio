@@ -89,7 +89,7 @@ public class PointsDAO implements DAO<Points>{
 	}
 
 	@Override
-	public void update(Points t, String arg[]) throws SQLException, Exception {
+	public void update(Points t) throws SQLException, Exception {
 //		unimplemented
 	}
 

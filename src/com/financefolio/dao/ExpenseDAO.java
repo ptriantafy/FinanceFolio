@@ -236,7 +236,7 @@ public class ExpenseDAO implements DAO<Expense>{
 
 
     @Override 
-    public void save (Expense t, String arg[]) throws SQLException, Exception
+    public void save (Expense t) throws SQLException, Exception
     {
         //Create connection object
         Connection con = this.connect();

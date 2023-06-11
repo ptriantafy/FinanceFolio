@@ -77,7 +77,7 @@ public class FriendRequestDAO implements DAO<FriendRequest> {
 	}
 
 	@Override
-	public void update(FriendRequest t, String arg[]) throws Exception {
+	public void update(FriendRequest t) throws Exception {
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("UPDATE friend_requests SET sender_id = ?, receiver_id = ?, "
 				+ "sender_sharing_level = ? WHERE request_id = ?;");

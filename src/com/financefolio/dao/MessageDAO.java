@@ -89,7 +89,7 @@ public class MessageDAO implements DAO<Message> {
 
 //	edit existing message
 	@Override
-	public void update(Message t, String arg[]) throws SQLException, Exception {
+	public void update(Message t) throws SQLException, Exception {
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("UPDATE messages SET sender_id = ?, receiver_id = ?, "
 				+ "body = ?, sent_on = ?, chat_id = ? WHERE message_id= ?;");
