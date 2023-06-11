@@ -255,11 +255,7 @@ package com.financefolio.expense{
         +removeMicroExpenses(): void
         +getNumberOfMicroExpenses(): int
         +getMicroExpense(): Expense
-
-
-
     }
-
     
     class Bill{
         -type: String
@@ -280,10 +276,20 @@ package com.financefolio.expense{
 
     class ExpenseManagement{
         -expenseList: List<Expense>
-        -printExpenseDetails(): void
+        +printExpenseDetails(): void
         +printList(): void
         +manageExpensesScene(): void
-        +
+    }
+
+    class AddExpense{
+        +addExpense(): void
+        +addBill(): void
+        +addPower(): void
+        +addWater(): void
+        +addPhone(): void
+        +addSubscription(): void
+        +addMiscellaneous(): void
+
     }
 }
 
@@ -391,6 +397,7 @@ Achievement --|> Goal
 Expense <|-- Miscellaneous
 Expense <|-- Bill
 Expense <|-- Subscription
+Expense <|-- AddExpense
 ExpenseList *-- Expense
 ExpenseManagement *-- Expense
 
