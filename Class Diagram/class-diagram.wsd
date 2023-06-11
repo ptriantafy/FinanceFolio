@@ -3,36 +3,40 @@ skinparam classAttributeIconSize 0
 ' package Declarations
 package com.financefolio.forum{ 
     class Forum {
-     -posts: List<Question>
+     -forum: List<Question>
+     -searchResult: List<Question>
      +sortByRating(): void
-     +getQuestionSelected(): void
+     +getQuestion(): Question
+     +getQuestions(): void 
      +searchQuestion(): Question
-    '  +addCommentToQuestion(): void
+     +addQuestion(): void
+     +registerVoteOnQuestion(): void
     }
 
     class Question{
+        -questionId: int
+        -title: String
         -body: String
         -date: Date
-        -author: String
+        -authorId: int
         -upvotes: int
         -downvotes: int
+        -rating: float
         -comments: List<Comment>
-        +registerVoteOnSelectedComment(): void
-        +addCommentToQuestion()
-        ' +requestInsert():void
-        ' +requestUpdate():void
-        ' +addVote(): void
+        +gettersAndSetters()
+        +registerVoteOnComment(): void
+        +addCommentToQuestion() : void
     }
 
     class Comment{
+        -questionId: int
+        -commentId: int
         -body: String
         -date: Date
-        -author: String
+        -authorId: int
         -upvotes: int
         -downvotes: int
-        +requestInsert():void
-        +requestUpdate():void
-        +addVote(): void
+        +gettersAndSetters()
     }
 }
 
@@ -126,7 +130,7 @@ package com.financefolio.premiumfeatures{
 }
 ' premiumfeatures package relations
 PremiumFeature --o PremiumFeatureToken
-PremiumFeatureToken --* Member
+PremiumFeatureToken --o Member
 
 package com.financefolio.points{ 
     class PointsRecord{
@@ -208,8 +212,8 @@ package com.financefolio.social{
 'social  package relations
 Friend --* FriendsList
 FriendRequest --* FriendRequestsList
-Member *--FriendRequestsList
-Member *--FriendsList
+Member o--FriendRequestsList
+Member o--FriendsList
 
 package com.financefolio.diagrams{
     class DiagramsRecord{
@@ -228,45 +232,66 @@ package com.financefolio.expense{
         ' -name: String'
         -category: String
         -name: String
-        -amount: int
-        +getSelectedCategory(): String 
+        -description: String
+        -id: int
+        -amount: double
+        -addition_date: Date
+        --
+        +init(): void
+        setters/getters 
     }
 
     class Subscription{
+        -next_billing_date: Date
+        +getNextBillingDate(): Date
+        +setNextBillingDate(): void
     }
 
     class Miscellaneous{
+        -microExpenses: List<Expense>
+        +updateSum(): void
+        +appendEnMass(): void
+        +appendMicroExpenses(): void
+        +removeMicroExpenses(): void
+        +removeMicroExpenses(): void
+        +getNumberOfMicroExpenses(): int
+        +getMicroExpense(): Expense
+
+
 
     }
 
-    class MiscellaneousList{
-        -miscList: List<Miscellaneous>
-    }
-
+    
     class Bill{
-
-    }
-
-    class Power{ 
-    }
-
-    class Phone{
-    }
-
-    class Water{
+        -type: String
+        -owed: double
+        -date_from: Date
+        -date_to: Date
+        --
+        setters/getters
     }
 
     class ExpenseList{
         -number: int
         -expensesInList: List<Expense>
+        +addExpensesInList(): void
         +updateInList(): void
         +getAllExpensesList(): List<Expense>
-        +addExpensesInList(): void
+    }
+
+    class ExpenseManagement{
+        -expenseList: List<Expense>
+        +printList(): void
+        +printExpenseDetails(): void
+        +manageExpensesScene(): void
+        +
     }
 }
 
 package com.financefolio.goals{
     class Goal{
+        -goalId: int
+        -ownerId: int
         -name: String
         -state: String
         -shared: boolean
@@ -274,24 +299,34 @@ package com.financefolio.goals{
         -moneyToSpend: float
         -difficulty: int
         -reward: int
-        +estimateDifficulty(): int
-        +getReward(): int
+        +gettersAndSetters()
+        +estimateDifficulty(): void
+        +addGoal(): void
         +modifyGoal(): void
-        +updateGoal(): void
         +deleteGoal(): void       
-    }
-
-    class Achievement{
-        -state: String
-        +calcPoints(): int
-    }
-
-    class AchievementList{ 
-        -achList: List<Achievement>
     }
 
     class GoalsHistory{ 
         -goalHistory: List<Goal>
+        +getGoal(): Goal
+        +getGoals(): void
+    }
+
+    class Achievement{
+        -achievementId: int
+        -description: String
+        -type: String
+        -state: String
+        -reward: int
+        -timeToComplete: int
+        +gettersAndSetters()
+
+    }
+
+    class AchievementList{ 
+        -achList: List<Achievement>
+        +getAchievements(): void
+        +getAchievement(): void
     }
 }
 
@@ -356,12 +391,9 @@ Achievement --|> Goal
 'expense package relations
 Expense <|-- Miscellaneous
 Expense <|-- Bill
-Bill <|-- Power
-Bill <|-- Water
-Bill <|-- Phone
-Miscellaneous --* MiscellaneousList
 Expense <|-- Subscription
 ExpenseList *-- Expense
+ExpenseManagement *-- Expense
 
 newpage
 
@@ -473,35 +505,55 @@ package com.financefolio.dao{
         -usrname: String
         +connect(): Connection
         +get(): Optional <PremiumFeature>
-        +getAll(): Optinal <List<PremiumFeature>> 
+        +getAll(): Optional <List<PremiumFeature>> 
         +save(): void
         +update(): void
         +delete(): void
     }
-    class SubscriptionDAO{}
-    
-    class MiscellaneousDAO{}
-    
-    class PhoneDAO{}
-    
-    class PowerDAO{}
-    
-    class WaterDAO{}
 
-    class GoalDAO{}
+    class ExpenseDAO{
+        -db_url: String 
+        -username: String
+        -password: String
+        +connect(): Connection
+        +get(): Optional<Expense>
+        +getAll(): Optional<List<Expense>>
+        +save():void
+        +update(): void
+        +delete(): void
 
-    class AchievementDAO{}
+    }
+
+    class GoalDAO{
+        -db_url: String
+        -usrname: String
+        -password: String
+        +connect(): Connection
+        +get(): Optional <Goal>
+        +getAll(): Optinal <List<Goal>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
+
+    class AchievementDAO{
+        -db_url: String
+        -usrname: String
+        -password: String
+        +connect(): Connection
+        +get(): Optional <Achievement>
+        +getAll(): Optinal <List<Achievement>> 
+        +save(): void
+        +update(): void
+        +delete(): void
+    }
 
     class ReminderDAO{} 
 }
 'dao package relations
 DAO <|.. QuestionDAO
 DAO <|.. CommentDAO
-DAO <|.. SubscriptionDAO
-DAO <|.. MiscellaneousDAO
-DAO <|.. PhoneDAO
-DAO <|.. WaterDAO
-DAO <|.. PowerDAO
+DAO <|.. ExpenseDAO
 DAO <|.. AchievementDAO
 DAO <|.. GoalDAO
 DAO <|.. ReminderDAO

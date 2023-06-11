@@ -21,8 +21,8 @@ public class PointsDAO implements DAO<Points>{
 	//constructor
 	public PointsDAO()
 	{
-		this.usrname = "FinanceFolioJava";
-		this.password = "FinFolJavPass";
+		this.usrname = "root";
+        this.password = "Dfg5c12af49gr58";
 	}
 	
 	public Connection connect() throws Exception
@@ -89,7 +89,7 @@ public class PointsDAO implements DAO<Points>{
 	}
 
 	@Override
-	public void update(Points t) throws SQLException, Exception {
+	public void update(Points t, String arg[]) throws SQLException, Exception {
 //		unimplemented
 	}
 

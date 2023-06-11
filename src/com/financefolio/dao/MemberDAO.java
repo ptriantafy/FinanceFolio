@@ -20,8 +20,8 @@ public class MemberDAO implements DAO<Member> {
 	//constructor
 	public MemberDAO()
 	{
-		this.usrname = "FinanceFolioJava";
-		this.password = "FinFolJavPass";
+		this.usrname = "root";
+        this.password = "Dfg5c12af49gr58";
 	}
 	
 	public Connection connect() throws Exception
@@ -96,7 +96,7 @@ public class MemberDAO implements DAO<Member> {
 
 //	edit member info
 	@Override
-	public void update(Member t) throws SQLException, Exception {
+	public void update(Member t, String arg[]) throws SQLException, Exception {
 		Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("UPDATE user SET username = ?;");
 		statement.setString(1, t.getName());

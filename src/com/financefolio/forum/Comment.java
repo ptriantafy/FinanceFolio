@@ -42,10 +42,6 @@ public class Comment {
     public int getDownvotes() {
         return downvotes;
     }
-    public void requestInsert(){}
-    public void requestUpdate(){}
-    public void addVote(){
-    }
 
     public void setCommentId(int commentId){
         this.commentId = commentId;

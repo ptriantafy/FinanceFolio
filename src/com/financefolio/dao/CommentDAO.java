@@ -16,12 +16,12 @@ import com.mysql.cj.protocol.Resultset;
 
 public class CommentDAO implements DAO<Comment>{
     private String db_url = "jdbc:mysql://localhost:3306/financefolio";
-    private String username;
+    private String usrname;
     private String password;
 
     public CommentDAO()
     {
-        this.username = "root";
+        this.usrname = "root";
         this.password = "Dfg5c12af49gr58";
     }
 
@@ -30,7 +30,7 @@ public class CommentDAO implements DAO<Comment>{
         //Driver
         Class.forName("com.mysql.cj.jdbc.Driver");
         //Connection with database
-        Connection con = DriverManager.getConnection(db_url, username, password);
+        Connection con = DriverManager.getConnection(db_url, usrname, password);
 
         System.out.println("Connection established");
 
@@ -107,7 +107,7 @@ public class CommentDAO implements DAO<Comment>{
     }
 
     @Override
-    public void update(Comment com) throws Exception{
+    public void update(Comment com, String arg[]) throws Exception{
         Connection con = this.connect();
 		PreparedStatement statement = con.prepareStatement("UPDATE comment SET body = ?, "
 				+ "upvotes = ?, downvotes = ? WHERE comment_id = ?;");

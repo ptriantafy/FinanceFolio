@@ -7,7 +7,7 @@ import com.financefolio.dao.QuestionDAO;
 public class Forum {
     //attributes
     private List<Question> forum = new ArrayList <Question>();
-    private List<Question> search_result = new ArrayList<Question>();
+    private List<Question> searchResult = new ArrayList<Question>();
     //methods
     public void setForumScene(){
         for(int i = 0; i < this.forum.size(); i++){
@@ -49,14 +49,14 @@ public class Forum {
         for(int i = 0; i < this.forum.size(); i++)
         {
             if(this.forum.get(i).getTitle().contains(input) || this.forum.get(i).getBody().contains(input)){
-                search_result.add(this.forum.get(i));
+                searchResult.add(this.forum.get(i));
             }
         }
         System.out.println("Questions matching to inputs: " + "\n");
-        for(int j = 0; j < search_result.size(); j++)
+        for(int j = 0; j < searchResult.size(); j++)
         {
             System.out.println((j+1) + "." + 
-            search_result.get(j).getTitle() + "\n");
+            searchResult.get(j).getTitle() + "\n");
         }
     }
 
@@ -77,7 +77,7 @@ public class Forum {
             } else {
                 que_sel.setDownvotes(que_sel.getDownvotes() + 1);
             }
-            qd.update(que_sel);
+            qd.update(que_sel, null);
         } catch (Exception e) {
             System.out.println(e);
         }

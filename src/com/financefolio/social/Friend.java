@@ -27,6 +27,7 @@ public class Friend {
 			e.printStackTrace();
 		}
 	}
+	//#region getters and setters
 	public int getId() {
 		return id;
 	}
@@ -62,6 +63,8 @@ public class Friend {
 	public void setFriendsSince(Date friendsSince) {
 		this.friendsSince = friendsSince;
 	}
+	//#endregion
+
 	@Override
     public String toString() {
         return "\nid: " + String.valueOf(this.getId())+" name: " + this.getName()+" friendsSince: " + String.valueOf(this.getFriendsSince())

@@ -8,11 +8,15 @@ import java.util.List;
 import com.financefolio.dao.MemberDAO;
 import com.financefolio.dao.PointsDAO;
 import com.financefolio.dao.PremiumFeatureTokenDAO;
+import com.financefolio.goals.Achievement;
+import com.financefolio.goals.Goal;
 import com.financefolio.points.Points;
 import com.financefolio.points.PointsRecord;
 import com.financefolio.premiumfeatures.PremiumFeatureToken;
+import com.financefolio.dao.AchievementDAO;
 import com.financefolio.dao.FriendDAO;
 import com.financefolio.dao.FriendRequestDAO;
+import com.financefolio.dao.GoalDAO;
 import com.financefolio.social.Friend;
 import com.financefolio.social.FriendRequest;
 import com.financefolio.social.FriendRequestsList;
@@ -79,6 +83,7 @@ public class Member extends User {
 			return false;
 		}
 	}
+
 	public void adjustPoints(int amount, String reason) {
 		Points newPoints = new Points(-1, amount, new Timestamp(System.currentTimeMillis()), reason);
 		PointsDAO pDAO = new PointsDAO();
@@ -143,6 +148,56 @@ public class Member extends User {
 		}
 		this.requestsList.deleteRequest(fr);
 	}
+
+	public void goalCompletion(Goal goal, boolean comp) {
+		GoalDAO gd = new GoalDAO();
+		if(comp == true){
+			this.adjustPoints(goal.getReward(), "Goal Completed!");
+			goal.setState("completed");
+			try {
+				gd.update(goal, null);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			System.out.println("Goal completed!" + "\n");
+		} else {
+			this.adjustPoints(goal.getReward()*(-15/100), "Goal failed!");
+			goal.setState("failed");
+			try {
+				gd.update(goal, null);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+			
+	}
+
+	public void achievementCompletion(Achievement ach) {
+		AchievementDAO ad = new AchievementDAO();
+		this.adjustPoints(ach.getReward(), "Completed Achievement");
+		ach.setState("UNLOCKED");
+		try {
+			ad.update(ach, null);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		System.out.println("Achievement completed!");
+	}
+
+	public void setViewFriendsScene(){
+		System.out.println("------Friends------");
+		for (int i = 0; i < this.friends.getFriendsList().size(); i++) {
+			System.out.println((i+1) + "." + this.friends.getFriendsList().get(i).getName() + "\n" +
+				"Sharing level: " + this.friends.getFriendsList().get(i).getSharingLevel() + "\n");
+		}
+		
+	}
+
+	public int getCurrentPoints(){
+		return this.pointsRecord.getCurrentTotal();
+	}
+
+	//#region
 	
 	public FriendsList getFriends() {
 		return friends;
@@ -224,6 +279,8 @@ public class Member extends User {
 	public void setTokens(List<PremiumFeatureToken> tokens) {
 		this.tokens = tokens;
 	}
+
+	//#endregion
 
 	@Override
     public String toString() {

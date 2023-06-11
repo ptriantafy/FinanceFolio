@@ -12,19 +12,19 @@ public class Question implements Comparable<Question>{
     private String title;
     private String body;
     private Date date;
-    private int author_id;
+    private int authorId;
     private int upvotes;
     private int downvotes;
     private float rating;
     private List<Comment> comments = new ArrayList<Comment>();
 
 
-    public Question(int questionId ,String title, String body, Date date, int author_id){
+    public Question(int questionId ,String title, String body, Date date, int authorId){
         this.questionId = questionId;
         this.title = title;
         this.body = body;
         this.date = date;
-        this.author_id = author_id;
+        this.authorId = authorId;
     }
 //#region
     public int getQuestionId() {
@@ -48,7 +48,7 @@ public class Question implements Comparable<Question>{
     }
 
     public int getAuthorId() {
-        return author_id;
+        return authorId;
     }
 
     public int getUpvotes() {
@@ -114,7 +114,7 @@ public class Question implements Comparable<Question>{
             e.printStackTrace(); // Print the exception stack trace for debugging
         }
     }
-    public void registerVoteOnSelectedComment(Comment com, int vote){
+    public void registerVoteOnComment(Comment com, int vote){
     
         CommentDAO cd = new CommentDAO();
         try {
@@ -122,7 +122,7 @@ public class Question implements Comparable<Question>{
               com.setUpvotes(com.getUpvotes() + 1);
           else
               com.setDownvotes(com.getDownvotes() + 1);
-          cd.update(com);
+          cd.update(com, null);
         } catch (Exception e) {
           System.out.println(e);
         }  
