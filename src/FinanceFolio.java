@@ -1,24 +1,18 @@
-import java.util.ArrayList;
-import java.util.List;
-
-import com.financefolio.expensemanagement.*;
 
 import com.financefolio.dao.ExpenseDAO;
+import com.financefolio.expensemanagement.*;
+import java.sql.Connection;
+import com.financefolio.expensemanagement.*;
+import java.util.*;
 
 
 public class FinanceFolio
 {
-   
+    
     public static void main(String[] args) 
     {
-    
-
-        //test if expense details work
-        // ExpenseManagement manage = new ExpenseManagement();
-        // manage.manageExpensesScene();
-        ExpenseInput add = new ExpenseInput();
-
-        add.addExpense();
+        ExpenseManagement expMngmnt = new ExpenseManagement();
+        expMngmnt.manageExpensesScene();
         
     }
 

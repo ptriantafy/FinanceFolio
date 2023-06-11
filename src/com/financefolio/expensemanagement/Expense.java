@@ -41,13 +41,13 @@ public class Expense {
         this.category = category;
     }
     
-    public String getSelectedCategory() {
-    	return category; 	
+    public String getCategory() {
+    	return this.category; 	
     }
     
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -66,7 +66,7 @@ public class Expense {
     }
 
     public double getAmount() {
-        return amount;
+        return this.amount;
     }
 
     public void setAmount(double amount) {
